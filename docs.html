@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ZPad User Guide — Everything about the one-hotkey terminal + browser panel</title>
+  <meta name="description" content="The complete ZPad manual: install in 30 seconds, master display modes, keyboard shortcuts, workspaces, the built-in browser and terminal, AI chat setup, license activation and device management, privacy, and troubleshooting." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/docs.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ZPad" />
+  <meta property="og:title" content="ZPad User Guide" />
+  <meta property="og:description" content="Install, master, and troubleshoot ZPad — the complete manual." />
+  <meta property="og:url" content="https://zpad.wangyitu.tech/docs.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #ef4444;
+      --accent-dim: rgba(239, 68, 68, 0.1);
+      --bg: #000000;
+      --bg-soft: #0a0a0c;
+      --card: rgba(255, 255, 255, 0.02);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.16);
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    kbd {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-bottom-width: 2px;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    code {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.88em;
+      background: rgba(255,255,255,0.07);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    pre code {
+      display: block;
+      background: none;
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    pre {
+      background: #0d0d10;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      overflow-x: auto;
+      margin: 14px 0;
+    }
+
+    /* Header */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 32px;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; }
+    .brand:hover { text-decoration: none; }
+    .logo {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px;
+    }
+    .brand-name { font-weight: 700; font-size: 15px; }
+    .header-crumb { font-size: 13px; color: var(--text-tertiary); }
+    .header-links { display: flex; align-items: center; gap: 18px; }
+    .header-links a { color: var(--text-secondary); font-size: 13.5px; font-weight: 500; }
+    .header-links a:hover { color: var(--text-primary); text-decoration: none; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff !important;
+      padding: 9px 18px; border-radius: 10px;
+      font-size: 13.5px; font-weight: 600;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-decoration: none; }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 96px 32px 80px;
+      gap: 48px;
+    }
+
+    /* Sidebar */
+    .toc {
+      position: sticky; top: 96px;
+      align-self: start;
+      max-height: calc(100vh - 130px);
+      overflow-y: auto;
+      padding-right: 8px;
+      font-size: 13.5px;
+    }
+    .toc::-webkit-scrollbar { width: 4px; }
+    .toc::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+    .toc-title {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--text-tertiary);
+      margin: 22px 0 8px;
+    }
+    .toc-title:first-child { margin-top: 0; }
+    .toc a {
+      display: block; padding: 6px 10px; margin-left: -10px;
+      border-radius: 8px; color: var(--text-secondary);
+      border-left: 2px solid transparent;
+    }
+    .toc a:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); text-decoration: none; }
+    .toc a.active { color: var(--accent); background: var(--accent-dim); border-left-color: var(--accent); font-weight: 600; }
+
+    /* Content */
+    .doc { min-width: 0; }
+    .doc-hero { margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+    .doc-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .doc-hero h1 { font-size: clamp(30px, 4vw, 42px); font-weight: 800; line-height: 1.15; margin-bottom: 14px; }
+    .doc-hero p { color: var(--text-secondary); font-size: 16.5px; max-width: 640px; }
+    .doc-hero .hero-actions { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border-light); color: var(--text-primary) !important;
+      padding: 9px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 600;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.3); text-decoration: none; }
+
+    section.doc-section { margin-bottom: 72px; scroll-margin-top: 96px; }
+    section.doc-section > h2 {
+      font-size: 26px; font-weight: 800; margin-bottom: 6px;
+      padding-bottom: 14px; border-bottom: 1px solid var(--border);
+    }
+    section.doc-section > .lede { color: var(--text-tertiary); font-size: 15px; margin-bottom: 28px; margin-top: 10px; }
+    h3 { font-size: 18px; font-weight: 700; margin: 34px 0 12px; }
+    h4 { font-size: 15px; font-weight: 700; margin: 24px 0 8px; color: var(--text-primary); }
+    p { margin-bottom: 14px; color: var(--text-secondary); font-size: 15px; }
+    ul, ol { margin: 0 0 16px 20px; color: var(--text-secondary); font-size: 15px; }
+    li { margin-bottom: 8px; }
+    li > ul { margin-top: 8px; }
+    strong { color: var(--text-primary); }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 22px; margin: 18px 0;
+    }
+    .card > :last-child { margin-bottom: 0; }
+    .card.tip { border-left: 3px solid #34d399; }
+    .card.warn { border-left: 3px solid #f59e0b; }
+    .card.tip .card-tag { color: #34d399; }
+    .card.warn .card-tag { color: #f59e0b; }
+    .card-tag {
+      display: block; font-size: 11px; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 18px 0; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-tertiary); font-weight: 700; }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { white-space: nowrap; }
+    .tbl-wrap { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--card); }
+
+    .steps { counter-reset: step; list-style: none; margin-left: 0; }
+    .steps > li {
+      counter-increment: step; position: relative;
+      padding: 0 0 24px 52px;
+    }
+    .steps > li::before {
+      content: counter(step);
+      position: absolute; left: 0; top: 0;
+      width: 32px; height: 32px; border-radius: 10px;
+      background: var(--accent-dim); color: var(--accent);
+      font-weight: 800; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .steps > li::after {
+      content: ''; position: absolute; left: 16px; top: 36px; bottom: 4px;
+      width: 1px; background: var(--border);
+    }
+    .steps > li:last-child::after { display: none; }
+
+    .mode-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 18px 0; }
+    .mode-card { border: 1px solid var(--border); border-radius: 12px; padding: 18px; background: var(--card); }
+    .mode-card .mode-keys { margin: 10px 0; display: flex; gap: 4px; flex-wrap: wrap; }
+    .mode-card h4 { margin: 0 0 4px; }
+    .mode-card p { font-size: 13px; color: var(--text-tertiary); margin: 0; }
+
+    .badge-beta {
+      display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .06em;
+      background: var(--accent-dim); color: var(--accent);
+      padding: 2px 9px; border-radius: 999px; margin-left: 8px; vertical-align: middle;
+    }
+
+    details.faqitem { border: 1px solid var(--border); border-radius: 12px; background: var(--card); margin-bottom: 10px; overflow: hidden; }
+    details.faqitem summary { cursor: pointer; padding: 15px 18px; font-weight: 600; font-size: 14.5px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+    details.faqitem summary::-webkit-details-marker { display: none; }
+    details.faqitem summary::after { content: '+'; color: var(--text-tertiary); font-weight: 700; }
+    details.faqitem[open] summary::after { content: '−'; color: var(--accent); }
+    details.faqitem .a { padding: 0 18px 16px; font-size: 14px; color: var(--text-secondary); }
+    details.faqitem .a :last-child { margin-bottom: 0; }
+
+    .kbd-table td:nth-child(2) { color: var(--text-tertiary); }
+
+    .doc-footer { border-top: 1px solid var(--border); padding-top: 32px; margin-top: 24px; }
+    .doc-footer .links { display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 13.5px; }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 32px; text-align: center;
+      color: var(--text-tertiary); font-size: 13px;
+    }
+    .footer a { color: var(--text-secondary); }
+
+    /* Mobile TOC */
+    .toc-toggle { display: none; }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; padding: 88px 20px 60px; gap: 0; }
+      .toc {
+        position: static; max-height: none; overflow: visible;
+        margin-bottom: 28px;
+        border: 1px solid var(--border); border-radius: 14px; background: var(--card);
+      }
+      .toc-inner { display: none; padding: 8px 4px 12px; }
+      .toc.open .toc-inner { display: block; }
+      .toc-toggle {
+        display: flex; width: 100%; align-items: center; justify-content: space-between;
+        background: none; border: none; color: var(--text-primary);
+        font: inherit; font-weight: 700; font-size: 14px;
+        padding: 14px 18px; cursor: pointer;
+      }
+      .toc-toggle .chev { transition: transform .2s ease; color: var(--text-tertiary); }
+      .toc.open .toc-toggle .chev { transform: rotate(180deg); }
+      .header { padding: 12px 20px; }
+      .header-crumb { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="brand" href="index.html">
+    <div class="logo">Z</div>
+    <span class="brand-name">ZPad</span>
+    <span class="header-crumb">/ User Guide</span>
+  </a>
+  <nav class="header-links">
+    <a href="faq.html">FAQ</a>
+    <a href="changelog.html">What's New</a>
+    <a href="support.html">Support</a>
+    <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+  <!-- ============ Sidebar ============ -->
+  <aside class="toc" id="toc">
+    <button class="toc-toggle" aria-expanded="false" onclick="document.getElementById('toc').classList.toggle('open')">
+      On this page
+      <svg class="chev" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+    </button>
+    <div class="toc-inner">
+      <p class="toc-title">Start here</p>
+      <a href="#top">Overview</a>
+      <a href="#install">1 · Install &amp; first run</a>
+      <a href="#panel">2 · The panel &amp; display modes</a>
+      <p class="toc-title">Core features</p>
+      <a href="#browser">3 · Browser</a>
+      <a href="#terminal">4 · Terminal</a>
+      <a href="#workspaces">5 · Workspaces &amp; favorites</a>
+      <a href="#command-palette">6 · Command palette</a>
+      <a href="#ai-chat">7 · AI chat <span class="badge-beta" style="font-size:9px;padding:1px 6px;">BETA</span></a>
+      <p class="toc-title">Reference</p>
+      <a href="#shortcuts">8 · Keyboard shortcuts</a>
+      <a href="#settings">9 · Settings reference</a>
+      <p class="toc-title">Account &amp; trust</p>
+      <a href="#license">10 · License &amp; activation</a>
+      <a href="#updates">11 · Updates</a>
+      <a href="#privacy">12 · Privacy &amp; security</a>
+      <a href="#troubleshooting">13 · Troubleshooting</a>
+      <a href="#uninstall">14 · Uninstall</a>
+    </div>
+  </aside>
+
+  <!-- ============ Content ============ -->
+  <main class="doc" id="top">
+
+    <div class="doc-hero">
+      <span class="eyebrow">User Guide · v1.0</span>
+      <h1>Everything ZPad can do,<br>in one page.</h1>
+      <p>ZPad keeps a real multi-tab browser and a real terminal one hotkey away — <kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd> from anywhere. This guide covers install, every feature, licensing, and fixes for anything that can go wrong.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download Free — 30-Day Trial</a>
+        <a class="btn-ghost" href="demo.html">Try the live demo →</a>
+      </div>
+    </div>
+
+    <!-- ================= 1. INSTALL ================= -->
+    <section class="doc-section" id="install">
+      <h2>1 · Install &amp; first run</h2>
+      <p class="lede">From download to first summon in about a minute.</p>
+
+      <h3>Requirements</h3>
+      <ul>
+        <li><strong>macOS 15.1 (Sequoia) or later</strong></li>
+        <li><strong>Apple Silicon (M1/M2/M3/M4)</strong> — current release builds are arm64; Intel Macs are not supported</li>
+        <li>Internet connection for browsing (the app itself works offline)</li>
+      </ul>
+
+      <h3>Install</h3>
+      <ol class="steps">
+        <li><p><strong>Download the <code>.dmg</code></strong> from the official <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases page</a>. Every release build is Developer ID–signed, Apple-notarized, and stapled.</p></li>
+        <li><p><strong>Open the disk image</strong> and drag <strong>ZPad</strong> into <strong>Applications</strong>.</p></li>
+        <li><p><strong>Launch ZPad.</strong> macOS may ask you to confirm opening an app downloaded from the internet — this is normal Gatekeeper behavior for notarized apps. Click <strong>Open</strong>.</p></li>
+        <li><p><strong>First-run onboarding</strong> walks you through the hotkey and the trial: <strong>30 days, fully functional, no credit card</strong>. The trial starts when you accept the offer — launching alone never consumes a trial day.</p></li>
+        <li><p><p>Press <kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd>. The panel slides out. That's it.</p></p></li>
+      </ol>
+
+      <div class="card tip">
+        <span class="card-tag">Security tip</span>
+        <p>If macOS ever says the app is “damaged” or refuses to open it: <strong>do not bypass Gatekeeper</strong>. Delete the download, confirm you are on the official Releases page, and re-download. A genuine notarized build opens cleanly.</p>
+      </div>
+
+      <h3>Where things live</h3>
+      <table>
+        <tr><th>Data</th><th>Location</th></tr>
+        <tr><td>App support (chats, workspace data)</td><td><code>~/Library/Application Support/ZPad/</code></td></tr>
+        <tr><td>Preferences &amp; trial state</td><td><code>~/Library/Preferences/</code> (standard <code>defaults</code> storage)</td></tr>
+        <tr><td>API keys (AI chat)</td><td>macOS <strong>Keychain</strong> — never plaintext files</td></tr>
+        <tr><td>Browser data (cookies, cache)</td><td>App-managed WebKit data store, clearable from Settings</td></tr>
+      </table>
+    </section>
+
+    <!-- ================= 2. PANEL ================= -->
+    <section class="doc-section" id="panel">
+      <h2>2 · The panel &amp; display modes</h2>
+      <p class="lede">Four ways to summon ZPad — pick the one that fits your muscle memory.</p>
+
+      <div class="mode-grid">
+        <div class="mode-card">
+          <h4>Side panel (right)</h4>
+          <div class="mode-keys"><kbd>⌘</kbd><kbd>⌥</kbd><kbd>2</kbd></div>
+          <p>Default. Slides from the right edge — ideal next to your editor.</p>
+        </div>
+        <div class="mode-card">
+          <h4>Side panel (left)</h4>
+          <div class="mode-keys">Settings → Display</div>
+          <p>Mirror layout for dock-right users.</p>
+        </div>
+        <div class="mode-card">
+          <h4>Centered modal</h4>
+          <div class="mode-keys"><kbd>⌘</kbd><kbd>⌥</kbd><kbd>1</kbd></div>
+          <p>Big, focused, spotlight-style. Great for heavy browsing sessions.</p>
+        </div>
+        <div class="mode-card">
+          <h4>Navbar anchor</h4>
+          <div class="mode-keys"><kbd>⌘</kbd><kbd>⌥</kbd><kbd>3</kbd></div>
+          <p>Drops down under the menu-bar icon — classic dropdown feel.</p>
+        </div>
+      </div>
+
+      <h3>Summon &amp; dismiss</h3>
+      <ul>
+        <li><strong>Hotkey:</strong> <kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd> toggles the panel from any app, fullscreen included.</li>
+        <li><strong>Hot zone:</strong> move the mouse to your screen edge and the panel slides out automatically. Can be disabled in <a href="#settings">Settings → Behavior</a> if it triggers accidentally.</li>
+        <li><strong>Menu-bar icon:</strong> click it for the classic menu (modes, workspaces, settings, quit).</li>
+        <li><strong>Dismissing</strong> keeps everything alive — tabs, terminal scrollback, and per-workspace state are preserved exactly as you left them.</li>
+      </ul>
+
+      <h3>Made for multi-screen</h3>
+      <p>On multi-monitor setups the panel can follow the screen your mouse is on (Settings → Behavior → <em>Multi-screen mouse following</em>), and window geometry is remembered per mode.</p>
+    </section>
+
+    <!-- ================= 3. BROWSER ================= -->
+    <section class="doc-section" id="browser">
+      <h2>3 · Browser</h2>
+      <p class="lede">A real WebKit (WKWebView) browser — not an embedded teaser. Sign in, watch, download, develop.</p>
+
+      <h3>Everyday use</h3>
+      <ul>
+        <li><strong>New tab:</strong> <kbd>⌘</kbd><kbd>T</kbd>, or the <code>+</code> in the sidebar. Tabs are typed — web, terminal, or chat — living in one sidebar.</li>
+        <li><strong>Unified URL bar:</strong> type a URL or a search query; ZPad routes it for you.</li>
+        <li><strong>Find in page:</strong> <kbd>⌘</kbd><kbd>F</kbd> (when a web view is focused).</li>
+        <li><strong>Zoom:</strong> <kbd>⌘</kbd><kbd>+</kbd> / <kbd>⌘</kbd><kbd>−</kbd> / <kbd>⌘</kbd><kbd>0</kbd> to reset.</li>
+        <li><strong>Jump to tab:</strong> <kbd>⌘</kbd><kbd>1</kbd>…<kbd>9</kbd>. Reopen closed: <kbd>⌘</kbd><kbd>⇧</kbd><kbd>T</kbd>.</li>
+        <li><strong>Right-click tabs</strong> for rename, pin, duplicate, and close-others.</li>
+      </ul>
+
+      <h3>Favicons</h3>
+      <p>Site icons are fetched via DuckDuckGo's icon service on first hit and <strong>cached locally</strong> afterward. Prefer zero favicon network traffic? Turn it off in Settings → Privacy → <em>Favicon network fetch</em>.</p>
+
+      <h3>Bookmarks &amp; history</h3>
+      <p>Save pages as <strong>favorites</strong> (with folders) for instant access from the homepage, and revisit recent URLs via browsing history. Everything is stored locally — see <a href="#privacy">Privacy</a>.</p>
+    </section>
+
+    <!-- ================= 4. TERMINAL ================= -->
+    <section class="doc-section" id="terminal">
+      <h2>4 · Terminal</h2>
+      <p class="lede">A real terminal emulator (SwiftTerm) with a full PTY — your shell, your tools, your themes.</p>
+
+      <h3>Terminal tabs</h3>
+      <ul>
+        <li>Create terminal tabs from the sidebar <code>+</code> menu — each gets an independent session.</li>
+        <li><strong>Scrollback is preserved</strong> even after you dismiss the panel: terminal views are kept alive, not torn down.</li>
+        <li>Your default shell is auto-detected from <code>/etc/shells</code> — zsh, fish, whatever you've set.</li>
+      </ul>
+
+      <h3>Works with your CLI stack</h3>
+      <p>Anything that runs in a terminal runs here: <code>git</code>, <code>npm</code>, <code>docker</code>, <code>ssh</code>, <code>vim</code> — and agentic CLIs like <strong>Claude Code</strong>:</p>
+      <pre><code>$ claude
+# → reads your repo, edits files, runs commands
+# → all inside the same panel you summon with ⌘⌥P</code></pre>
+
+      <h3>Themes &amp; fonts</h3>
+      <p>Built-in terminal palettes plus custom theming, adjustable font size, and a working directory shown per tab. Colors follow the system appearance.</p>
+
+      <div class="card tip">
+        <span class="card-tag">Tip</span>
+        <p>Keep one terminal tab per project and put them in a <a href="#workspaces">workspace</a> — switching workspaces restores each project's shell state instantly.</p>
+      </div>
+    </section>
+
+    <!-- ================= 5. WORKSPACES ================= -->
+    <section class="doc-section" id="workspaces">
+      <h2>5 · Workspaces &amp; favorites</h2>
+      <p class="lede">Workspaces are saved, switchable sets of tabs — think browser profiles for projects.</p>
+
+      <ul>
+        <li><strong>Create workspaces</strong> like “Frontend”, “Infra”, “Research” — each keeps its own tabs, terminal sessions, and layout.</li>
+        <li><strong>Switch instantly</strong> from the workspace menu in the panel header; nothing is closed or lost.</li>
+        <li><strong>Favorites</strong> are bookmarked sites organized into folders, available from the homepage of any workspace.</li>
+        <li><strong>Workspace automation</strong> (Settings → Behavior) can re-evaluate and switch workspaces based on your active context.</li>
+      </ul>
+    </section>
+
+    <!-- ================= 6. COMMAND PALETTE ================= -->
+    <section class="doc-section" id="command-palette">
+      <h2>6 · Command palette</h2>
+      <p class="lede">Everything is one fuzzy-search away — even while the panel is hidden.</p>
+      <ul>
+        <li><kbd>⌘</kbd><kbd>K</kbd> — open the palette from anywhere (works when the panel is hidden too).</li>
+        <li><kbd>⌘</kbd><kbd>⇧</kbd><kbd>A</kbd> — palette scoped to tabs: fuzzy-jump between web, terminal, and chat tabs.</li>
+        <li>Actions include new tab / terminal / chat, workspace switching, settings, and more.</li>
+      </ul>
+    </section>
+
+    <!-- ================= 7. AI CHAT ================= -->
+    <section class="doc-section" id="ai-chat">
+      <h2>7 · AI chat <span class="badge-beta">Beta</span></h2>
+      <p class="lede">Bring your own model: any OpenAI-compatible API — including local Ollama.</p>
+
+      <h3>Set up a provider</h3>
+      <ol class="steps">
+        <li><p>Open <strong>Settings → Chat</strong> and enter your provider's <strong>Base URL</strong> (e.g. <code>https://api.openai.com/v1</code> or <code>http://localhost:11434</code> for Ollama).</p></li>
+        <li><p>Paste your <strong>API key</strong> — it's stored in the macOS <strong>Keychain</strong>, never in plaintext. Local providers like Ollama need no key.</p></li>
+        <li><p>Click <strong>Test connection</strong>, then <strong>Fetch models</strong> to list what your provider offers.</p></li>
+        <li><p>Create a chat from the sidebar <code>+</code> menu and start talking.</p></li>
+      </ol>
+
+      <h3>What you get</h3>
+      <ul>
+        <li>Streaming replies (SSE) with automatic non-streaming fallback</li>
+        <li>Markdown rendering with copyable code blocks</li>
+        <li>Per-chat model override, temperature, context window, and system prompt</li>
+        <li>Send with <kbd>⌘</kbd><kbd>↩</kbd> or <kbd>↩</kbd> — your choice</li>
+        <li>Auto-titled conversations; pin / rename / clear / close from the context menu</li>
+        <li>History stored locally as JSON under <code>~/Library/Application Support/ZPad/Chats/</code> — one file per conversation, yours to back up or delete</li>
+      </ul>
+
+      <div class="card tip">
+        <span class="card-tag">Privacy</span>
+        <p>Chats are sent <strong>only</strong> to the provider you configure, with the key you provide. ZPad adds no middleman, no telemetry on message content, and no cloud storage.</p>
+      </div>
+    </section>
+
+    <!-- ================= 8. SHORTCUTS ================= -->
+    <section class="doc-section" id="shortcuts">
+      <h2>8 · Keyboard shortcuts</h2>
+      <p class="lede">The full list. Global shortcuts work from any app; panel shortcuts when the panel is visible.</p>
+
+      <div class="tbl-wrap kbd-table">
+      <table>
+        <tr><th>Shortcut</th><th>Scope</th><th>Action</th></tr>
+        <tr><td><kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd></td><td>Global</td><td>Summon / dismiss the panel</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>⌥</kbd><kbd>1</kbd></td><td>Global</td><td>Toggle panel in <strong>centered</strong> mode</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>⌥</kbd><kbd>2</kbd></td><td>Global</td><td>Toggle panel in <strong>side-panel</strong> mode</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>⌥</kbd><kbd>3</kbd></td><td>Global</td><td>Toggle panel in <strong>navbar</strong> mode</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>K</kbd></td><td>Global</td><td>Command palette (all actions)</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>⇧</kbd><kbd>A</kbd></td><td>Global</td><td>Command palette (tab switcher)</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>T</kbd></td><td>Panel</td><td>New tab</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>⇧</kbd><kbd>T</kbd></td><td>Panel</td><td>Reopen last closed tab</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>W</kbd></td><td>Panel</td><td>Close current tab</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>1…9</kbd></td><td>Panel</td><td>Switch to tab N</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>F</kbd></td><td>Panel (web)</td><td>Find in page</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>+</kbd> / <kbd>⌘</kbd><kbd>−</kbd> / <kbd>⌘</kbd><kbd>0</kbd></td><td>Panel (web)</td><td>Zoom in / out / reset</td></tr>
+        <tr><td><kbd>⌘</kbd><kbd>,</kbd></td><td>Panel</td><td>Open Settings</td></tr>
+      </table>
+      </div>
+
+      <p>Terminal tabs keep their native key handling (shell history, copy/paste, Ctrl-C…); browser shortcuts only intercept when a web view owns the surface.</p>
+    </section>
+
+    <!-- ================= 9. SETTINGS ================= -->
+    <section class="doc-section" id="settings">
+      <h2>9 · Settings reference</h2>
+      <p class="lede">Open with the menu-bar icon, the gear in the panel, or <kbd>⌘</kbd><kbd>,</kbd>.</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <tr><th>Section</th><th>What's inside</th></tr>
+        <tr><td><strong>Primary</strong></td><td>Language (follow system / English / 简体中文) · Display mode</td></tr>
+        <tr><td><strong>Behavior</strong></td><td>Hot-zone (edge) trigger on/off · Auto-close panel · Multi-screen mouse following · Workspace automation</td></tr>
+        <tr><td><strong>Privacy</strong></td><td>Analytics opt-in (off by default) · Favicon network fetch · Automatic update checks · Clear browser data</td></tr>
+        <tr><td><strong>Chat</strong></td><td>Provider Base URL · API key (Keychain) · Connection test · Model list · Temperature · Context window · System prompt · Streaming · Send-key mode · Font size · Starter prompts · Delete all chats</td></tr>
+        <tr><td><strong>Advanced</strong></td><td>User scripts — run your own scripts from the panel</td></tr>
+        <tr><td><strong>System</strong></td><td>Check for updates · Privacy policy · EULA · Acknowledgments</td></tr>
+      </table>
+      </div>
+    </section>
+
+    <!-- ================= 10. LICENSE ================= -->
+    <section class="doc-section" id="license">
+      <h2>10 · License &amp; activation</h2>
+      <p class="lede">30-day trial → one-time $79 lifetime license · 5 devices · offline-friendly · 14-day refund.</p>
+
+      <h3>The trial</h3>
+      <ul>
+        <li><strong>30 days, fully functional</strong> — every feature, no watermarks, no credit card.</li>
+        <li>The trial starts only when you accept it during onboarding; merely launching never burns a day.</li>
+        <li>Rolling the system clock back doesn't extend it (tamper detection).</li>
+      </ul>
+
+      <h3>Buy &amp; activate</h3>
+      <ol class="steps">
+        <li><p><strong>Buy</strong> from the <a href="index.html#pricing">pricing page</a> — secure Stripe checkout, card or Apple Pay.</p></li>
+        <li><p><strong>Your license key arrives by email</strong> within minutes (via Resend). Keep it — it's your proof of purchase.</p></li>
+        <li><p>In ZPad, open the license screen from the menu-bar icon or the trial banner, <strong>paste the key, activate</strong>. Verification is signed (Ed25519) and can be validated locally.</p></li>
+      </ol>
+
+      <h3>Devices, offline &amp; transfers</h3>
+      <ul>
+        <li><strong>5 devices per license</strong> — your MacBook, iMac, and work machine can all be active.</li>
+        <li><strong>Offline grace:</strong> an activated license works offline for up to <strong>14 consecutive days</strong> (flights, cabins, outages). Reconnecting re-confirms automatically.</li>
+        <li><strong>Device management is self-serve:</strong> deactivate an old Mac from the app's license screen, or recover a license via email if you lose the key.</li>
+        <li><strong>Getting a new Mac?</strong> Deactivate the old one first if you're at the 5-device limit; otherwise just activate the new one.</li>
+      </ul>
+
+      <h3>Refunds</h3>
+      <p>Full refund within <strong>14 days</strong> of purchase, no questions asked. Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Refund">hello@zpad.wangyitu.tech</a> with your order details. Details in the <a href="refund.html">Refund Policy</a>.</p>
+    </section>
+
+    <!-- ================= 11. UPDATES ================= -->
+    <section class="doc-section" id="updates">
+      <h2>11 · Updates</h2>
+      <p class="lede">Signed update metadata (Sparkle appcast) served over HTTPS — no silent binaries.</p>
+      <ul>
+        <li><strong>Automatic checks</strong> can be enabled or disabled in Settings → Privacy. Disabled means ZPad only checks when <em>you</em> ask.</li>
+        <li><strong>Check manually:</strong> Settings → System → <em>Check for updates</em>.</li>
+        <li>Update metadata is signed; the app verifies it before offering anything.</li>
+        <li>Prefer manual installs? Grab the latest <code>.dmg</code> from <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases</a> and drag over the old app — your settings and license carry over.</li>
+      </ul>
+      <p>See what shipped in each version on the <a href="changelog.html">changelog</a>.</p>
+    </section>
+
+    <!-- ================= 12. PRIVACY ================= -->
+    <section class="doc-section" id="privacy">
+      <h2>12 · Privacy &amp; security</h2>
+      <p class="lede">Local-first by design. Every network call is listed, scoped, and (mostly) optional.</p>
+
+      <div class="tbl-wrap">
+      <table>
+        <tr><th>Service</th><th>Purpose</th><th>When</th><th>Can disable?</th></tr>
+        <tr><td>DuckDuckGo</td><td>Favicon lookup</td><td>First visit to a hostname, if enabled</td><td>Yes — Settings → Privacy</td></tr>
+        <tr><td>Stripe</td><td>Checkout</td><td>Only when you buy</td><td>n/a (hosted page)</td></tr>
+        <tr><td>Resend</td><td>License email delivery</td><td>Only after purchase</td><td>n/a</td></tr>
+        <tr><td>ZPad license API</td><td>Activation, device limits, recovery</td><td>Licensing actions; installed licenses re-report on launch (14-day offline grace)</td><td>Inherent to licensing</td></tr>
+        <tr><td>GitHub</td><td>Signed update metadata</td><td>Manual checks, or automatic if enabled</td><td>Yes — Settings → Privacy</td></tr>
+        <tr><td>Analytics</td><td>Product usage stats</td><td><strong>Never, unless you opt in</strong></td><td>Off by default</td></tr>
+        <tr><td>Your AI provider</td><td>Chat completions</td><td>Only when you send a chat message</td><td>Don't configure a provider</td></tr>
+      </table>
+      </div>
+      <p>Full disclosure — what's sent, why, and how to switch each integration off — lives in <a href="privacy.html">PRIVACY.md</a>. Release builds are Developer ID–signed and Apple-notarized; the source is available on <a href="https://github.com/pekaboo/ZPad" target="_blank" rel="noopener">GitHub</a>.</p>
+    </section>
+
+    <!-- ================= 13. TROUBLESHOOTING ================= -->
+    <section class="doc-section" id="troubleshooting">
+      <h2>13 · Troubleshooting</h2>
+      <p class="lede">The fixes for 95% of support questions. Still stuck? <a href="support.html">Contact support</a>.</p>
+
+      <details class="faqitem">
+        <summary>macOS says ZPad is “damaged” or won't open</summary>
+        <div class="a"><p>This happens with corrupted or unofficial downloads. <strong>Do not bypass Gatekeeper</strong> (no <code>xattr</code> tricks). Delete the copy, download again from the official <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases page</a>, and confirm the download completes fully before opening.</p></div>
+      </details>
+      <details class="faqitem">
+        <summary>The panel doesn't appear when I press ⌘⌥P</summary>
+        <div class="a"><p>Another app may own that shortcut (check tools like Raycast, BetterTouchTool, or IME switchers). Try the mode-specific shortcuts (<kbd>⌘⌥1/2/3</kbd>) or the menu-bar icon. If it persists, quit and relaunch ZPad.</p></div>
+      </details>
+      <details class="faqitem">
+        <summary>The panel appears when I don't want it (edge triggers)</summary>
+        <div class="a"><p>That's the hot-zone feature. Turn it off in <strong>Settings → Behavior → hot-zone trigger</strong> and rely on the hotkey instead.</p></div>
+      </details>
+      <details class="faqitem">
+        <summary>License activation fails</summary>
+        <div class="a"><ul>
+          <li>Check you're online and pasted the <em>entire</em> key from the email.</li>
+          <li>At the 5-device limit? Deactivate an old device first (license screen → device management).</li>
+          <li>Still failing? Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20License%20Help">support</a> with your order ID — we'll fix it.</li>
+        </ul></div>
+      </details>
+      <details class="faqitem">
+        <summary>Terminal tab shows no prompt / wrong shell</summary>
+        <div class="a"><p>ZPad reads valid shells from <code>/etc/shells</code>. If your custom shell isn't listed there, add its path and relaunch. A stuck session can be closed and reopened from the tab context menu.</p></div>
+      </details>
+      <details class="faqitem">
+        <summary>Website X doesn't work in the browser</summary>
+        <div class="a"><p>ZPad uses Apple WebKit, same engine as Safari. Sites that block Safari may also block embedded WebKit. Try lowering tracking protection for that site in Settings, or use “Open in default browser” from the tab context menu.</p></div>
+      </details>
+      <details class="faqitem">
+        <summary>AI chat errors: connection / 401 / no models</summary>
+        <div class="a"><ul>
+          <li><strong>401</strong> → wrong API key (re-paste it; it lives in Keychain).</li>
+          <li><strong>Connection refused</strong> → for Ollama make sure it's running and the Base URL is right (<code>http://localhost:11434</code>).</li>
+          <li><strong>No models listed</strong> → click <em>Fetch models</em> again after a successful connection test.</li>
+        </ul></div>
+      </details>
+      <details class="faqitem">
+        <summary>ZPad feels slow or battery-hungry</summary>
+        <div class="a"><p>ZPad is native Swift and idles quietly. Heavy pages (dozens of tabs, video) use real memory — close what you don't need. Terminal and chat tabs are lightweight. Auto-mute audio in Settings to stop background tabs from playing sound.</p></div>
+      </details>
+    </section>
+
+    <!-- ================= 14. UNINSTALL ================= -->
+    <section class="doc-section" id="uninstall">
+      <h2>14 · Uninstall</h2>
+      <p class="lede">No uninstaller needed — and no data left behind if you don't want it.</p>
+      <ol>
+        <li>Quit ZPad from the menu-bar icon.</li>
+        <li>Delete <code>/Applications/ZPad.app</code>.</li>
+        <li>(Optional) remove remaining data:
+          <pre><code>rm -rf ~/Library/Application\ Support/ZPad
+rm -rf ~/Library/Caches/com.zpad.* 2>/dev/null
+defaults delete com.zpad.app 2>/dev/null</code></pre></li>
+        <li>(Optional) remove the ZPad entry from <strong>Keychain Access</strong> if you stored an AI provider key.</li>
+      </ol>
+      <p>License refunds within 14 days: see the <a href="refund.html">Refund Policy</a>.</p>
+    </section>
+
+    <div class="doc-footer">
+      <p style="font-size:13.5px;color:var(--text-tertiary);">Was this page helpful? Spotted something wrong or missing? <a href="https://github.com/pekaboo/ZPad/issues" target="_blank" rel="noopener">Open an issue</a> or <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Docs%20Feedback">email us</a>.</p>
+      <div class="links" style="margin-top:14px;">
+        <a href="index.html">← Back to homepage</a>
+        <a href="faq.html">FAQ</a>
+        <a href="changelog.html">What's New</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="eula.html">EULA</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2024-2026 pekaboo · ZPad for macOS 15.1+ (Apple Silicon) · <a href="index.html#pricing">$79 lifetime · 5 devices · 14-day refund</a></p>
+</footer>
+
+<script>
+(function () {
+  // Active TOC highlighting
+  const links = Array.from(document.querySelectorAll('.toc a[href^="#"]'));
+  const map = new Map();
+  links.forEach(l => {
+    const el = document.querySelector(l.getAttribute('href'));
+    if (el) map.set(el, l);
+  });
+  if ('IntersectionObserver' in window && map.size) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const link = map.get(e.target);
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    map.forEach((_, el) => io.observe(el));
+  }
+  // Close mobile TOC on navigation
+  links.forEach(l => l.addEventListener('click', () => {
+    document.getElementById('toc').classList.remove('open');
+  }));
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ZPad — End User License Agreement</title>
+  <meta name="description" content="ZPad EULA: your license, trial, restrictions, refunds, updates, warranty, and liability in plain language." />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/eula.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: #000000;
+      color: #f5f5f7;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --accent: #ef4444;
+      --accent-dim: rgba(239, 68, 68, 0.1);
+      --accent-glow: rgba(239, 68, 68, 0.2);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.15);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 40px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 32px; height: 32px; border-radius: 8px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; color: white;
+    }
+    .brand-name { font-weight: 700; font-size: 18px; }
+    .nav { display: flex; gap: 32px; }
+    .nav a { font-size: 14px; color: var(--text-secondary); transition: color 0.2s; }
+    .nav a:hover { color: var(--text-primary); }
+
+    .page { max-width: 820px; margin: 0 auto; padding: 140px 40px 80px; }
+    .section-label {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .page h1 {
+      font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.1; margin-bottom: 24px;
+    }
+    .lede { font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 48px; max-width: 640px; }
+    .lede a { color: var(--accent); }
+    .last-updated { font-size: 13px; color: var(--text-tertiary); margin-bottom: 40px; }
+
+    .policy-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      scroll-margin-top: 100px;
+    }
+    .policy-card h2 { font-size: 19px; font-weight: 700; margin-bottom: 14px; }
+    .policy-card h2 .card-index { color: var(--accent); margin-right: 8px; }
+    .policy-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 12px; }
+    .policy-card p:last-child { margin-bottom: 0; }
+    .policy-card ul { margin-top: 10px; }
+    .policy-card li {
+      display: flex; gap: 12px; font-size: 15px; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 10px;
+    }
+    .policy-card li::before {
+      content: ''; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-top: 9px;
+    }
+    .policy-card a { color: var(--accent); }
+    .policy-card a:hover { opacity: 0.8; }
+    .policy-card strong { color: var(--text-primary); font-weight: 600; }
+
+    .contact-note { margin-top: 40px; font-size: 14px; color: var(--text-tertiary); line-height: 1.6; }
+    .contact-note a { color: var(--accent); }
+
+    .footer { padding: 60px 40px; border-top: 1px solid var(--border); text-align: center; }
+    .footer-content {
+      max-width: 1200px; margin: 0 auto 40px; display: grid;
+      grid-template-columns: 2fr 1fr 1fr; gap: 48px; text-align: left;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+    .footer-brand p { font-size: 14px; color: var(--text-tertiary); line-height: 1.6; max-width: 280px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: var(--text-tertiary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto; padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 13px; color: var(--text-tertiary); }
+
+    @media (max-width: 768px) {
+      .header { padding: 14px 20px; }
+      .nav { display: none; }
+      .page { padding: 120px 20px 60px; }
+      .policy-card { padding: 24px 20px; }
+      .footer-content { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 480px) { .footer-content { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="/" class="header-brand">
+      <div class="logo">Z</div>
+      <span class="brand-name">ZPad</span>
+    </a>
+    <nav class="nav">
+      <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+        <a href="/#features">Features</a>
+      <a href="/#demo">Demo</a>
+      <a href="/#testimonials">Use Cases</a>
+      <a href="/#pricing">Pricing</a>
+    </nav>
+    <a class="btn btn-primary" href="/#pricing" style="padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; background: var(--accent); color: white;">Get Started</a>
+  </header>
+
+  <main class="page">
+    <p class="section-label">Legal</p>
+    <h1>End User License Agreement</h1>
+    <p class="lede">Thanks for using ZPad. This agreement (the "EULA") is between you and ZPad. By installing, opening, or using ZPad, you agree to the terms below. If you don't agree, don't use the app — and you can request a refund within 14 days (see <a href="#refunds">Refunds</a>). This is written in plain language on purpose. Where a section has a strict legal meaning, we say so.</p>
+    <p class="last-updated">Last updated: 2026-09-02</p>
+
+    <div class="policy-card" id="your-license">
+      <h2><span class="card-index">1</span>Your license</h2>
+      <p>ZPad is licensed, not sold. We grant you a <strong>non-exclusive, non-transferable, revocable</strong> license to install and run ZPad for your own personal or professional use on up to <strong>5 devices</strong> that you own or control.</p>
+      <ul>
+        <li>One license key = up to 5 activations. Trying to activate a 6th device will be refused by the activation endpoint.</li>
+        <li>The license is for you. Don't share, sell, sub-license, or transfer your key to anyone else.</li>
+        <li>Site-wide, team, or enterprise use needs a separate arrangement — contact support.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card" id="trial">
+      <h2><span class="card-index">2</span>Trial</h2>
+      <p>ZPad ships with a <strong>30-day free trial</strong>. No payment information is required to start it. Clock-tamper detection protects the trial: rolling back the system clock will mark the trial as expired. When the trial ends, the app enters a locked state until a license key is entered.</p>
+    </div>
+
+    <div class="policy-card" id="restrictions">
+      <h2><span class="card-index">3</span>What you can't do</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li><strong>Reverse engineer, decompile, or disassemble</strong> ZPad, except to the extent your local law explicitly gives you the right to do so for interoperability.</li>
+        <li><strong>Redistribute</strong> the app — including re-uploading it, bundling it with other software for resale, or hosting it for download from a non-official source.</li>
+        <li><strong>Resell, lease, or rent</strong> access to ZPad, or use it to provide a paid hosted service.</li>
+        <li><strong>Remove, alter, or obscure</strong> copyright, trademark, or license notices.</li>
+        <li><strong>Bypass or disable</strong> license verification, trial limits, device-count limits, or update mechanisms.</li>
+        <li><strong>Use ZPad for anything illegal</strong> in your jurisdiction.</li>
+      </ul>
+      <p>The SwiftTerm component ships as a local Swift package and remains governed by its own open-source license; nothing in this EULA overrides that.</p>
+    </div>
+
+    <div class="policy-card" id="ownership">
+      <h2><span class="card-index">4</span>Ownership</h2>
+      <p>ZPad and all its intellectual property — the app code, icons, copy, brand, and design — are owned by ZPad and its licensors. This EULA gives you a right to use the app; it does not transfer ownership of anything else.</p>
+    </div>
+
+    <div class="policy-card" id="refunds">
+      <h2><span class="card-index">5</span>Refunds</h2>
+      <p>If ZPad doesn't work for you, you can request a <strong>full refund within 14 days of purchase, no questions asked</strong>. Email the address on your purchase receipt (or see <a href="#contact">Contact</a>) with your license key or the email used at checkout. Stripe processes the refund; depending on your bank, the credit may take 5–10 business days to appear.</p>
+      <p>After 14 days, refunds are at our discretion — typically granted for non-functional installs or duplicate purchases.</p>
+      <p>See also the <a href="refund.html">refund policy page</a>.</p>
+    </div>
+
+    <div class="policy-card" id="updates">
+      <h2><span class="card-index">6</span>Updates</h2>
+      <p>ZPad can check for updates automatically when an internet connection is available. Automatic checks are on by default and can be turned off in Settings → Privacy. When a newer version is found, ZPad opens the official download page in your web browser; downloading and installing the update is your choice. ZPad does not currently use Sparkle or an EdDSA update feed. Distributed installers are signed, notarized, and stapled for macOS verification. Updates ship under the same terms as this EULA unless a new version ships with an updated agreement, in which case the new terms take effect when you install.</p>
+    </div>
+
+    <div class="policy-card" id="privacy">
+      <h2><span class="card-index">7</span>Privacy</h2>
+      <p>ZPad is built privacy-first. The app runs locally; your browsing history, terminal sessions, files, and bookmarks stay on your device. A small number of external services are contacted for specific features (favicon lookups, license purchase and activation/device management, license delivery, and optional usage analytics). Full details — what's sent, when, why, and how to turn each one off — live in the <a href="privacy.html">Privacy Disclosure</a>.</p>
+      <p>Optional <strong>usage analytics</strong> is off by default and requires an explicit opt-in via Settings → Privacy. ZPad does not collect crash reports in this version.</p>
+    </div>
+
+    <div class="policy-card" id="warranty">
+      <h2><span class="card-index">8</span>No warranty</h2>
+      <p>ZPad is provided <strong>"as is"</strong> and <strong>"as available."</strong> To the maximum extent permitted by law, ZPad disclaims all warranties, whether express, implied, or statutory — including implied warranties of merchantability, fitness for a particular purpose, title, and non-infringement.</p>
+      <p>You are responsible for your own data. Back up anything important before clearing browser data, resetting the app, or removing it from your machine.</p>
+    </div>
+
+    <div class="policy-card" id="liability">
+      <h2><span class="card-index">9</span>Limitation of liability</h2>
+      <p>To the maximum extent permitted by law, in no event will ZPad be liable for:</p>
+      <ul>
+        <li>Any <strong>indirect, incidental, special, consequential, or punitive damages</strong> — including lost profits, lost data, business interruption, or the cost of substitute software.</li>
+        <li>Any damages arising from unauthorized access to your device, your network, or your accounts through ZPad.</li>
+        <li>Any bugs, data loss, or downtime caused by the app or by third-party services the app depends on (DuckDuckGo, Stripe, Resend, Cloudflare).</li>
+      </ul>
+      <p><strong>Our total aggregate liability</strong> for any claim arising out of or related to this EULA is capped at the amount you paid for ZPad in the 12 months preceding the claim (or, for trial users and free use, $0 USD).</p>
+      <p>Some jurisdictions do not allow the exclusion or limitation of certain damages; the above limits apply to you only to the extent permitted by your local law.</p>
+    </div>
+
+    <div class="policy-card" id="termination">
+      <h2><span class="card-index">10</span>Termination</h2>
+      <p>This EULA terminates automatically if you breach any of its terms. On termination you must: stop using ZPad, remove it from all your devices, and (if asked) confirm in writing that you've done so. Sections on ownership, no warranty, limitation of liability, and governing law survive termination.</p>
+      <p>We may also stop issuing license keys or activation responses for keys we believe were obtained fraudulently, shared publicly, or used to violate these terms. License keys are verified locally and allow bounded offline use for up to 14 consecutive days. Activation and launch checks also enforce device limits, revocation, and expiry so a shared or refunded key cannot remain active indefinitely.</p>
+    </div>
+
+    <div class="policy-card" id="governing-law">
+      <h2><span class="card-index">11</span>Governing law</h2>
+      <p>This EULA is governed by the laws agreed between you and ZPad at the time of purchase. If no specific jurisdiction is recorded, the laws of the jurisdiction in which ZPad's operator is established apply, without regard to conflict-of-law principles.</p>
+      <p>Any dispute will first be attempted through informal communication with support. If that fails, disputes will be resolved in the courts of the operator's jurisdiction — or, where required by mandatory local consumer law, in the courts of your own jurisdiction.</p>
+    </div>
+
+    <div class="policy-card" id="changes">
+      <h2><span class="card-index">12</span>Changes to this EULA</h2>
+      <p>If we update this agreement, we'll bump the "Last updated" date above and ship the revised text with an app release. Material changes (e.g. new restrictions, changed refund window, changed liability terms) will be surfaced in Settings → What's New so they're not buried.</p>
+      <p>Continuing to use ZPad after a material update means you accept the revised terms. If you don't, stop using the app and request a refund under <a href="#refunds">Refunds</a> if you're within the 14-day window.</p>
+    </div>
+
+    <div class="policy-card" id="contact">
+      <h2><span class="card-index">13</span>Contact</h2>
+      <ul>
+        <li><strong>Email:</strong> via <a href="https://github.com/pekaboo/ZPad/issues" target="_blank" rel="noopener">GitHub Issues</a> (or the address on your purchase receipt)</li>
+        <li><strong>Issues:</strong> <a href="https://github.com/pekaboo/ZPad/issues" target="_blank" rel="noopener">github.com/pekaboo/ZPad/issues</a></li>
+        <li><strong>Website:</strong> <a href="/">zpad.wangyitu.tech</a></li>
+      </ul>
+      <p>We typically reply within 1–2 business days.</p>
+    </div>
+
+    <p class="contact-note">Questions? Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Licensing">hello@zpad.wangyitu.tech</a></p>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="header-brand">
+          <div class="logo">Z</div>
+          <span class="brand-name">ZPad</span>
+        </div>
+        <p>A real terminal and a real browser, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+        <a href="/#features">Features</a>
+        <a href="/#demo">Demo</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs.html">User Guide</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/changelog.html">Changelog</a>
+        <a href="/support.html">Support</a>
+      </div>
+      <div class="footer-links">
+        <a href="/refund.html">Refund Policy</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/eula.html">EULA</a>
+        <a href="mailto:hello@zpad.wangyitu.tech">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024-2026 pekaboo. Built for focused work.</p>
+      <p>ZPad is commercial software for macOS 15.1+. All prices in USD.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

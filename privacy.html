@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ZPad — Privacy Disclosure</title>
+  <meta name="description" content="What ZPad sends, what stays on your Mac, and how to control every network feature." />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/privacy.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: #000000;
+      color: #f5f5f7;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --accent: #ef4444;
+      --accent-dim: rgba(239, 68, 68, 0.1);
+      --accent-glow: rgba(239, 68, 68, 0.2);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.15);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 40px; display: flex; align-items: center; justify-content: space-between;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 32px; height: 32px; border-radius: 8px; background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; color: white;
+    }
+    .brand-name { font-weight: 700; font-size: 18px; }
+    .nav { display: flex; gap: 32px; }
+    .nav a { font-size: 14px; color: var(--text-secondary); transition: color 0.2s; }
+    .nav a:hover { color: var(--text-primary); }
+
+    .page { max-width: 820px; margin: 0 auto; padding: 140px 40px 80px; }
+    .section-label {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 16px;
+    }
+    .page h1 {
+      font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.1; margin-bottom: 24px;
+    }
+    .lede { font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 48px; max-width: 640px; }
+    .lede a { color: var(--accent); }
+    .last-updated { font-size: 13px; color: var(--text-tertiary); margin-bottom: 40px; }
+
+    .policy-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+    }
+    .policy-card h2 { font-size: 19px; font-weight: 700; margin-bottom: 14px; }
+    .policy-card h2 .card-index { color: var(--accent); margin-right: 8px; }
+    .policy-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 12px; }
+    .policy-card p:last-child { margin-bottom: 0; }
+    .policy-card ul { margin-top: 10px; }
+    .policy-card li {
+      display: flex; gap: 12px; font-size: 15px; color: var(--text-secondary);
+      line-height: 1.7; margin-bottom: 10px;
+    }
+    .policy-card li::before {
+      content: ''; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-top: 9px;
+    }
+    .policy-card a { color: var(--accent); }
+    .policy-card a:hover { opacity: 0.8; }
+    .policy-card strong { color: var(--text-primary); font-weight: 600; }
+
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin-top: 10px; }
+    .meta-grid > div { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .meta-grid .meta-key { color: var(--text-tertiary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+
+    .policy-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; margin-top: 14px; }
+    .policy-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+    .policy-table th, .policy-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.6; vertical-align: top; }
+    .policy-table thead th { color: var(--text-primary); font-weight: 600; font-size: 13px; background: rgba(255,255,255,0.03); }
+    .policy-table tr:last-child td { border-bottom: none; }
+
+    .contact-note { margin-top: 40px; font-size: 14px; color: var(--text-tertiary); line-height: 1.6; }
+    .contact-note a { color: var(--accent); }
+
+    .footer { padding: 60px 40px; border-top: 1px solid var(--border); text-align: center; }
+    .footer-content {
+      max-width: 1200px; margin: 0 auto 40px; display: grid;
+      grid-template-columns: 2fr 1fr 1fr; gap: 48px; text-align: left;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+    .footer-brand p { font-size: 14px; color: var(--text-tertiary); line-height: 1.6; max-width: 280px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: var(--text-tertiary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto; padding-top: 24px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 13px; color: var(--text-tertiary); }
+
+    @media (max-width: 768px) {
+      .header { padding: 14px 20px; }
+      .nav { display: none; }
+      .page { padding: 120px 20px 60px; }
+      .policy-card { padding: 24px 20px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 480px) { .footer-content { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="/" class="header-brand">
+      <div class="logo">Z</div>
+      <span class="brand-name">ZPad</span>
+    </a>
+    <nav class="nav">
+      <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+        <a href="/#features">Features</a>
+      <a href="/#demo">Demo</a>
+      <a href="/#testimonials">Use Cases</a>
+      <a href="/#pricing">Pricing</a>
+    </nav>
+    <a class="btn btn-primary" href="/#pricing" style="padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; background: var(--accent); color: white;">Get Started</a>
+  </header>
+
+  <main class="page">
+    <p class="section-label">Privacy</p>
+    <h1>Privacy Disclosure</h1>
+    <p class="lede">ZPad is designed to keep browsing, terminal, bookmark, workspace, and file activity on your Mac. This page describes the app-initiated network calls in the product, what they transmit, why they exist, and how to control them. It does not describe websites, search engines, or download URLs that you choose to open; those services receive the requests you explicitly direct ZPad to make. For warranty, liability, and other license terms, see the <a href="eula.html">EULA</a>.</p>
+    <p class="last-updated">Last updated: 2026-09-02</p>
+
+    <div class="policy-card">
+      <h2>What stays on your device</h2>
+      <ul>
+        <li><strong>Browsing data.</strong> Website data belongs to the in-app WKWebView storage and can be removed from Settings → Privacy → Clear Browser Data.</li>
+        <li><strong>Terminal content.</strong> Terminal commands, output, and scrollback remain local.</li>
+        <li><strong>Favorites, workspaces, tabs, and preferences.</strong> Stored locally in app preferences/app-support storage. Explicit custom favorite icons remain usable when dedicated icon fetching is disabled; browser-synced favorite icons are browser-derived data and are removed by Clear Browser Data.</li>
+        <li><strong>License key.</strong> Stored in your Keychain. License validation itself is offline-first; device management is an explicit network operation described below.</li>
+        <li><strong>Clipboard.</strong> ZPad never scans the clipboard at launch. Clipboard data is read only through an explicit user action such as Paste or an import command.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">1</span>Website icon and logo lookups</h2>
+      <div class="meta-grid">
+        <div><div class="meta-key">Default</div>On — site icons are part of the expected tab and favorites interface.</div>
+        <div><div class="meta-key">Control</div>Settings → Privacy → <strong>Fetch Website Icons</strong>. Turning this off stops every dedicated favicon/logo network request. Clear Browser Data removes in-memory/disk favicon caches, browser-derived favorite icons, and ZPad's form/sessionStorage tab snapshots. A URL detected inside a page is treated as a network lookup and is not fetched when the control is off.</div>
+      </div>
+      <p style="margin-top:16px;">ZPad uses the following dedicated providers and request paths:</p>
+      <div class="policy-table-wrap">
+        <table class="policy-table">
+          <thead><tr><th>Path</th><th>Provider</th><th>When it is used</th><th>What leaves the device</th></tr></thead>
+          <tbody>
+            <tr><td>Shared favicon fallback</td><td>DuckDuckGo (<code>icons.duckduckgo.com</code>)</td><td>A tab, favorite editor, or sidebar host has no local cached icon</td><td>The hostname</td></tr>
+            <tr><td>Page-declared icon</td><td>The website that declared the icon</td><td>A browser page supplies an explicit HTTPS icon URL and no cached icon exists</td><td>The URL requested by that page</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px;">The provider and the visited website see the corresponding hostname or requested icon URL plus normal HTTP metadata (including your IP address). Their logs and privacy policies are controlled by those providers. ZPad does not send the full page URL to DuckDuckGo for this dedicated fallback lookup.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">2</span>Update checks</h2>
+      <div class="meta-grid">
+        <div><div class="meta-key">Default</div>On.</div>
+        <div><div class="meta-key">Control</div>Settings → Privacy → <strong>Check Updates Automatically</strong>. When off, ZPad makes no update request at launch. You can still use Settings → System → Updates → <strong>Check</strong> for an explicit manual request.</div>
+      </div>
+      <p style="margin-top:16px;"><strong>What is sent:</strong> current app version and build number, plus an anonymous installation ID in a request header. The installation ID is random and is not derived from your hardware serial, Apple ID, name, or license key.</p>
+      <p><strong>Retention:</strong> the update service returns release metadata and does not intentionally persist these request fields in ZPad's application storage. Normal hosting, edge, and network logs may exist for operational/security purposes.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">3</span>Purchase configuration</h2>
+      <p><strong>When:</strong> you open the purchase sheet. ZPad does not fetch this configuration merely because the app launched.</p>
+      <p><strong>What is sent:</strong> an anonymous installation ID for rollout/pricing selection. The response contains pricing and feature flags and is cached locally for up to six hours.</p>
+      <p><strong>Control:</strong> do not open the purchase sheet. This is a user-initiated purchase flow, not background startup activity.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">4</span>Optional usage analytics</h2>
+      <div class="meta-grid">
+        <div><div class="meta-key">Default</div>Off. No analytics are sent until you explicitly enable Settings → Privacy → <strong>Share anonymous usage</strong>.</div>
+        <div><div class="meta-key">When</div>At most once per day after opt-in.</div>
+      </div>
+      <p style="margin-top:16px;"><strong>What is sent:</strong></p>
+      <ul>
+        <li>App version/build, macOS version, and device model family</li>
+        <li>Anonymous installation ID</li>
+        <li>Aggregate display-mode and tab-type counters</li>
+        <li>Workspace count, distinct days used, and feature "ever used" flags</li>
+        <li>License state and trial day; never the license key</li>
+      </ul>
+      <p><strong>Never sent:</strong> visited URLs or search queries, terminal commands/output, file contents/names/paths, email addresses, license keys, your Apple ID, or crash reports. This telemetry payload contains only the aggregate fields listed above.</p>
+      <p><strong>Retention:</strong> up to 90 days in rolling telemetry storage. Raw IP addresses are not written to telemetry objects. To prevent abuse, the service derives a truncated SHA-256 identifier from the source IP and stores only that hash as a rate-limit counter and deletes it at the one-hour expiry with a Durable Object alarm. A separate hashed installation identifier is used for the 24-hour installation limit.</p>
+      <p><strong>Control:</strong> turn <strong>Share anonymous usage</strong> off. Future collection/upload triggers stop immediately; an upload that was already in flight may complete. Aggregate counters remain local and are never uploaded while the setting is off.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">5</span>License device management and recovery</h2>
+      <p>License device reports occur when:</p>
+      <ul>
+        <li>you enter a valid license key;</li>
+        <li>ZPad starts with a locally stored license, so revocation, expiry, and the device limit can be enforced;</li>
+        <li>you open Manage Devices, which refreshes and can display the device list; or</li>
+        <li>you deactivate a device, which removes that device's activation row.</li>
+      </ul>
+      <p>Lost-key recovery is explicit and submits the email address you enter so the license key can be re-sent.</p>
+      <p>Device reports send the signed license key, a stable per-install device ID, and a generic device label containing only a hashed identifier (never your hostname or account name). Transient network failures preserve offline use for up to 14 consecutive days; explicit server revocation, expiry, or device-limit decisions are enforced locally.</p>
+      <p>Inactive activation rows are pruned after 90 days. License issuance records are retained for the lifetime needed to honor and audit the purchase. Operational backups contain purchase/license recovery data but exclude activation rows, so they do not preserve removed device IDs or device labels. You can remove a device from Settings → License → Manage Devices.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">6</span>Payments and license email delivery</h2>
+      <p>Public checkout currently offers a one-time lifetime license; annual auto-renewing checkout is not offered while subscription self-service is unavailable. Existing annual license records continue to be recognized under their stored terms. Purchases use Stripe's hosted checkout. Stripe receives your email and payment details; ZPad does not see or store your card number. License email delivery uses Resend and sends the email address and license key to your inbox. Their privacy policies apply:</p>
+      <ul>
+        <li><a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe — stripe.com/privacy</a></li>
+        <li><a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">Resend — resend.com/legal/privacy-policy</a></li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h2><span class="card-index">7</span>Referral sharing</h2>
+      <p>ZPad only creates a referral link when you explicitly choose <strong>Share</strong>. The link includes an anonymous installation ID. If you share it through another app, that app and the recipient can see the link. ZPad does not scan the clipboard at launch, automatically claim a pasted referral, or POST a referrer/invitee relationship from the app.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2>Automatic startup summary</h2>
+      <p>At first launch after these controls are installed:</p>
+      <ul>
+        <li>Dedicated favicon/network icon lookups occur only when enabled and a local icon is unavailable.</li>
+        <li>An installed license is re-reported to enforce revocation, expiry, and device limits; transient failures preserve a 14-day offline grace period.</li>
+        <li>Automatic update checks occur only when enabled.</li>
+        <li>Remote purchase configuration is <strong>not</strong> fetched.</li>
+        <li>Clipboard is <strong>not</strong> read.</li>
+        <li>Analytics are <strong>not</strong> sent unless previously opted in.</li>
+        <li>Referral relationships are <strong>not</strong> submitted.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h2>Children's privacy</h2>
+      <p>ZPad is not directed to children under 13 (or the applicable local age) and does not knowingly collect personal information from children.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2>Changes and contact</h2>
+      <p>Material changes to this disclosure will ship with an app release and update this date. For privacy or data requests, use <a href="https://github.com/pekaboo/ZPad/issues" target="_blank" rel="noopener">GitHub Issues</a> or the contact provided on your purchase receipt.</p>
+    </div>
+
+    <p class="contact-note">Questions? Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Privacy">hello@zpad.wangyitu.tech</a></p>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="header-brand">
+          <div class="logo">Z</div>
+          <span class="brand-name">ZPad</span>
+        </div>
+        <p>A real terminal and a real browser, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+        <a href="/#features">Features</a>
+        <a href="/#demo">Demo</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs.html">User Guide</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/changelog.html">Changelog</a>
+        <a href="/support.html">Support</a>
+      </div>
+      <div class="footer-links">
+        <a href="/refund.html">Refund Policy</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/eula.html">EULA</a>
+        <a href="mailto:hello@zpad.wangyitu.tech">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024-2026 pekaboo. Built for focused work.</p>
+      <p>ZPad is commercial software for macOS 15.1+. All prices in USD.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ZPad FAQ — Pricing, licensing, privacy, compatibility, troubleshooting</title>
+  <meta name="description" content="Answers to the most common ZPad questions: how the 30-day trial works, what the $79 lifetime license covers, 5-device limits, offline use, privacy, Apple Silicon requirements, and fixes for common issues." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/faq.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ZPad" />
+  <meta property="og:title" content="ZPad FAQ" />
+  <meta property="og:description" content="Pricing, licensing, privacy, compatibility, and troubleshooting — answered straight." />
+  <meta property="og:url" content="https://zpad.wangyitu.tech/faq.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How long is the free trial?", "acceptedAnswer": { "@type": "Answer", "text": "30 days, fully functional, no credit card. The trial starts when you accept it during onboarding; simply launching the app never consumes a trial day." } },
+      { "@type": "Question", "name": "How much does ZPad cost after the trial?", "acceptedAnswer": { "@type": "Answer", "text": "A one-time $79 lifetime license. No subscription, no renewals. Each license covers up to 5 Macs." } },
+      { "@type": "Question", "name": "What does 'lifetime' mean exactly?", "acceptedAnswer": { "@type": "Answer", "text": "One payment covers the current product line, including its updates, for the lifetime of the product — as defined in the EULA. Existing licenses remain valid under their original terms if pricing ever changes." } },
+      { "@type": "Question", "name": "Can I use one license on multiple Macs?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — up to 5 devices. You can deactivate old machines yourself from the in-app license screen." } },
+      { "@type": "Question", "name": "Does ZPad work offline?", "acceptedAnswer": { "@type": "Answer", "text": "The app works offline. Browsing needs internet by nature. An activated license tolerates up to 14 consecutive offline days before needing to re-confirm online." } },
+      { "@type": "Question", "name": "Which macOS version and hardware do I need?", "acceptedAnswer": { "@type": "Answer", "text": "macOS 15.1 (Sequoia) or later on Apple Silicon. Current release builds are arm64 only — Intel Macs are not supported." } },
+      { "@type": "Question", "name": "Is there a refund policy?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — full refund within 14 days of purchase, no questions asked." } },
+      { "@type": "Question", "name": "What data does ZPad collect?", "acceptedAnswer": { "@type": "Answer", "text": "Analytics is opt-in and off by default. Browsing data, terminal sessions, and chats stay on your Mac. Network calls are limited to optional favicon lookups, license verification, optional update checks, and checkout/emails." } },
+      { "@type": "Question", "name": "Is ZPad an Electron app?", "acceptedAnswer": { "@type": "Answer", "text": "No. ZPad is native Swift + SwiftUI with Apple WKWebView and a real SwiftTerm terminal. Release builds are Developer ID signed and Apple notarized." } },
+      { "@type": "Question", "name": "Can I use Claude Code or other CLI tools inside ZPad?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The built-in terminal is a real emulator with a full PTY — run claude, git, npm, docker, ssh, vim, anything." } },
+      { "@type": "Question", "name": "How do updates work?", "acceptedAnswer": { "@type": "Answer", "text": "Update checks are manual by default and can be enabled in Settings → Privacy. Update metadata is signed; you can always install manually from GitHub Releases." } },
+      { "@type": "Question", "name": "How do I get a refund or transfer my license to a new Mac?", "acceptedAnswer": { "@type": "Answer", "text": "For refunds, email hello@zpad.wangyitu.tech within 14 days with your order details. To move to a new Mac, deactivate the old device in the license screen (if at the 5-device limit) and activate on the new one." } }
+    ]
+  }
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #ef4444;
+      --accent-dim: rgba(239, 68, 68, 0.1);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.16);
+      --card: rgba(255, 255, 255, 0.02);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      background: #000;
+      color: var(--text-primary);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    code, kbd {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.88em;
+      background: rgba(255,255,255,0.07);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 32px;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; }
+    .brand:hover { text-decoration: none; }
+    .logo {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px;
+    }
+    .brand-name { font-weight: 700; font-size: 15px; }
+    .header-crumb { font-size: 13px; color: var(--text-tertiary); }
+    .header-links { display: flex; align-items: center; gap: 18px; }
+    .header-links a { color: var(--text-secondary); font-size: 13.5px; font-weight: 500; }
+    .header-links a:hover { color: var(--text-primary); text-decoration: none; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff !important;
+      padding: 9px 18px; border-radius: 10px;
+      font-size: 13.5px; font-weight: 600;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-decoration: none; }
+
+    main { max-width: 820px; margin: 0 auto; padding: 120px 24px 90px; }
+
+    .page-head { margin-bottom: 52px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    h1 { font-size: clamp(32px, 5vw, 46px); font-weight: 800; line-height: 1.12; margin-bottom: 14px; }
+    .page-head p { color: var(--text-secondary); font-size: 16.5px; max-width: 620px; }
+
+    .faq-cat { margin-bottom: 56px; scroll-margin-top: 100px; }
+    .faq-cat > h2 {
+      font-size: 22px; font-weight: 800;
+      padding-bottom: 12px; margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-cat > h2 .cat-chip {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: 9px;
+      background: var(--accent-dim); color: var(--accent);
+      font-size: 15px; margin-right: 12px; vertical-align: -6px;
+    }
+
+    .faqitem {
+      border: 1px solid var(--border); border-radius: 14px;
+      background: var(--card); margin-bottom: 12px; overflow: hidden;
+    }
+    .faqitem summary {
+      cursor: pointer; padding: 18px 22px;
+      font-weight: 600; font-size: 15.5px;
+      list-style: none; display: flex; justify-content: space-between; gap: 16px;
+    }
+    .faqitem summary::-webkit-details-marker { display: none; }
+    .faqitem summary::after { content: '+'; color: var(--text-tertiary); font-weight: 700; font-size: 18px; flex-shrink: 0; }
+    .faqitem[open] summary::after { content: '−'; color: var(--accent); }
+    .faqitem[open] { border-color: var(--border-light); }
+    .faqitem[open] summary { color: var(--accent); }
+    .faqitem .a { padding: 0 22px 20px; font-size: 14.5px; color: var(--text-secondary); }
+    .faqitem .a p:last-child, .faqitem .a ul:last-child { margin-bottom: 0; }
+    .faqitem .a ul { margin: 10px 0 0 20px; }
+
+    .still-stuck {
+      text-align: center; padding: 44px 28px;
+      border: 1px dashed var(--border-light); border-radius: 18px;
+      margin-top: 20px;
+    }
+    .still-stuck h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .still-stuck p { color: var(--text-tertiary); font-size: 14.5px; margin-bottom: 20px; }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 32px; text-align: center;
+      color: var(--text-tertiary); font-size: 13px;
+    }
+    .footer a { color: var(--text-secondary); }
+
+    @media (max-width: 640px) {
+      .header { padding: 12px 20px; }
+      .header-crumb { display: none; }
+      main { padding: 100px 18px 70px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="brand" href="index.html">
+    <div class="logo">Z</div>
+    <span class="brand-name">ZPad</span>
+    <span class="header-crumb">/ FAQ</span>
+  </a>
+  <nav class="header-links">
+    <a href="docs.html">Docs</a>
+    <a href="changelog.html">What's New</a>
+    <a href="support.html">Support</a>
+    <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <span class="eyebrow">Frequently asked questions</span>
+    <h1>Ask us anything.<br>We've probably answered it.</h1>
+    <p>Pricing, licensing, privacy, compatibility — the straight answers. For step-by-step guides see the <a href="docs.html">user guide</a>.</p>
+  </div>
+
+  <!-- ======== General ======== -->
+  <section class="faq-cat" id="general">
+    <h2><span class="cat-chip">⚡️</span>General</h2>
+
+    <details class="faqitem" open>
+      <summary>What exactly is ZPad?</summary>
+      <div class="a"><p>A macOS status-bar panel that keeps a <strong>real multi-tab browser</strong> and a <strong>real terminal</strong> one hotkey away — <kbd>⌘⌥P</kbd> from any app. Slide it out, work, slide it away; tabs, scrollback, and sessions are preserved. Native Swift + SwiftUI, not Electron.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Who is it for?</summary>
+      <div class="a"><p>Anyone who lives on a Mac and toggles between docs/web and a shell: developers, data folks, writers who research, students, sysadmins. If you've ever cmd-tabbed to Terminal 40 times a day, ZPad is for you.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Which Macs and macOS versions are supported?</summary>
+      <div class="a"><p><strong>macOS 15.1 (Sequoia) or later, Apple Silicon (M1–M4)</strong>. Release builds are arm64 only; there is no Intel build today.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>How is this different from Spotlight or Raycast?</summary>
+      <div class="a"><p>Launchers <em>start</em> apps and hand you off. ZPad <em>is</em> the destination: the browser and terminal live inside it permanently, state preserved, zero launch latency, one hotkey to show/hide. See the <a href="index.html#features">feature summary</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Does it replace my main browser or terminal?</summary>
+      <div class="a"><p>It can, but it shines as your <em>quick-access</em> surface: docs lookups, dashboards, git/build commands, Claude Code sessions. Your heavy sessions stay wherever they are; ZPad removes the switching tax between them.</p></div>
+    </details>
+  </section>
+
+  <!-- ======== Purchase & License ======== -->
+  <section class="faq-cat" id="purchase">
+    <h2><span class="cat-chip">💳</span>Purchase &amp; licensing</h2>
+
+    <details class="faqitem" open>
+      <summary>How long is the free trial?</summary>
+      <div class="a"><p><strong>30 days, fully functional, no credit card</strong>. No feature is held back, no watermarks. The trial starts when you accept it in onboarding — merely launching the app never burns a day.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>How much does it cost after the trial?</summary>
+      <div class="a"><p>A <strong>one-time $79 lifetime license</strong>. No subscription, no renewal, no seat games. It's an early-adopter price that will rise as the product grows — buying now locks it in.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>What does “lifetime” cover?</summary>
+      <div class="a"><p>One payment for the current product line, including its updates, for as long as the product exists (full terms in the <a href="eula.html">EULA</a>). If pricing or packaging ever changes, existing licenses stay valid under their original terms.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>How many Macs can I use it on?</summary>
+      <div class="a"><p>Up to <strong>5 devices</strong> per license — personal laptop, desktop, and work machine included. Need to free a slot? Deactivate an old device yourself in the in-app license screen.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Does the license work offline?</summary>
+      <div class="a"><p>Yes — an activated license works fully offline for up to <strong>14 consecutive days</strong> (validated locally with signed keys). Reconnect within the window and it re-confirms silently.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>What's your refund policy?</summary>
+      <div class="a"><p><strong>Full refund within 14 days, no questions asked.</strong> Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Refund">hello@zpad.wangyitu.tech</a> with your order details. Full text in the <a href="refund.html">Refund Policy</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>I lost my license key. Help?</summary>
+      <div class="a"><p>Check the purchase email first (search for “ZPad”). Still missing? Email us from the address you bought with and we'll recover it via the license API.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Can I buy for my team / company?</summary>
+      <div class="a"><p>Each license covers one person across up to 5 of their Macs. For team volume purchases, email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Team">hello@zpad.wangyitu.tech</a> and we'll sort you out.</p></div>
+    </details>
+  </section>
+
+  <!-- ======== Features ======== -->
+  <section class="faq-cat" id="features">
+    <h2><span class="cat-chip">🧰</span>Features</h2>
+
+    <details class="faqitem" open>
+      <summary>Can I run Claude Code / other CLI agents in ZPad?</summary>
+      <div class="a"><p>Yes — the terminal is a real emulator (SwiftTerm) with a full PTY. <code>claude</code>, <code>aider</code>, <code>git</code>, <code>docker</code>, <code>ssh</code>, <code>vim</code>: if it runs in Terminal.app it runs here. Scrollback survives every hide/show.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>What are workspaces?</summary>
+      <div class="a"><p>Saved, switchable sets of tabs — one for each project or context. Each workspace keeps its own browser tabs, terminal sessions, and layout. Switching is instant and lossless. See <a href="docs.html#workspaces">the guide</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Is there a command palette?</summary>
+      <div class="a"><p>Yes — <kbd>⌘K</kbd> opens it globally (even while the panel is hidden); <kbd>⌘⇧A</kbd> opens a tab-switcher scope. Fuzzy-search everything: actions, tabs, workspaces.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Does ZPad include an AI chat?</summary>
+      <div class="a"><p>Yes, as a beta: bring your own OpenAI-compatible provider (OpenAI, DeepSeek, local Ollama…) — API key stored in Keychain, history stored locally. You control the model, temperature, and system prompt. Setup: <a href="docs.html#ai-chat">guide</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Which display modes exist?</summary>
+      <div class="a"><p>Four: side panel right (default), side panel left, centered modal, and dropdown under the menu-bar icon. Toggle directly with <kbd>⌘⌥1/2/3</kbd> or set a default in Settings.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Can I change the language?</summary>
+      <div class="a"><p>Yes — English and 简体中文 built in; follow the system or force either in Settings → Primary → Language.</p></div>
+    </details>
+  </section>
+
+  <!-- ======== Privacy ======== -->
+  <section class="faq-cat" id="privacy">
+    <h2><span class="cat-chip">🔒</span>Privacy &amp; security</h2>
+
+    <details class="faqitem" open>
+      <summary>Does ZPad spy on me?</summary>
+      <div class="a"><p>No. Analytics is <strong>opt-in and off by default</strong>. Browsing data, terminal sessions, chat history, and API keys stay on your Mac (keys in Keychain). The complete list of network calls — favicon lookups, licensing, optional update checks — is published in <a href="privacy.html">PRIVACY.md</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>Are the builds signed and notarized?</summary>
+      <div class="a"><p>Yes — Developer ID signed, Apple notarized, and stapled, published only via GitHub Releases. If macOS calls a download “damaged”, don't bypass Gatekeeper: re-download from the official page.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>What does the license server see?</summary>
+      <div class="a"><p>License lookups send your key, device identifier, and app version — used only to enforce device limits and revocation. No browsing or terminal data ever leaves your Mac. See <a href="docs.html#privacy">the privacy matrix</a>.</p></div>
+    </details>
+  </section>
+
+  <!-- ======== Troubleshooting ======== -->
+  <section class="faq-cat" id="troubleshooting">
+    <h2><span class="cat-chip">🛠</span>Troubleshooting</h2>
+
+    <details class="faqitem" open>
+      <summary>macOS says the app is “damaged”</summary>
+      <div class="a"><p>Delete it and re-download from the official <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases page</a>. Genuine notarized builds open cleanly; never bypass Gatekeeper warnings. Full steps in the <a href="docs.html#troubleshooting">troubleshooting guide</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>⌘⌥P does nothing</summary>
+      <div class="a"><p>Another app (Raycast, BetterTouchTool, input-method switchers) probably owns the shortcut. Check its settings, or use the menu-bar icon / mode shortcuts <kbd>⌘⌥1/2/3</kbd> instead.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>The panel pops out when I don't want it</summary>
+      <div class="a"><p>That's the screen-edge hot zone. Turn it off: <strong>Settings → Behavior → hot-zone trigger</strong>, and keep hotkey-only summoning.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>License activation fails</summary>
+      <div class="a"><p>Check the pasted key is complete and you're online; if you're at 5 devices, deactivate one first. Still failing — email us with your order ID. Details: <a href="docs.html#license">license guide</a>.</p></div>
+    </details>
+    <details class="faqitem">
+      <summary>How do I update ZPad?</summary>
+      <div class="a"><p><strong>Settings → System → Check for updates</strong> (signed metadata), or download the latest DMG and drag over — settings and license carry over. Enable automatic checks in Settings → Privacy if you prefer hands-off.</p></div>
+    </details>
+  </section>
+
+  <div class="still-stuck">
+    <h3>Still stuck?</h3>
+    <p>Self-serve fixes and templates live in the <a href="docs.html#troubleshooting">docs</a>; otherwise we answer every email.</p>
+    <a class="btn-primary" href="support.html" style="text-decoration:none;">Get Support →</a>
+  </div>
+</main>
+
+<footer class="footer">
+  <p>&copy; 2024-2026 pekaboo · <a href="docs.html">Docs</a> · <a href="changelog.html">Changelog</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="eula.html">EULA</a></p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ZPad Support — Self-serve fixes, bug reports, refunds, contact</title>
+  <meta name="description" content="Get help with ZPad: instant self-serve fixes for common issues, a bug-report template that gets fast answers, refund requests, license recovery, and direct email support." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/support.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ZPad" />
+  <meta property="og:title" content="ZPad Support" />
+  <meta property="og:description" content="Self-serve fixes, bug-report templates, refunds, and a direct line to the developer." />
+  <meta property="og:url" content="https://zpad.wangyitu.tech/support.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #ef4444;
+      --accent-dim: rgba(239, 68, 68, 0.1);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.16);
+      --card: rgba(255, 255, 255, 0.02);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      background: #000;
+      color: var(--text-primary);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    code {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.88em;
+      background: rgba(255,255,255,0.07);
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 32px;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: inherit; }
+    .brand:hover { text-decoration: none; }
+    .logo {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 14px;
+    }
+    .brand-name { font-weight: 700; font-size: 15px; }
+    .header-crumb { font-size: 13px; color: var(--text-tertiary); }
+    .header-links { display: flex; align-items: center; gap: 18px; }
+    .header-links a { color: var(--text-secondary); font-size: 13.5px; font-weight: 500; }
+    .header-links a:hover { color: var(--text-primary); text-decoration: none; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff !important;
+      padding: 9px 18px; border-radius: 10px;
+      font-size: 13.5px; font-weight: 600;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-decoration: none; }
+
+    main { max-width: 860px; margin: 0 auto; padding: 120px 24px 90px; }
+
+    .page-head { margin-bottom: 52px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    h1 { font-size: clamp(32px, 5vw, 46px); font-weight: 800; line-height: 1.12; margin-bottom: 14px; }
+    .page-head p { color: var(--text-secondary); font-size: 16.5px; max-width: 640px; }
+
+    h2 {
+      font-size: 22px; font-weight: 800;
+      padding-bottom: 12px; margin: 56px 0 20px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 100px;
+    }
+    p { color: var(--text-secondary); font-size: 15px; margin-bottom: 14px; }
+    ul { margin: 0 0 14px 20px; color: var(--text-secondary); font-size: 15px; }
+    li { margin-bottom: 8px; }
+    strong { color: var(--text-primary); }
+
+    .path-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 24px 0 8px; }
+    .path-card {
+      display: block; border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px 22px; background: var(--card); color: inherit;
+      transition: border-color .2s ease, transform .2s ease;
+    }
+    .path-card:hover { border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
+    .path-card .ic {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--accent-dim); color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .path-card h3 { font-size: 15.5px; font-weight: 700; margin-bottom: 5px; color: var(--text-primary); }
+    .path-card p { font-size: 13px; color: var(--text-tertiary); margin: 0; }
+    .path-card .arr { color: var(--accent); font-weight: 700; }
+
+    .bug-template {
+      position: relative;
+      background: #0d0d10; border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px 22px; overflow-x: auto;
+    }
+    .bug-template pre {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 12.5px; line-height: 1.7; color: var(--text-secondary);
+      white-space: pre-wrap;
+    }
+    .copy-btn {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--border-light);
+      color: var(--text-secondary); font-size: 12px; font-weight: 600;
+      padding: 6px 12px; border-radius: 8px; cursor: pointer;
+      transition: all .15s ease;
+    }
+    .copy-btn:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+    .copy-btn.copied { color: #34d399; border-color: rgba(52,211,153,0.4); }
+
+    .contact-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 22px; }
+    .contact-card { border: 1px solid var(--border); border-radius: 16px; padding: 24px; background: var(--card); }
+    .contact-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .contact-card p { font-size: 13.5px; color: var(--text-tertiary); margin-bottom: 14px; }
+    .contact-card .cc-link { font-size: 14px; font-weight: 600; }
+
+    .sla {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px;
+    }
+    .sla span {
+      font-size: 12.5px; color: var(--text-tertiary);
+      border: 1px solid var(--border); border-radius: 999px;
+      padding: 5px 14px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 32px; text-align: center;
+      color: var(--text-tertiary); font-size: 13px;
+    }
+    .footer a { color: var(--text-secondary); }
+
+    @media (max-width: 640px) {
+      .header { padding: 12px 20px; }
+      .header-crumb { display: none; }
+      main { padding: 100px 18px 70px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a class="brand" href="index.html">
+    <div class="logo">Z</div>
+    <span class="brand-name">ZPad</span>
+    <span class="header-crumb">/ Support</span>
+  </a>
+  <nav class="header-links">
+    <a href="docs.html">Docs</a>
+    <a href="faq.html">FAQ</a>
+    <a href="changelog.html">What's New</a>
+    <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <span class="eyebrow">Support</span>
+    <h1>Fix it now,<br>or reach a human.</h1>
+    <p>Most issues are solved in under two minutes by the self-serve paths below. When they're not, you get a direct line to the person who wrote the code.</p>
+  </div>
+
+  <h2 id="paths">Pick your path</h2>
+  <div class="path-grid">
+    <a class="path-card" href="docs.html#troubleshooting">
+      <div class="ic"><svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+      <h3>Something's broken</h3>
+      <p>Troubleshooting guide: panel won't show, “damaged” download, license errors, terminal quirks.</p>
+      <span class="arr">→ Troubleshooting</span>
+    </a>
+    <a class="path-card" href="docs.html">
+      <div class="ic"><svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div>
+      <h3>How do I…?</h3>
+      <p>The full user guide: display modes, shortcuts, workspaces, AI chat, license management.</p>
+      <span class="arr">→ User guide</span>
+    </a>
+    <a class="path-card" href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Refund">
+      <div class="ic"><svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3m9 9V9a4 4 0 00-4-4h-4m0 0l3-3m-3 3l3 3"/></svg></div>
+      <h3>I want a refund</h3>
+      <p>Within 14 days of purchase: full refund, no questions asked.</p>
+      <span class="arr">→ Request refund</span>
+    </a>
+    <a class="path-card" href="docs.html#license">
+      <div class="ic"><svg width="19" height="19" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg></div>
+      <h3>License trouble</h3>
+      <p>Activation errors, lost keys, device limits, moving to a new Mac.</p>
+      <span class="arr">→ License guide</span>
+    </a>
+  </div>
+
+  <h2 id="bug">Report a bug (get it fixed faster)</h2>
+  <p>The fastest route is a <a href="https://github.com/pekaboo/ZPad/issues/new?labels=bug&template=bug_report.md" target="_blank" rel="noopener">GitHub issue</a> — it feeds straight into the build pipeline. Prefer email? Copy the template below into <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Bug%20Report">hello@zpad.wangyitu.tech</a> and fill it in:</p>
+
+  <div class="bug-template">
+    <button class="copy-btn" id="copyBug" onclick="copyBugTemplate()">Copy</button>
+    <pre id="bugTemplate">ZPad version:  (menu-bar icon → About / Settings → System)
+macOS version:  ( → About This Mac)
+Apple Silicon / RAM:
+
+What happened:
+  …
+
+What I expected:
+  …
+
+Steps to reproduce:
+  1. …
+  2. …
+
+Does it happen every time?  yes / no
+Anything unusual?  (external displays, custom shell, VPN, other utility apps)</pre>
+  </div>
+
+  <ul>
+    <li><strong>Include the version</strong> — half of all bug reports are solved by “update to the latest build”.</li>
+    <li><strong>Never paste API keys or license keys</strong> into public issues. Email is fine for license specifics.</li>
+  </ul>
+
+  <h2 id="feature">Request a feature</h2>
+  <p>Feature requests are welcome — several shipped features started as user emails. Open a <a href="https://github.com/pekaboo/ZPad/issues/new?labels=enhancement" target="_blank" rel="noopener">GitHub issue with the “enhancement” label</a> and describe <em>the workflow you want</em>, not just the feature: the “why” shapes the design. Check the <a href="changelog.html">changelog</a> first — it might already exist.</p>
+
+  <h2 id="contact">Contact</h2>
+  <div class="contact-cards">
+    <div class="contact-card">
+      <h3>✉️ Email</h3>
+      <p>General help, licensing, refunds, anything.</p>
+      <a class="cc-link" href="mailto:hello@zpad.wangyitu.tech">hello@zpad.wangyitu.tech</a>
+    </div>
+    <div class="contact-card">
+      <h3>🐞 GitHub Issues</h3>
+      <p>Bugs and feature requests, public and searchable.</p>
+      <a class="cc-link" href="https://github.com/pekaboo/ZPad/issues" target="_blank" rel="noopener">github.com/pekaboo/ZPad/issues</a>
+    </div>
+    <div class="contact-card">
+      <h3>🛒 Purchase &amp; billing</h3>
+      <p>Stripe receipts, VAT, invoices, team purchases.</p>
+      <a class="cc-link" href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Billing">hello@zpad.wangyitu.tech</a>
+    </div>
+  </div>
+  <div class="sla">
+    <span>🕐 Typical first reply: 1–2 business days</span>
+    <span>🌍 Timezone: UTC+8</span>
+    <span>💸 Refunds processed within 5 business days</span>
+  </div>
+  <p style="margin-top:26px;font-size:13.5px;color:var(--text-tertiary);">Before writing: it's worth 60 seconds in the <a href="faq.html">FAQ</a> and the <a href="docs.html#troubleshooting">troubleshooting section</a> — the answer may already be there.</p>
+</main>
+
+<footer class="footer">
+  <p>&copy; 2024-2026 pekaboo · <a href="docs.html">Docs</a> · <a href="faq.html">FAQ</a> · <a href="changelog.html">Changelog</a> · <a href="privacy.html">Privacy</a> · <a href="eula.html">EULA</a></p>
+</footer>
+
+<script>
+function copyBugTemplate() {
+  const text = document.getElementById('bugTemplate').innerText;
+  const btn = document.getElementById('copyBug');
+  const done = () => { btn.textContent = 'Copied ✓'; btn.classList.add('copied'); setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  } else { fallbackCopy(text, done); }
+}
+function fallbackCopy(text, done) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch (e) {}
+  document.body.removeChild(ta);
+}
+</script>
+
+</body>
+</html>

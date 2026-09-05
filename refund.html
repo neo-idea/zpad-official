@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <title>ZPad — Refund Policy</title>
+  <meta name="description" content="ZPad refund policy: full refund within 14 days, no questions asked." />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/refund.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+      background: #000000;
+      color: #f5f5f7;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :root {
+      --accent: #ef4444;
+      --accent-dim: rgba(239, 68, 68, 0.1);
+      --accent-glow: rgba(239, 68, 68, 0.2);
+      --text-primary: #f5f5f7;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-tertiary: rgba(255, 255, 255, 0.5);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.15);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* Header (matches main site) */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-brand { display: flex; align-items: center; gap: 10px; }
+    .logo {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; color: white;
+    }
+    .brand-name { font-weight: 700; font-size: 18px; }
+    .nav { display: flex; gap: 32px; }
+    .nav a { font-size: 14px; color: var(--text-secondary); transition: color 0.2s; }
+    .nav a:hover { color: var(--text-primary); }
+
+    /* Page */
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 140px 40px 80px;
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .page h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .lede {
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      max-width: 640px;
+    }
+
+    /* Policy cards */
+    .policy-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+    }
+    .policy-card h2 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .policy-card p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    .policy-card p:last-child { margin-bottom: 0; }
+    .policy-card ul { margin-top: 10px; }
+    .policy-card li {
+      display: flex;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .policy-card li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 9px;
+    }
+    .policy-card a { color: var(--accent); }
+    .policy-card a:hover { opacity: 0.8; }
+    .policy-card strong { color: var(--text-primary); font-weight: 600; }
+
+    .contact-note {
+      margin-top: 40px;
+      font-size: 14px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+    }
+    .contact-note a { color: var(--accent); }
+
+    /* Footer (matches main site) */
+    .footer {
+      padding: 60px 40px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      text-align: left;
+    }
+    .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+    .footer-brand p { font-size: 14px; color: var(--text-tertiary); line-height: 1.6; max-width: 280px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 14px; color: var(--text-tertiary); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 13px; color: var(--text-tertiary); }
+
+    @media (max-width: 768px) {
+      .header { padding: 14px 20px; }
+      .nav { display: none; }
+      .page { padding: 120px 20px 60px; }
+      .policy-card { padding: 24px 20px; }
+      .footer-content { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 480px) {
+      .footer-content { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="/" class="header-brand">
+      <div class="logo">Z</div>
+      <span class="brand-name">ZPad</span>
+    </a>
+    <nav class="nav">
+      <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+        <a href="/#features">Features</a>
+      <a href="/#demo">Demo</a>
+      <a href="/#testimonials">Use Cases</a>
+      <a href="/#pricing">Pricing</a>
+    </nav>
+    <a class="btn btn-primary" href="/#pricing" style="padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; background: var(--accent); color: white;">Get Started</a>
+  </header>
+
+  <main class="page">
+    <p class="section-label">Refund Policy</p>
+    <h1>14-day, no-questions refund.</h1>
+    <p class="lede">If ZPad isn't right for you, email us within 14 days of purchase and we'll refund the full amount. No forms, no friction.</p>
+
+    <div class="policy-card">
+      <h2>Full refund within 14 days</h2>
+      <p>Full refund within 14 days of purchase, no questions asked. Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Refund">hello@zpad.wangyitu.tech</a> with your license key, license ID, or checkout email and we'll handle the rest.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2>How to request a refund</h2>
+      <ul>
+        <li>Find your license key in <strong>ZPad → Settings → License</strong>, or use the license ID / purchase email from your confirmation email.</li>
+        <li>Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Refund">hello@zpad.wangyitu.tech</a> with the subject "Refund request" and include your license key, license ID, or checkout email.</li>
+        <li>Refunds are processed within 5 business days back to your original payment method.</li>
+      </ul>
+    </div>
+
+    <div class="policy-card">
+      <h2>Annual subscriptions</h2>
+      <p>Annual subscriptions cancelled mid-year get a prorated refund for the remaining full months. You can cancel an annual subscription at any time.</p>
+    </div>
+
+    <div class="policy-card">
+      <h2>After a refund</h2>
+      <p>Once a refund is issued, your license is deactivated and ZPad will return to trial access if it remains available; otherwise it will enter the locked state. Lifetime licenses are non-refundable beyond the 14-day window.</p>
+    </div>
+
+    <p class="contact-note">Questions? Email <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Support">hello@zpad.wangyitu.tech</a></p>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="header-brand">
+          <div class="logo">Z</div>
+          <span class="brand-name">ZPad</span>
+        </div>
+        <p>A real terminal and a real browser, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+        <a href="/#features">Features</a>
+        <a href="/#demo">Demo</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs.html">User Guide</a>
+        <a href="/faq.html">FAQ</a>
+        <a href="/changelog.html">Changelog</a>
+        <a href="/support.html">Support</a>
+      </div>
+      <div class="footer-links">
+        <a href="/refund.html">Refund Policy</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/eula.html">EULA</a>
+        <a href="mailto:hello@zpad.wangyitu.tech">Contact</a>
+        <a href="mailto:hello@zpad.wangyitu.tech?subject=ZPad%20Support">Support</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024-2026 pekaboo. Built for focused work.</p>
+      <p>ZPad is commercial software for macOS 15.1+. All prices in USD.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
