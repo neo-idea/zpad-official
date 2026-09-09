@@ -617,15 +617,6 @@
     /* =====================================================
        Live ZPad panel（fixed 视口贴缘，页面即桌面）
        ===================================================== */
-    /* 页面即桌面：引导卡（面板为 fixed 视口贴缘层，独立于文档流） */
-
-    /* 面板滑入/滑出（复现 App 热区唤出动画） */
-    #window { transition: transform .42s cubic-bezier(.3,1,.25,1), opacity .32s ease; will-change: transform; }
-    #window.away-right { transform: translateX(calc(100% + 4px)); pointer-events: none; }
-    #window.away-left { transform: translateX(calc(-100% - 4px)); pointer-events: none; }
-    #window.away-navbar { transform: translateY(calc(-100% - 4px)); opacity: 1; pointer-events: none; }
-    #window.away-centered { transform: translate(-50%, -50%) scale(.96); opacity: 0; pointer-events: none; }
-
     /* 热区可视化覆盖层（拖滑条时实时显示，复现 App） */
     .hz-overlay { position: fixed; z-index: 1200; pointer-events: none; opacity: 0; transition: opacity .25s ease;
       border: 1.5px dashed rgba(239,68,68,.9); background: rgba(239,68,68,.14); border-radius: 6px; }
@@ -1069,53 +1060,24 @@
     <!-- 首次引导：指向浏览器右缘 -->
     <div class="coach" id="coach">
       <span class="arrow">→</span>
-      <span>鼠标移到<b>窗口右缘</b></span>
+      <span>Fling your mouse to the <b>right edge</b></span>
     </div>
 
     <!-- 引导卡：页面即桌面 -->
-    <div class="stage-card">
-      <div class="sc-head">
-        <div class="sc-icon">🖱</div>
-        <div>
-          <h3>这个页面就是你的桌面</h3>
-          <div class="sc-sub">ZPad 已在屏幕右缘待命 — 用真实的方式唤出它</div>
-        </div>
-      </div>
-      <ol>
-        <li><i>1</i><span>把鼠标移到<b>浏览器窗口最右侧边缘</b></span></li>
-        <li><i>2</i><span>停留片刻，面板从右侧滑入 — 移开鼠标自动收起</span></li>
-        <li><i>3</i><span>随时按 <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> 唤出 / 收起面板</span></li>
-      </ol>
-      <div class="sc-sliders">
-        <div class="sp-row">
-          <label>热区宽度 <b id="hzWVal2">30 px</b></label>
-          <input type="range" id="hzWidth2" min="5" max="100" step="5" value="30" />
-        </div>
-        <div class="sp-row">
-          <label>热区高度 <b id="hzHVal2">100 %</b></label>
-          <input type="range" id="hzHeight2" min="10" max="100" step="5" value="100" />
-        </div>
-        <div class="sp-row">
-          <label>触发延迟 <b id="hzDVal2">0.15 s</b></label>
-          <input type="range" id="hzDelay2" min="0.05" max="0.8" step="0.05" value="0.15" />
-        </div>
-      </div>
-    </div>
-
     <div class="dp-window mode-centered" id="window">
       <!-- 设置弹层：热区宽度 / 高度 / 触发延迟（面板内，随面板滑入滑出） -->
       <div class="settings-pop" id="settingsPop">
-        <h4>触发设置</h4>
+        <h4>Trigger Settings</h4>
         <div class="sp-row">
-          <label>热区宽度 <b id="hzWVal">30 px</b></label>
+          <label>Zone width <b id="hzWVal">30 px</b></label>
           <input type="range" id="hzWidth" min="5" max="100" step="5" value="30" />
         </div>
         <div class="sp-row">
-          <label>热区高度 <b id="hzHVal">100 %</b></label>
+          <label>Zone height <b id="hzHVal">100 %</b></label>
           <input type="range" id="hzHeight" min="10" max="100" step="5" value="100" />
         </div>
         <div class="sp-row" style="margin-bottom:2px">
-          <label>触发延迟 <b id="hzDVal">0.15 s</b></label>
+          <label>Trigger delay <b id="hzDVal">0.15 s</b></label>
           <input type="range" id="hzDelay" min="0.05" max="0.8" step="0.05" value="0.15" />
         </div>
       </div>
@@ -1126,26 +1088,26 @@
       <div class="dp-body">
         <!-- Sidebar：实测 40px 窄条 -->
         <aside class="dp-sidebar">
-          <button class="rail-btn" id="collapseBtn" title="收起面板">
+          <button class="rail-btn" id="collapseBtn" title="Collapse panel">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
           </button>
-          <button class="rail-btn on" id="hoverToggle" title="鼠标悬停触发（热区）开/关">
+          <button class="rail-btn on" id="hoverToggle" title="Toggle hover-trigger (hot zone)">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M12 7v3"/></svg>
           </button>
-          <button class="rail-btn" title="收藏">
+          <button class="rail-btn" title="Favorites">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21z"/></svg>
           </button>
-          <button class="rail-btn" id="newTab" title="新建标签">
+          <button class="rail-btn" id="newTab" title="New tab">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v16m8-8H4"/></svg>
           </button>
           <div class="rail-div"></div>
           <div class="tabs" id="tabs"></div>
           <div class="side-foot">
             <div class="rail-div"></div>
-            <button class="rail-btn" title="工作区：ZPad">
+            <button class="rail-btn" title="Workspace: ZPad">
               <span style="width:10px;height:10px;border-radius:3px;background:var(--accent);display:block;"></span>
             </button>
-            <button class="rail-btn" id="settingsRow" title="设置（触发热区调节）">
+            <button class="rail-btn" id="settingsRow" title="Settings (adjust hot zone)">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.3 3.2a1 1 0 011.4 0l.6.6a1 1 0 001 .25l.8-.27a1 1 0 011.27.64l.26.82a1 1 0 00.78.68l.85.14a1 1 0 01.83 1.14l-.13.85a1 1 0 00.36.95l.68.55a1 1 0 010 1.55l-.68.55a1 1 0 00-.36.95l.13.85a1 1 0 01-.83 1.14l-.85.14a1 1 0 00-.78.68l-.26.82a1 1 0 01-1.27.64l-.8-.27a1 1 0 00-1 .25l-.6.6a1 1 0 01-1.4 0l-.6-.6a1 1 0 00-1-.25l-.8.27a1 1 0 01-1.27-.64l-.26-.82a1 1 0 00-.78-.68l-.85-.14a1 1 0 01-.83-1.14l.13-.85a1 1 0 00-.36-.95l-.68-.55a1 1 0 010-1.55l.68-.55a1 1 0 00.36-.95l-.13-.85a1 1 0 01.83-1.14l.85-.14a1 1 0 00.78-.68l.26-.82a1 1 0 011.27-.64l.8.27a1 1 0 001-.25z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
             </button>
           </div>
@@ -1176,14 +1138,14 @@
                 <span class="ch-title">Chat</span>
                 <span class="ch-model">gpt-5.2 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
                 <span class="ch-sp"></span>
-                <button class="ch-btn" title="查找"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
-                <button class="ch-btn" title="导出"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m3-3H9m10 7H5a2 2 0 01-2-2V7a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v11a2 2 0 01-2 2z"/></svg></button>
+                <button class="ch-btn" title="Find"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
+                <button class="ch-btn" title="Export"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m3-3H9m10 7H5a2 2 0 01-2-2V7a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v11a2 2 0 01-2 2z"/></svg></button>
               </div>
               <div class="chat-body" id="chatBody"></div>
               <div class="chat-composer">
                 <div class="chat-inputwrap">
                   <input id="chatInput" placeholder="Ask anything…" autocomplete="off" spellcheck="false" />
-                  <button class="chat-send" id="chatSend" title="发送"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
+                  <button class="chat-send" id="chatSend" title="Send"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
                 </div>
                 <div class="chat-modes">
                   <button class="cm active" data-m="fast">⚡ Fast</button>
@@ -1350,7 +1312,7 @@
       <span>→</span>
       <span class="now">ZPad Lifetime: $99, once.</span>
     </div>
-    <!-- TODO(stripe): 上线前在 Stripe 重建价格（$29/yr 订阅 + $99 lifetime + $69 founding 一次性）并重新生成两个 payment link -->
+    <!-- TODO(stripe): before launch, recreate prices in Stripe ($29/yr sub + $99 lifetime + $69 founding one-time) and regenerate the two payment links -->
     <div class="price-cards reveal reveal-d1">
       <div class="price-card-shell">
         <div class="price-card">
@@ -1561,7 +1523,7 @@ function renderTabs() {
         : fav.img
           ? `<img class="fav" src="${fav.img}" alt="" />`
           : `<span class="fav" style="background:${fav.bg}">${fav.t}</span>`;
-    el.innerHTML = `${inner}<span class="dot"></span><span class="close" title="关闭标签"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
+    el.innerHTML = `${inner}<span class="dot"></span><span class="close" title="Close tab"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
     el.addEventListener('click', () => activate(t.id));
     el.addEventListener('contextmenu', (e) => { e.preventDefault(); closeTab(t.id); });
     el.querySelector('.close').addEventListener('click', (e) => { e.stopPropagation(); closeTab(t.id); });
@@ -1651,13 +1613,13 @@ function zpadHome() {
   ];
   return `<div style="display:flex;flex-direction:column;align-items:center;padding:52px 30px 30px;min-height:100%">
     <div style="font-size:34px;font-weight:800;letter-spacing:-.6px;color:rgba(238,238,242,.95)">Z<span style="color:#ef4444">Pad</span></div>
-    <div style="font-size:12.5px;color:rgba(235,235,240,.45);margin-top:6px">一个热键，唤出终端与浏览器</div>
+    <div style="font-size:12.5px;color:rgba(235,235,240,.45);margin-top:6px">One hotkey. Terminal & browser, instantly.</div>
     <div style="width:100%;max-width:400px;margin-top:26px;position:relative">
-      <input placeholder="搜索或输入网址…" style="width:100%;box-sizing:border-box;height:38px;border-radius:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:.5px solid rgba(255,255,255,.09);box-shadow:0 2px 6px rgba(0,0,0,.05);padding:0 40px 0 16px;color:rgba(238,238,242,.9);outline:none;font-size:13px;transition:all .2s" onfocus="this.style.borderColor='rgba(239,68,68,.35)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.09)'" onblur="this.style.borderColor='rgba(255,255,255,.09)';this.style.boxShadow='0 2px 6px rgba(0,0,0,.05)'" />
+      <input placeholder="Search or enter a URL…" style="width:100%;box-sizing:border-box;height:38px;border-radius:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:.5px solid rgba(255,255,255,.09);box-shadow:0 2px 6px rgba(0,0,0,.05);padding:0 40px 0 16px;color:rgba(238,238,242,.9);outline:none;font-size:13px;transition:all .2s" onfocus="this.style.borderColor='rgba(239,68,68,.35)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.09)'" onblur="this.style.borderColor='rgba(255,255,255,.09)';this.style.boxShadow='0 2px 6px rgba(0,0,0,.05)'" />
       <svg style="position:absolute;right:13px;top:12px;width:14px;height:14px;color:rgba(235,235,240,.4)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
     </div>
     <div style="width:100%;max-width:460px;margin-top:30px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:12px">收藏</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:12px">Favorites</div>
       <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px">
         ${favs.map(f => `<div title="${f.n}" style="cursor:pointer">
           <div style="width:44px;height:44px;border-radius:11px;background:${f.bg};display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:800;margin:0 auto;transition:transform .15s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='none'">${f.t}</div>
@@ -1665,11 +1627,11 @@ function zpadHome() {
       </div>
     </div>
     <div style="width:100%;max-width:460px;margin-top:26px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:10px">最近</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:10px">Recents</div>
       ${favs.slice(0,3).map(f => `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background='none'">
         <span style="width:22px;height:22px;border-radius:6px;background:${f.bg};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800">${f.t}</span>
         <span style="font-size:12.5px;color:rgba(235,235,240,.75)">${f.n}</span>
-        <span style="margin-left:auto;font-size:11px;color:rgba(235,235,240,.3)">今天</span>
+        <span style="margin-left:auto;font-size:11px;color:rgba(235,235,240,.3)">Today</span>
       </div>`).join('')}
     </div>
   </div>`;
@@ -1682,7 +1644,7 @@ function chatgptPage() {
       <img src="https://th.bing.com/th/id/ODF.TaWVp0eZxcA44tUgJJDYMQ?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="ChatGPT" style="width:30px;height:30px;border-radius:50%;background:#fff;object-fit:cover" />
       <span style="font-size:17px;font-weight:600;color:rgba(238,238,242,.9)">ChatGPT</span>
     </div>
-    <div style="font-size:21px;font-weight:600;color:rgba(238,238,242,.92);text-align:center;letter-spacing:-.2px">什么可以帮忙的？</div>
+    <div style="font-size:21px;font-weight:600;color:rgba(238,238,242,.92);text-align:center;letter-spacing:-.2px">What can I help with?</div>
     <div style="width:100%;max-width:440px;margin-top:28px;position:relative">
       <input placeholder="Ask anything" style="width:100%;box-sizing:border-box;height:50px;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:0 96px 0 20px;color:rgba(238,238,242,.9);outline:none;font-size:14px;transition:all .2s" onfocus="this.style.borderColor='rgba(255,255,255,.22)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'" />
       <span style="position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer">
@@ -1692,7 +1654,7 @@ function chatgptPage() {
     <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px;max-width:440px">
       ${chips.map(c => `<span style="padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:12.5px;color:rgba(235,235,240,.7);cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">${c}</span>`).join('')}
     </div>
-    <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:rgba(235,235,240,.3)">ChatGPT 也可能犯错。请核查重要信息。</div>
+    <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:rgba(235,235,240,.3)">ChatGPT can make mistakes. Check important info.</div>
   </div>`;
 }
 
@@ -2034,13 +1996,13 @@ const chatBody = document.getElementById('chatBody');
 const chatInput = document.getElementById('chatInput');
 
 const chatResponses = [
-  { keys: ['热区', 'hot', '触发', '边缘'], a: '热区由 <code>PanelManager+Mouse.swift</code> 驱动：鼠标贴到屏幕边缘的感应矩形（宽度 × 高度% × 垂直居中）停留触发延迟后唤出面板。宽高延迟都可在设置里调，拖滑条时还有实时虚线预览——这个 demo 页右上角就能试。' },
-  { keys: ['模式', '左', 'mode', 'display'], a: 'ZPad 支持四种显示模式：右侧板（默认）、左侧板、居中弹窗、顶部 navbar。每种模式是独立的 <code>DisplayModeStrategy</code> 实现，控制窗口 frame、样式掩码和滑入动画。' },
-  { keys: ['终端', 'terminal', 'shell', 'zsh'], a: '终端基于 fork 的 SwiftTerm，用 <code>NSViewRepresentable</code> 包装。所有终端视图常驻 ZStack、透明度切换，切标签不丢回滚缓冲。' },
-  { keys: ['价格', '买', 'price', 'buy'], a: '买断制，一次购买永久使用，14 天无理由退款。下载页有 30 天全功能试用，不用绑卡。' },
-  { keys: ['快捷键', 'hotkey', '⌘'], a: '全局 <kbd>⌘⌥P</kbd> 随时唤出/收起。终端里 <kbd>⌘T</kbd> 新建、<kbd>⌘W</kbd> 关闭。' }
+  { keys: ['hot', 'edge', 'zone', 'trigger'], a: 'The hot zone lives in <code>PanelManager+Mouse.swift</code>: a sensing rectangle at the screen edge (width × height% × vertically centered). Rest there past the trigger delay and the panel slides in. Width, height and delay are all adjustable — tweak the sliders in Settings inside the panel.' },
+  { keys: ['mode', 'display', 'left', 'side', 'panel'], a: 'ZPad ships four display modes: right panel (default), left panel, centered modal, and navbar. Each is its own <code>DisplayModeStrategy</code> controlling window frame, style mask and slide animation.' },
+  { keys: ['terminal', 'shell', 'zsh', 'swiftterm'], a: 'The terminal runs on a forked SwiftTerm wrapped via <code>NSViewRepresentable</code>. All terminal views stay alive in a ZStack with opacity switching — scrollback survives tab changes.' },
+  { keys: ['price', 'buy', 'cost', 'license', 'purchase'], a: 'One-time purchase, yours forever, 14-day no-questions refund. The download page has a full-featured 30-day trial — no credit card needed.' },
+  { keys: ['hotkey', 'shortcut', 'key'], a: 'Global <kbd>⌘⌥P</kbd> summons or hides the panel from anywhere. In the terminal: <kbd>⌘T</kbd> new tab, <kbd>⌘W</kbd> close.' }
 ];
-const chatDefault = '我是 ZPad 内置 Chat——接你自己的服务商（OpenAI 兼容 API）就能用，Fast/Think 双模式随时切。想了解什么？';
+const chatDefault = 'I am ZPad\'s built-in Chat — bring your own provider (any OpenAI-compatible API), switch Fast/Think anytime. What would you like to know?';
 
 function chatAnswer(q) {
   const ql = q.toLowerCase();
@@ -2058,10 +2020,10 @@ function appendMsg(role, html) {
 }
 
 /* 预置对话 */
-appendMsg('user', 'ZPad 的热区触发是怎么实现的？');
-appendMsg('ai', '鼠标贴到屏幕边缘的感应矩形（宽度 × 高度% × 垂直居中），停留触发延迟后面板滑入。<code>PanelManager+Mouse.swift</code> 里 60 行搞定，宽/高/延迟全部可调。');
-appendMsg('user', '能换到左边吗？');
-appendMsg('ai', '可以，四种显示模式：右侧板（默认）、左侧板、居中弹窗、navbar。每种是独立的 <code>DisplayModeStrategy</code>。');
+appendMsg('user', 'How does the hot-zone trigger work?');
+appendMsg('ai', 'A sensing rectangle at the screen edge (width × height% × vertically centered). Rest there past the trigger delay and the panel slides in. <code>PanelManager+Mouse.swift</code> — width, height and delay all adjustable.');
+appendMsg('user', 'Can it live on the left instead?');
+appendMsg('ai', 'Sure — four display modes: right panel (default), left panel, centered modal, navbar. Each is its own <code>DisplayModeStrategy</code>.');
 
 function chatSend(q) {
   q = (q || '').trim();
@@ -2171,7 +2133,7 @@ let hoverEnabled = true;
 document.getElementById('hoverToggle').addEventListener('click', function () {
   hoverEnabled = !hoverEnabled;
   this.classList.toggle('on', hoverEnabled);
-  showToastMini(hoverEnabled ? '鼠标悬停触发已开启' : '鼠标悬停触发已关闭 — 用 ⌘⌥P 唤出');
+  showToastMini(hoverEnabled ? 'Hover-trigger on' : 'Hover-trigger off — use ⌘⌥P to summon');
 });
 function showToastMini(msg) {
   let t = document.getElementById('miniToast');
@@ -2199,7 +2161,7 @@ function showHzPreview() {
   hzOverlay.style.width = Math.min(HZ.width, W) + 'px';
   hzOverlay.style[appMode === 'left' ? 'left' : 'right'] = '0px';
   hzOverlay.style[appMode === 'left' ? 'right' : 'left'] = 'auto';
-  hzTag.textContent = `宽 ${HZ.width} · 高 ${HZ.heightPct}%`;
+  hzTag.textContent = `W ${HZ.width} · H ${HZ.heightPct}%`;
   hzOverlay.classList.add('show');
   clearTimeout(hzFadeTimer);
   hzFadeTimer = setTimeout(() => hzOverlay.classList.remove('show'), 1200);
@@ -2245,7 +2207,7 @@ function setAppMode(m) {
     panelOpen = false;
     coach.classList.toggle('left', m === 'left');
     coach.querySelector('span:last-child').innerHTML = m === 'left'
-      ? '鼠标移到<b>窗口左缘</b>' : '鼠标移到<b>窗口右缘</b>';
+      ? 'Fling your mouse to the <b>left edge</b>' : 'Fling your mouse to the <b>right edge</b>';
     coach.classList.remove('hide');
     setTimeout(() => coach.classList.add('hide'), 4000);
   } else {
