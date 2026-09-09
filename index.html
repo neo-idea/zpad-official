@@ -2075,7 +2075,9 @@ function inHotZone(e) {
   return appMode === 'right' ? (e.clientX > W - HZ.width) : (e.clientX < HZ.width);
 }
 
+let lastMouse = { x: -1, y: -1 };
 document.addEventListener('mousemove', (e) => {
+  lastMouse.x = e.clientX; lastMouse.y = e.clientY;
   if (inHotZone(e)) {
     clearTimeout(enterTimer);
     clearTimeout(leaveTimer);
@@ -2083,24 +2085,39 @@ document.addEventListener('mousemove', (e) => {
   } else {
     clearTimeout(enterTimer);
   }
-  // auto-close: panel open, pointer outside panel+edge for 0.3s -> hide
-  if (panelOpen && isSideMode() && !mouseInPanel) {
-    const W = window.innerWidth;
-    const nearEdge = appMode === 'right' ? e.clientX > W - HZ.width - 36 : e.clientX < HZ.width + 36;
-    if (!nearEdge) {
-      clearTimeout(leaveTimer);
-      leaveTimer = setTimeout(closePanel, 300);
-    } else clearTimeout(leaveTimer);
-  }
 }, { passive: true });
 
 /* pointer left the document entirely -> hide (fast escape works) */
 document.documentElement.addEventListener('mouseleave', () => {
-  if (panelOpen && isSideMode()) { clearTimeout(leaveTimer); leaveTimer = setTimeout(closePanel, 300); }
+  if (panelOpen && isSideMode() && hoverEnabled) { clearTimeout(leaveTimer); leaveTimer = setTimeout(closePanel, 300); }
 });
 
 winEl.addEventListener('mouseenter', () => { mouseInPanel = true; clearTimeout(leaveTimer); });
 winEl.addEventListener('mouseleave', () => { mouseInPanel = false; });
+
+/* ---------- robust auto-close (like the real app) ----------
+   Poll-based rectangle hit test — immune to frozen mouse or missed
+   enter/leave sequencing. Panel stays open only while:
+   · the pointer is inside the panel rect (with slack), or
+   · the pointer rests on the triggering screen edge, or
+   · an input inside the panel has focus (typing).            */
+setInterval(() => {
+  if (!panelOpen || !isSideMode() || !hoverEnabled) return;
+  const r = winEl.getBoundingClientRect();
+  const inPanelRect =
+    lastMouse.x >= r.left - 10 && lastMouse.x <= r.right + 10 &&
+    lastMouse.y >= r.top - 10 && lastMouse.y <= r.bottom + 10;
+  const focusInside = winEl.contains(document.activeElement) && document.activeElement !== document.body;
+  const nearEdge = appMode === 'right'
+    ? lastMouse.x > window.innerWidth - HZ.width - 36
+    : lastMouse.x < HZ.width + 36;
+  if (mouseInPanel || inPanelRect || focusInside || nearEdge || lastMouse.x < 0) {
+    clearTimeout(leaveTimer);
+  } else {
+    clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(closePanel, 300);
+  }
+}, 200);
 
 // sidebar top actions (real app semantics: collapse / hover-trigger toggle)
 document.getElementById('collapseBtn').addEventListener('click', closePanel);
