@@ -671,6 +671,13 @@
       overflow: hidden;
     }
 
+    /* panel slide in/out (mirrors the app's hot-zone summon animation) */
+    #window { transition: transform .42s cubic-bezier(.3,1,.25,1), opacity .32s ease; will-change: transform; }
+    #window.away-right { transform: translateX(calc(100% + 4px)); pointer-events: none; }
+    #window.away-left { transform: translateX(calc(-100% - 4px)); pointer-events: none; }
+    #window.away-navbar { transform: translateY(calc(-100% - 4px)); opacity: 1; pointer-events: none; }
+    #window.away-centered { transform: translate(-50%, -50%) scale(.96); opacity: 0; pointer-events: none; }
+
     /* display modes — viewport positioning (side panel: 60% height, centered) */
     #window.mode-right { top: 20vh; right: 0; bottom: auto; left: auto; width: min(540px, 92vw); height: 64vh;
       border-radius: 14px 0 0 14px; border-right: none; }
