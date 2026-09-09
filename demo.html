@@ -134,7 +134,7 @@
     .coach.hide { opacity: 0; }
 
     /* 设置弹层（侧栏 Settings 上方弹出，复现 App 设置） */
-    .settings-pop { position: absolute; left: 10px; bottom: 62px; z-index: 45; width: 264px;
+    .settings-pop { position: absolute; left: 48px; bottom: 34px; z-index: 45; width: 264px;
       background: rgba(18,18,24,.96); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12);
       border-radius: 14px; padding: 14px 16px; box-shadow: 0 18px 50px rgba(0,0,0,.55);
       opacity: 0; transform: translateY(8px) scale(.97); pointer-events: none;
@@ -184,16 +184,17 @@
       position: fixed;
       z-index: 1000;
       display: flex; flex-direction: column;
-      background: var(--win-bg);
-      border: 1px solid var(--border-light);
-      box-shadow: -28px 24px 100px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.02) inset;
+      background: rgba(30,30,34,.78);
+      backdrop-filter: blur(40px) saturate(1.4); -webkit-backdrop-filter: blur(40px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: -24px 20px 90px rgba(0,0,0,.45);
       overflow: hidden;
     }
 
     /* display modes —— 视口定位（侧板：60% 高 · 垂直居中 · 贴缘） */
-    #window.mode-right { top: 20vh; right: 0; bottom: auto; left: auto; width: min(560px, 92vw); height: 60vh;
+    #window.mode-right { top: 20vh; right: 0; bottom: auto; left: auto; width: min(540px, 92vw); height: 64vh;
       border-radius: 14px 0 0 14px; border-right: none; }
-    #window.mode-left { top: 20vh; left: 0; bottom: auto; right: auto; width: min(560px, 92vw); height: 60vh;
+    #window.mode-left { top: 20vh; left: 0; bottom: auto; right: auto; width: min(540px, 92vw); height: 64vh;
       border-radius: 0 14px 14px 0; border-left: none; box-shadow: 36px 0 110px rgba(0,0,0,.55); }
     #window.mode-centered { top: 50%; left: 50%; right: auto; bottom: auto; transform: translate(-50%,-50%);
       width: min(920px, 94vw); height: min(660px, 88vh); border-radius: 14px; box-shadow: 0 40px 130px rgba(0,0,0,.6); }
@@ -203,96 +204,6 @@
     #window .dp-body { height: 100%; }
     #window.mode-navbar .dp-body { height: auto; }
 
-    /* title bar */
-    .dp-titlebar {
-      height: 38px; flex-shrink: 0;
-      background: rgba(255,255,255,.045);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center;
-      padding: 0 12px;
-      gap: 10px;
-      user-select: none;
-    }
-    .traffic { display: flex; gap: 7px; }
-    .tl { width: 11px; height: 11px; border-radius: 50%; }
-    .tl.r { background: #ff5f57; } .tl.y { background: #febc2e; } .tl.g { background: #28c840; }
-    .dp-title {
-      font-size: 12.5px; color: var(--text-tertiary); font-weight: 500;
-      margin: 0 auto; transform: translateX(-30px);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40%;
-    }
-    .mode-switch {
-      display: flex; gap: 4px; margin-left: auto;
-      background: rgba(0,0,0,.3); border: 1px solid var(--border);
-      padding: 3px; border-radius: 8px;
-    }
-    .mode-switch button {
-      width: 26px; height: 24px; border-radius: 6px; border: none;
-      background: transparent; color: var(--text-tertiary); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; transition: all .2s;
-    }
-    .mode-switch button svg { width: 14px; height: 14px; }
-    .mode-switch button:hover { color: var(--text-secondary); background: rgba(255,255,255,.05); }
-    .mode-switch button.active { background: var(--accent-dim); color: var(--accent); }
-
-    /* body: sidebar + main */
-    .dp-body { display: flex; min-height: 0; }
-    .dp-sidebar {
-      width: 212px; flex-shrink: 0;
-      background: rgba(255,255,255,.02);
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      padding: 12px 10px;
-    }
-    .ws-head {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 10px; border-radius: 8px; cursor: pointer;
-      font-size: 12.5px; font-weight: 600; color: var(--text-secondary);
-      transition: background .2s;
-    }
-    .ws-head:hover { background: rgba(255,255,255,.04); }
-    .ws-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
-    .ws-chev { margin-left: auto; color: var(--text-quaternary); }
-    .ws-chev svg { width: 14px; height: 14px; }
-
-    .tabs { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; flex: 1; overflow-y: auto; }
-    .tab {
-      display: flex; align-items: center; gap: 9px;
-      padding: 8px 10px; border-radius: 8px;
-      font-size: 13px; color: var(--text-tertiary); cursor: pointer;
-      border: 1px solid transparent; transition: all .18s; user-select: none;
-    }
-    .tab:hover { background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.25); color: var(--text-secondary); }
-    .tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); }
-    .tab .fav {
-      width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 700;
-    }
-    .tab .name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tab .close { opacity: 0; width: 16px; height: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); transition: opacity .15s, background .15s; }
-    .tab:hover .close, .tab.active .close { opacity: .7; }
-    .tab .close:hover { opacity: 1; background: rgba(255,255,255,.1); }
-    .tab .close svg { width: 11px; height: 11px; }
-
-    .new-tab {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 10px; border-radius: 8px; cursor: pointer; margin-top: 6px;
-      font-size: 12.5px; color: var(--text-tertiary); transition: background .2s, color .2s;
-      user-select: none;
-    }
-    .new-tab:hover { background: rgba(255,255,255,.04); color: var(--text-secondary); }
-    .new-tab svg { width: 15px; height: 15px; }
-
-    .side-foot { padding: 10px 6px 2px; border-top: 1px solid var(--border); margin-top: 8px; }
-    .side-foot .row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 10px; border-radius: 7px; font-size: 12px; color: var(--text-tertiary); cursor: pointer; transition: background .2s;
-    }
-    .side-foot .row:hover { background: rgba(255,255,255,.04); }
-    .side-foot svg { width: 15px; height: 15px; }
-
     /* main area */
     .dp-main { flex: 1; min-width: 0; position: relative; background: rgba(0,0,0,.25); }
     .pane { position: absolute; inset: 0; display: none; flex-direction: column; }
@@ -300,28 +211,31 @@
 
     /* ---------- Browser pane ---------- */
     .web-toolbar {
-      height: 46px; flex-shrink: 0;
-      display: flex; align-items: center; gap: 8px;
-      padding: 0 14px;
-      background: rgba(255,255,255,.03);
-      border-bottom: 1px solid var(--border);
+      height: 40px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 10px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
     }
     .nav-btn {
-      width: 28px; height: 28px; border-radius: 7px; border: none; cursor: pointer;
+      width: 26px; height: 26px; border-radius: 6px; border: none; cursor: pointer;
       background: transparent; color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; transition: all .18s;
     }
     .nav-btn:hover { background: rgba(255,255,255,.08); color: var(--text-secondary); }
     .nav-btn svg { width: 16px; height: 16px; }
     .addr {
-      flex: 1; display: flex; align-items: center; gap: 8px;
-      height: 30px; padding: 0 12px; border-radius: 8px;
-      background: rgba(0,0,0,.35); border: 1px solid var(--border);
-      color: var(--text-secondary); font-size: 13px;
+      flex: 1; display: flex; align-items: center; gap: 6px;
+      height: 26px; padding: 0 9px; border-radius: 7px;
+      background: rgba(255,255,255,.05);
+      border: .5px solid rgba(255,255,255,.07);
+      color: var(--text-secondary); font-size: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04);
+      transition: border-color .2s, background .2s;
     }
-    .addr svg { width: 13px; height: 13px; color: #4ade80; }
+    .addr:focus-within { border-color: rgba(239,68,68,.3); background: rgba(255,255,255,.07); }
+    .addr svg { width: 11px; height: 11px; color: #4ade80; flex-shrink: 0; }
     .addr input {
       flex: 1; background: none; border: none; outline: none;
-      color: var(--text-secondary); font-size: 13px; font-family: inherit;
+      color: var(--text-secondary); font-size: 12px; font-family: inherit;
     }
     .web-frame { flex: 1; overflow-y: auto; background: #0e0e12; }
     .web-empty { padding: 40px; text-align: center; color: var(--text-tertiary); font-size: 14px; }
@@ -524,38 +438,42 @@
         </div>
       </div>
 
-      <!-- Title bar -->
-      <div class="dp-titlebar">
-        <div class="traffic">
-          <span class="tl r"></span><span class="tl y"></span><span class="tl g"></span>
-        </div>
-        <div class="dp-title">ZPad — Focus Panel</div>
-        <div class="mode-switch" title="Display mode">
-          <button data-mode="navbar" title="Navbar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-          <button data-mode="left" title="Left panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4v16M10 4h10v16H10"/></svg></button>
-          <button data-mode="centered" class="active" title="Centered"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2" stroke-width="2"/></svg></button>
-          <button data-mode="right" title="Right panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 4v16M14 4H4v16h10"/></svg></button>
-        </div>
-      </div>
+      <!-- 无标题栏（真实 App：全尺寸内容视图）；模式切换为浮动小组件 -->
 
       <!-- Body -->
       <div class="dp-body">
-        <!-- Sidebar -->
+        <!-- 模式切换（浮动小组件，真实 App 无标题栏） -->
+        <div class="mode-switch" title="Display mode">
+          <button data-mode="navbar" title="Navbar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+          <button data-mode="left" title="Left panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4v16M10 4h10v16H10"/></svg></button>
+          <button data-mode="centered" title="Centered"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2" stroke-width="2"/></svg></button>
+          <button data-mode="right" title="Right panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 4v16M14 4H4v16h10"/></svg></button>
+        </div>
+
+        <!-- Sidebar：实测 40px 窄条 -->
         <aside class="dp-sidebar">
-          <div class="ws-head">
-            <span class="ws-dot"></span><span>ZPad</span>
-            <span class="ws-chev"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
-          </div>
+          <button class="rail-btn" id="collapseBtn" title="收起面板">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="rail-btn on" id="hoverToggle" title="鼠标悬停触发（热区）开/关">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M12 7v3"/></svg>
+          </button>
+          <button class="rail-btn" title="收藏">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21z"/></svg>
+          </button>
+          <button class="rail-btn" id="newTab" title="新建标签">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v16m8-8H4"/></svg>
+          </button>
+          <div class="rail-div"></div>
           <div class="tabs" id="tabs"></div>
-          <div class="new-tab" id="newTab">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            <span>New Tab</span>
-          </div>
           <div class="side-foot">
-            <div class="row" title="Settings" id="settingsRow">
+            <div class="rail-div"></div>
+            <button class="rail-btn" title="工作区：ZPad">
+              <span style="width:10px;height:10px;border-radius:3px;background:var(--accent);display:block;"></span>
+            </button>
+            <button class="rail-btn" id="settingsRow" title="设置（触发热区调节）">
               <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.3 3.2a1 1 0 011.4 0l.6.6a1 1 0 001 .25l.8-.27a1 1 0 011.27.64l.26.82a1 1 0 00.78.68l.85.14a1 1 0 01.83 1.14l-.13.85a1 1 0 00.36.95l.68.55a1 1 0 010 1.55l-.68.55a1 1 0 00-.36.95l.13.85a1 1 0 01-.83 1.14l-.85.14a1 1 0 00-.78.68l-.26.82a1 1 0 01-1.27.64l-.8-.27a1 1 0 00-1 .25l-.6.6a1 1 0 01-1.4 0l-.6-.6a1 1 0 00-1-.25l-.8.27a1 1 0 01-1.27-.64l-.26-.82a1 1 0 00-.78-.68l-.85-.14a1 1 0 01-.83-1.14l.13-.85a1 1 0 00-.36-.95l-.68-.55a1 1 0 010-1.55l.68-.55a1 1 0 00.36-.95l-.13-.85a1 1 0 01.83-1.14l.85-.14a1 1 0 00.78-.68l.26-.82a1 1 0 011.27-.64l.8.27a1 1 0 001-.25z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
-              <span>Settings</span>
-            </div>
+            </button>
           </div>
         </aside>
 
@@ -694,14 +612,18 @@ function renderTabs() {
   tabsEl.innerHTML = '';
   tabs.forEach(t => {
     const el = document.createElement('div');
-    el.className = 'tab' + (t.id === activeId ? ' active' : '');
+    el.className = 'tab' + (t.id === activeId ? ' active' : '') + (t.type === 'web' ? ' loaded' : '');
     el.dataset.id = t.id;
+    el.dataset.hint = t.name;
     const fav = FAV[t.favKey || t.type];
-    el.innerHTML = `
-      <span class="fav" style="background:${fav.bg};color:#fff">${fav.t}</span>
-      <span class="name">${t.name}</span>
-      <span class="close" title="Close"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
+    const inner = t.type === 'terminal'
+      ? `<span class="fav term-ico"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>`
+      : t.type === 'claude'
+        ? `<span class="fav" style="background:linear-gradient(135deg,#c084fc,#7c3aed)">C</span>`
+        : `<span class="fav" style="background:${fav.bg}">${fav.t}</span>`;
+    el.innerHTML = `${inner}<span class="dot"></span><span class="close" title="关闭标签"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
     el.addEventListener('click', () => activate(t.id));
+    el.addEventListener('contextmenu', (e) => { e.preventDefault(); closeTab(t.id); });
     el.querySelector('.close').addEventListener('click', (e) => { e.stopPropagation(); closeTab(t.id); });
     tabsEl.appendChild(el);
   });
@@ -1136,7 +1058,7 @@ function togglePanel() { panelOpen ? closePanel() : openPanel(); }
 
 /* 视口级热区命中：宽度 × 高度%（垂直居中） */
 function inHotZone(e) {
-  if (!isSideMode() || panelOpen) return false;
+  if (!isSideMode() || panelOpen || !hoverEnabled) return false;
   const W = window.innerWidth, H = window.innerHeight;
   const h = H * HZ.heightPct / 100, top = (H - h) / 2;
   if (e.clientY < top || e.clientY > top + h) return false;
@@ -1169,6 +1091,26 @@ document.documentElement.addEventListener('mouseleave', () => {
 
 winEl.addEventListener('mouseenter', () => { mouseInPanel = true; clearTimeout(leaveTimer); });
 winEl.addEventListener('mouseleave', () => { mouseInPanel = false; });
+
+// 侧栏顶部操作（真实 App 语义：收起面板 / 悬停触发开关）
+document.getElementById('collapseBtn').addEventListener('click', closePanel);
+let hoverEnabled = true;
+document.getElementById('hoverToggle').addEventListener('click', function () {
+  hoverEnabled = !hoverEnabled;
+  this.classList.toggle('on', hoverEnabled);
+  showToastMini(hoverEnabled ? '鼠标悬停触发已开启' : '鼠标悬停触发已关闭 — 用 ⌘⌥P 唤出');
+});
+function showToastMini(msg) {
+  let t = document.getElementById('miniToast');
+  if (!t) {
+    t = document.createElement('div'); t.id = 'miniToast';
+    t.style.cssText = 'position:fixed;left:50%;top:24px;transform:translate(-50%,-8px);z-index:2000;background:rgba(38,38,44,.95);border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:8px 15px;font-size:12.5px;color:rgba(235,235,240,.92);box-shadow:0 10px 34px rgba(0,0,0,.5);opacity:0;transition:all .25s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translate(-50%,0)'; });
+  clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translate(-50%,-8px)'; }, 2200);
+}
 
 // 全局快捷键 ⌘⌥P（e.code 避开 ⌥ 特殊字符）
 document.addEventListener('keydown', (e) => {
