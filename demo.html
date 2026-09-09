@@ -322,7 +322,7 @@
       flex: 1; background: none; border: none; outline: none;
       color: var(--text-secondary); font-size: 12px; font-family: inherit;
     }
-    .web-frame { flex: 1; overflow-y: auto; background: #0e0e12; }
+    .web-frame { flex: 1; overflow-y: auto; background: transparent; position: relative; }
     .web-empty { padding: 40px; text-align: center; color: var(--text-tertiary); font-size: 14px; }
 
     /* rendered fake pages */
@@ -572,7 +572,7 @@
               <button class="nav-btn" id="reload" title="Reload"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M20 9a8 8 0 00-14.9-3M4 15a8 8 0 0014.9 3"/></svg></button>
               <label class="addr">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                <input id="addr" value="zpad.app" spellcheck="false" />
+                <input id="addr" value="chatgpt.com" spellcheck="false" />
               </label>
               <button class="nav-btn" title="Open in new" id="go"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5v5M19 5l-7 7M12 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-6"/></svg></button>
             </div>
@@ -667,6 +667,7 @@ const mainEl = document.getElementById('main');
 
 const FAV = {
   zpad: { bg: 'linear-gradient(135deg,#ef4444,#b91c1c)', t: 'Z' },
+  chatgpt: { bg: '#0d0d0d', t: '✳' },
   apple: { bg: '#60a5fa', t: '' },
   terminal: { bg: '#1a1a1a', t: '>_' },
   claude: { bg: '#c084fc', t: 'C' },
@@ -719,7 +720,7 @@ function closeTab(id) {
   if (idx < 0) return;
   tabs.splice(idx, 1);
   if (!tabs.length) {
-    addTab({ type: 'web', favKey: 'zpad', name: 'ZPad 官网', url: 'zpad.app' });
+    addTab({ type: 'web', favKey: 'chatgpt', name: 'ChatGPT', url: 'chatgpt.com' });
     return;
   }
   if (activeId === id) activate(tabs[Math.min(idx, tabs.length - 1)].id);
@@ -781,6 +782,8 @@ function renderWeb(url) {
     webFrame.innerHTML = applePage();
   } else if (url.includes('swift.org')) {
     webFrame.innerHTML = docsPage('Swift.org', 'A powerful open-source language from Apple.', 'swift');
+  } else if (url.includes('chatgpt.com') || url.includes('openai.com')) {
+    webFrame.innerHTML = chatgptPage();
   } else if (url.includes('zpad')) {
     webFrame.innerHTML = zpadHome();
   } else {
@@ -821,6 +824,27 @@ function zpadHome() {
         <span style="margin-left:auto;font-size:11px;color:rgba(235,235,240,.3)">今天</span>
       </div>`).join('')}
     </div>
+  </div>`;
+}
+
+function chatgptPage() {
+  const chips = ['Summarize text', 'Brainstorm ideas', 'Analyze data', 'Make a plan', 'Code', 'Image ideas'];
+  return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:30px 26px;gap:0">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:34px">
+      <span style="width:30px;height:30px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px;color:#0d0d0d">✳</span>
+      <span style="font-size:17px;font-weight:600;color:rgba(238,238,242,.9)">ChatGPT</span>
+    </div>
+    <div style="font-size:21px;font-weight:600;color:rgba(238,238,242,.92);text-align:center;letter-spacing:-.2px">什么可以帮忙的？</div>
+    <div style="width:100%;max-width:440px;margin-top:28px;position:relative">
+      <input placeholder="Ask anything" style="width:100%;box-sizing:border-box;height:50px;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:0 96px 0 20px;color:rgba(238,238,242,.9);outline:none;font-size:14px;transition:all .2s" onfocus="this.style.borderColor='rgba(255,255,255,.22)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'" />
+      <span style="position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer">
+        <svg style="width:15px;height:15px;color:#0d0d0d" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M12 19V5m-7 7l7-7 7 7"/></svg>
+      </span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px;max-width:440px">
+      ${chips.map(c => `<span style="padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:12.5px;color:rgba(235,235,240,.7);cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">${c}</span>`).join('')}
+    </div>
+    <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:rgba(235,235,240,.3)">ChatGPT 也可能犯错。请核查重要信息。</div>
   </div>`;
 }
 
@@ -868,7 +892,7 @@ function genericPage(url) {
     <div class="kicker">${url}</div>
     <h2>${url.split('/')[0]}</h2>
     <p>This is a live preview of the ZPad in-app browser. In the real app, this loads the actual page with full WKWebView — JavaScript, logins, everything.</p>
-    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">zpad.app</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
+    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">chatgpt.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
   </div>`;
 }
 
@@ -1312,7 +1336,7 @@ document.querySelectorAll('.mode-switch button').forEach(x => x.classList.toggle
 /* =========================================================
    Init
    ========================================================= */
-addTab({ type: 'web', favKey: 'zpad', name: 'ZPad 官网', url: 'zpad.app' });
+addTab({ type: 'web', favKey: 'chatgpt', name: 'ChatGPT', url: 'chatgpt.com' });
 addTab({ type: 'terminal', favKey: 'terminal', name: 'Terminal' });
 addTab({ type: 'claude', favKey: 'claude', name: 'Claude Code' });
 // start on the web tab
