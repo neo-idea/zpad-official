@@ -358,27 +358,31 @@
     .term-sel { background: rgba(96,165,250,.25); }
     .term-link { color: #60a5ff; text-decoration: underline; cursor: pointer; }
 
-    /* ---------- Claude Code pane ---------- */
-    .claude { flex: 1; display: flex; flex-direction: column; background: var(--panel-bg); }
-    .claude-head { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 12px; color: var(--text-tertiary); }
-    .claude-head .t { color: #c084fc; font-weight: 600; }
-    .claude-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-    .msg { max-width: 88%; }
-    .msg.user { align-self: flex-end; background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.25); color: var(--text-primary); padding: 9px 13px; border-radius: 14px 14px 4px 14px; font-size: 13.5px; }
-    .msg.bot { align-self: flex-start; display: flex; gap: 10px; }
-    .msg.bot .av { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg,#c084fc,#ef4444); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: white; }
-    .msg.bot .bubble { background: rgba(255,255,255,.04); border: 1px solid var(--border); padding: 10px 13px; border-radius: 4px 14px 14px 14px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
-    .msg.bot .bubble code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(110,118,129,.2); padding: 1px 5px; border-radius: 4px; color: #e6e6e6; }
-    .msg.bot.typing .bubble::after { content: '▋'; animation: blink 1s steps(1) infinite; color: var(--accent); margin-left: 2px; }
-    @keyframes blink { 50% { opacity: 0; } }
-    .claude-input { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); background: rgba(0,0,0,.25); }
-    .claude-input input { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px; padding: 10px 13px; color: var(--text-primary); font-size: 13.5px; outline: none; }
-    .claude-input input:focus { border-color: var(--accent); }
-    .claude-input button { background: var(--accent); color: white; border: none; border-radius: 10px; padding: 0 16px; height: 40px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .claude-input button svg { width: 15px; height: 15px; }
-    .claude-suggest { display: flex; gap: 8px; padding: 0 14px 12px; flex-wrap: wrap; background: rgba(0,0,0,.25); border-top: 1px solid var(--border); }
-    .claude-suggest button { background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text-secondary); border-radius: 999px; padding: 6px 12px; font-size: 12px; cursor: pointer; transition: all .2s; }
-    .claude-suggest button:hover { border-color: var(--accent); color: var(--text-primary); }
+    /* ---------- Claude Code pane（终端界面） ---------- */
+    .cc {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: var(--term-bg);
+      font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+      font-size: 12.5px; line-height: 1.6; color: var(--term-fg);
+    }
+    .cc-out { flex: 1; overflow-y: auto; padding: 14px 16px 8px; white-space: pre-wrap; word-break: break-word; }
+    .cc-logo { color: #d97757; font-weight: 700; }
+    .cc b { color: #fff; font-weight: 700; }
+    .cc-rule { border-top: 1px solid rgba(255,255,255,.14); }
+    .cc-input-line { display: flex; align-items: center; gap: 9px; padding: 8px 16px; }
+    .cc-prompt { color: #d97757; font-weight: 700; user-select: none; }
+    .cc-input-line input {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--term-fg); font: inherit; caret-color: #d97757; padding: 0;
+    }
+    .cc-status { padding: 6px 16px 8px; font-size: 11.5px; color: var(--text-tertiary); user-select: none; }
+    .cc-q { color: var(--term-fg); }
+    .cc-q .cc-prompt-i { color: #d97757; }
+    .cc-a { color: rgba(222,222,228,.82); margin: 2px 0 12px; }
+    .cc-a .cc-arrow { color: var(--text-tertiary); margin-right: 8px; }
+    .cc-a code { font-family: inherit; background: rgba(110,118,129,.18); padding: 1px 5px; border-radius: 4px; color: #e6e6e6; font-size: 11.5px; }
+    .cc-think::after { content: '▋'; animation: ccblink 1s steps(1) infinite; color: #d97757; }
+    @keyframes ccblink { 50% { opacity: 0; } }
 
     /* ---------- CTA + Footer ---------- */
     .cta-wrap { max-width: 1100px; margin: 0 auto 40px; padding: 0 40px; text-align: center; }
@@ -567,20 +571,17 @@
             </div>
           </div>
 
-          <!-- Claude Code pane -->
+          <!-- Claude Code pane：终端界面 -->
           <div class="pane" data-pane="claude">
-            <div class="claude">
-              <div class="claude-head"><span>●</span><span>claude code</span><span class="t" style="margin-left:auto">model · sonnet · project: ZPad</span></div>
-              <div class="claude-body" id="claudeBody"></div>
-              <div class="claude-suggest" id="claudeSuggest">
-                <button>Explain this repo</button>
-                <button>Find the terminal code</button>
-                <button>Write a shell one-liner</button>
+            <div class="cc">
+              <div class="cc-out" id="ccOut"></div>
+              <div class="cc-rule"></div>
+              <div class="cc-input-line">
+                <span class="cc-prompt">❯</span>
+                <input id="claudeInput" autocomplete="off" spellcheck="false" />
               </div>
-              <div class="claude-input">
-                <input id="claudeInput" placeholder="Ask Claude Code anything…" />
-                <button id="claudeSend"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
-              </div>
+              <div class="cc-rule"></div>
+              <div class="cc-status">⏸ manual mode on · ? for shortcuts · ← for agents</div>
             </div>
           </div>
         </div>
@@ -682,7 +683,7 @@ function renderTabs() {
     const inner = t.type === 'terminal'
       ? `<span class="fav term-ico"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>`
       : t.type === 'claude'
-        ? `<span class="fav" style="background:linear-gradient(135deg,#c084fc,#7c3aed)">C</span>`
+        ? `<span class="fav" style="background:linear-gradient(135deg,#d97757,#b45309)">✳</span>`
         : fav.img
           ? `<img class="fav" src="${fav.img}" alt="" />`
           : `<span class="fav" style="background:${fav.bg}">${fav.t}</span>`;
@@ -1089,18 +1090,18 @@ document.querySelector('.pane[data-pane="terminal"]').addEventListener('click', 
 /* =========================================================
    Claude Code simulated chat
    ========================================================= */
-const claudeBody = document.getElementById('claudeBody');
+const ccOut = document.getElementById('ccOut');
 const claudeInput = document.getElementById('claudeInput');
 
 const claudeResponses = [
-  { keys: ['explain', 'repo', 'what', 'about'], a: 'This is the <code>ZPad</code> repo — a macOS status-bar panel app. The architecture is clean and protocol-oriented: <code>DisplayModeStrategy</code> handles window positioning across 4 modes, <code>TabBehaviorStrategy</code> unifies web & terminal tabs via an <code>AnyTab</code> type erasure. The brain is <code>PanelManager.swift</code>; the UI is <code>HomepageView.swift</code>.' },
-  { keys: ['terminal', 'swiftterm', 'shell'], a: 'The terminal is powered by a <b>forked SwiftTerm</b> at <code>SwiftTerm-fork/</code>, wrapped in <code>TerminalContainerView</code> via <code>NSViewRepresentable</code>. Clever bit: all terminal views stay alive in a ZStack with opacity-based switching, so scrollback buffers are preserved when you switch tabs.' },
-  { keys: ['hotkey', 'shortcut', 'summon', 'mode'], a: 'Summon with <code>Cmd + Opt + P</code> — the panel slides out in ~0.3s. Four display modes: side-panel left/right, centered modal, and navbar. Each mode is its own <code>DisplayModeStrategy</code> implementation controlling frame, style mask, and animation.' },
-  { keys: ['file', 'find', 'where'], a: 'Looking at the tree: hotkey handling lives in <code>ZPadApp.swift</code>, window geometry in <code>PanelManager.swift</code>, and the tabbed sidebar in <code>HomepageView.swift</code>. Constants (sizes, animation, hot-zone) are centralized in <code>Constants.swift</code>.' },
-  { keys: ['shell', 'one-liner', 'oneliner', 'script'], a: 'Here\'s a handy one — find Swift files bigger than 300 lines:<br><code>find . -name "*.swift" -exec wc -l {} + | sort -rn | head</code>' },
-  { keys: ['claude', 'ai'], a: 'Yes — Claude Code runs directly inside the terminal tab. You can edit files, run commands, and get help without ever leaving your focus flow. That\'s literally what you\'re looking at right now. 🙂' }
+  { keys: ['explain', 'repo', 'what', 'about'], a: 'This is the <code>ZPad</code> repo — a macOS status-bar panel app. The architecture is protocol-oriented: <code>DisplayModeStrategy</code> handles window positioning, <code>TabBehaviorStrategy</code> unifies web & terminal tabs via <code>AnyTab</code> type erasure. The brain is <code>PanelManager.swift</code>; the UI is <code>HomepageView.swift</code>.' },
+  { keys: ['terminal', 'swiftterm', 'shell'], a: 'The terminal is powered by a <b>forked SwiftTerm</b> at <code>SwiftTerm-fork/</code>, wrapped via <code>NSViewRepresentable</code>. All terminal views stay alive in a ZStack with opacity switching, so scrollback buffers survive tab changes.' },
+  { keys: ['hotkey', 'shortcut', 'summon'], a: 'Summon with <code>Cmd+Opt+P</code> — panel slides out in ~0.3s. Right-edge hot zone with configurable width/height/delay, exactly like the sliders in this demo.' },
+  { keys: ['file', 'find', 'where'], a: 'Hotkey handling: <code>ZPadApp.swift</code> · window geometry: <code>PanelManager.swift</code> · tabbed sidebar: <code>HomepageView.swift</code> · constants: <code>Constants.swift</code>.' },
+  { keys: ['shell', 'one-liner', 'oneliner', 'script'], a: 'Find Swift files over 300 lines:<br><code>find . -name "*.swift" -exec wc -l {} + | sort -rn | head</code>' },
+  { keys: ['claude', 'ai', 'glm'], a: 'Yes — Claude Code runs directly inside this tab. Edit files, run commands, stay in flow. That is literally what you are looking at right now. ✓' }
 ];
-const claudeDefault = 'I can explain the repo, find specific code, write shell snippets, or walk through the architecture. What do you want to dig into?';
+const claudeDefault = 'I can explain the repo, find code, write shell snippets, or walk through the architecture. What do you want to dig into?';
 
 function claudeAnswer(q) {
   const ql = q.toLowerCase();
@@ -1108,28 +1109,45 @@ function claudeAnswer(q) {
   return claudeDefault;
 }
 
+/* boot 画面（动态时间，无 MCP/hook 报错块） */
+(function ccBoot() {
+  const t = new Date(), pad = n => String(n).padStart(2, '0');
+  const ts = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
+  const el = document.createElement('div');
+  el.innerHTML = `<span class="t-dim">[${ts}]</span> <span class="t-blu">[~/Code/GITHUB/ZPad]</span> <span class="t-yel">[master ✖]</span> <span class="t-grn">❱❱❲</span> c
+<span class="cc-logo"> ▐▛███▛█</span>   <b>Claude Code</b> v2.1.263
+<span class="cc-logo">▝▜██████▀</span>  <span class="t-dim">glm-5.3[1M] · API Usage Billing</span>
+<span class="cc-logo">  ▝▝ ▝▝</span>    <span class="t-blu">~/Code/GITHUB/ZPad</span>
+
+`;
+  ccOut.appendChild(el);
+})();
+
 function claudeSend(q) {
   q = (q || '').trim();
   if (!q) return;
-  const u = document.createElement('div'); u.className = 'msg user'; u.textContent = q; claudeBody.appendChild(u);
-  const b = document.createElement('div'); b.className = 'msg bot typing';
-  b.innerHTML = `<div class="av">C</div><div class="bubble"></div>`; claudeBody.appendChild(b);
-  claudeBody.scrollTop = claudeBody.scrollHeight;
+  const u = document.createElement('div'); u.className = 'cc-q';
+  u.innerHTML = `<span class="cc-prompt-i">❯</span> ${q.replace(/</g,'&lt;')}`;
+  ccOut.appendChild(u);
+  const a = document.createElement('div'); a.className = 'cc-a cc-think';
+  a.innerHTML = `<span class="cc-arrow">⎿</span>`;
+  ccOut.appendChild(a);
+  ccOut.scrollTop = ccOut.scrollHeight;
   const answer = claudeAnswer(q);
-  // stream the answer word by word
-  let i = 0; const words = answer.split(' ');
-  const tick = () => {
-    b.querySelector('.bubble').innerHTML = words.slice(0, i).join(' ');
-    claudeBody.scrollTop = claudeBody.scrollHeight;
-    if (i < words.length) { i++; setTimeout(tick, 35); }
-    else { b.classList.remove('typing'); b.querySelector('.bubble').innerHTML = answer; }
-  };
-  setTimeout(tick, 280);
+  setTimeout(() => {
+    let i = 0; const words = answer.split(' ');
+    a.classList.remove('cc-think');
+    const tick = () => {
+      a.innerHTML = `<span class="cc-arrow">⎿</span>` + words.slice(0, i).join(' ');
+      ccOut.scrollTop = ccOut.scrollHeight;
+      if (i < words.length) { i++; setTimeout(tick, 30); }
+    };
+    tick();
+  }, 320);
+  ccOut.scrollTop = ccOut.scrollHeight;
 }
 
-document.getElementById('claudeSend').addEventListener('click', () => { claudeSend(claudeInput.value); claudeInput.value = ''; });
 claudeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { claudeSend(claudeInput.value); claudeInput.value = ''; } });
-document.querySelectorAll('#claudeSuggest button').forEach(b => b.addEventListener('click', () => claudeSend(b.textContent)));
 
 /* =========================================================
    Hot-Zone Engine v2 — 页面即桌面
@@ -1300,11 +1318,11 @@ setAppMode('right');
 /* =========================================================
    Init
    ========================================================= */
+// 三个 Tab：1 网页 · 2 终端 · 3 Claude Code
 addTab({ type: 'web', favKey: 'chatgpt', name: 'ChatGPT', url: 'chatgpt.com' });
 addTab({ type: 'terminal', favKey: 'terminal', name: 'Terminal' });
 addTab({ type: 'claude', favKey: 'claude', name: 'Claude Code' });
-// start on the web tab
-activate(1);
+activate(1);  // id=1 → 第一个 Tab（网页）
 boot();
 </script>
 </body>
