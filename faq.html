@@ -33,7 +33,7 @@
       { "@type": "Question", "name": "What data does ZPad collect?", "acceptedAnswer": { "@type": "Answer", "text": "Analytics is opt-in and off by default. Browsing data, terminal sessions, and chats stay on your Mac. Network calls are limited to optional favicon lookups, license verification, optional update checks, and checkout/emails." } },
       { "@type": "Question", "name": "Is ZPad an Electron app?", "acceptedAnswer": { "@type": "Answer", "text": "No. ZPad is native Swift + SwiftUI with Apple WKWebView and a real SwiftTerm terminal. Release builds are Developer ID signed and Apple notarized." } },
       { "@type": "Question", "name": "Can I use Claude Code or other CLI tools inside ZPad?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The built-in terminal is a real emulator with a full PTY — run claude, git, npm, docker, ssh, vim, anything." } },
-      { "@type": "Question", "name": "How do updates work?", "acceptedAnswer": { "@type": "Answer", "text": "Update checks are manual by default and can be enabled in Settings → Privacy. Update metadata is signed; you can always install manually from GitHub Releases." } },
+      { "@type": "Question", "name": "How do updates work?", "acceptedAnswer": { "@type": "Answer", "text": "Update checks are manual by default and can be enabled in Settings → Privacy. Update metadata is signed; you can always install manually from the official download page." } },
       { "@type": "Question", "name": "How do I get a refund or transfer my license to a new Mac?", "acceptedAnswer": { "@type": "Answer", "text": "For refunds, email hello@zpad.app within 14 days with your order details. To move to a new Mac, deactivate the old device in the license screen (if at the 5-device limit) and activate on the new one." } }
     ]
   }
@@ -179,7 +179,7 @@
     <a href="docs.html">Docs</a>
     <a href="changelog.html">What's New</a>
     <a href="support.html">Support</a>
-    <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a class="btn-primary" href="download.html" target="_blank" rel="noopener">Download</a>
   </nav>
 </header>
 
@@ -294,7 +294,7 @@
     </details>
     <details class="faqitem">
       <summary>Are the builds signed and notarized?</summary>
-      <div class="a"><p>Yes — Developer ID signed, Apple notarized, and stapled, published only via GitHub Releases. If macOS calls a download “damaged”, don't bypass Gatekeeper: re-download from the official page.</p></div>
+      <div class="a"><p>Yes — Developer ID signed, Apple notarized, and stapled, published only via the official download page. If macOS calls a download “damaged”, don't bypass Gatekeeper: re-download from the official page.</p></div>
     </details>
     <details class="faqitem">
       <summary>What does the license server see?</summary>
@@ -308,7 +308,7 @@
 
     <details class="faqitem" open>
       <summary>macOS says the app is “damaged”</summary>
-      <div class="a"><p>Delete it and re-download from the official <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases page</a>. Genuine notarized builds open cleanly; never bypass Gatekeeper warnings. Full steps in the <a href="docs.html#troubleshooting">troubleshooting guide</a>.</p></div>
+      <div class="a"><p>Delete it and re-download from the official <a href="download.html" target="_blank" rel="noopener">Releases page</a>. Genuine notarized builds open cleanly; never bypass Gatekeeper warnings. Full steps in the <a href="docs.html#troubleshooting">troubleshooting guide</a>.</p></div>
     </details>
     <details class="faqitem">
       <summary>⌘⌥P does nothing</summary>
@@ -336,7 +336,7 @@
 </main>
 
 <footer class="footer">
-  <p>&copy; 2024-2026 pekaboo · <a href="docs.html">Docs</a> · <a href="changelog.html">Changelog</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="eula.html">EULA</a></p>
+  <p>&copy; 2024-2026 ZPad · <a href="docs.html">Docs</a> · <a href="changelog.html">Changelog</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="eula.html">EULA</a></p>
 </footer>
 
 </body>

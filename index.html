@@ -7,7 +7,7 @@
 
   <title>ZPad | Terminal + Browser, One Hotkey Away</title>
   <meta name="description" content="ZPad slides a real terminal and a real browser out of your screen edge with one hotkey (Cmd+Opt+P). Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
-  <meta name="author" content="pekaboo" />
+  <meta name="author" content="ZPad" />
   <meta name="keywords" content="ZPad, macOS terminal, macOS browser, focus panel, status bar app, SwiftTerm, WKWebView, productivity, hotkey panel, workspace" />
   <link rel="canonical" href="https://zpad.app/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
@@ -44,7 +44,7 @@
       "priceCurrency": "USD",
       "description": "One-time lifetime license. Free 30-day trial."
     },
-    "creator": { "@type": "Person", "name": "pekaboo" },
+    "creator": { "@type": "Person", "name": "ZPad" },
     "softwareVersion": "1.0.1"
   }
   </script>
@@ -713,25 +713,6 @@
     .addr input { flex: 1; background: none; border: none; outline: none; color: var(--text-secondary); font-size: 13px; font-family: inherit; }
     .web-frame { flex: 1; overflow-y: auto; background: #0e0e12; }
     .web-empty { padding: 40px; text-align: center; color: var(--text-tertiary); font-size: 14px; }
-    .page-github { font-size: 14px; color: #c9d1d9; }
-    .gh-top { display: flex; align-items: center; gap: 14px; padding: 16px 28px; border-bottom: 1px solid #21262d; }
-    .gh-repo { font-size: 19px; font-weight: 600; color: #58a6ff; }
-    .gh-repo b { color: var(--text-primary); font-weight: 600; }
-    .gh-badge { font-size: 11px; padding: 3px 9px; border-radius: 999px; border: 1px solid #30363d; color: #8b949e; }
-    .gh-meta { display: flex; gap: 18px; padding: 14px 28px; border-bottom: 1px solid #21262d; font-size: 13px; color: #8b949e; flex-wrap: wrap; }
-    .gh-meta span { display: inline-flex; align-items: center; gap: 6px; }
-    .gh-files { padding: 8px 28px; }
-    .gh-file { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 6px; font-size: 13.5px; }
-    .gh-file:hover { background: #161b22; }
-    .gh-file .ico { color: #8b949e; display: flex; }
-    .gh-file .ico svg { width: 15px; height: 15px; display: block; }
-    .gh-file .nm { color: #d2a8ff; }
-    .gh-file .nm.folder { color: #58a6ff; font-weight: 500; }
-    .gh-file .msg { margin-left: auto; color: #8b949e; font-size: 12.5px; max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .gh-readme { margin: 14px 28px 30px; border: 1px solid #21262d; border-radius: 8px; overflow: hidden; }
-    .gh-readme .h { padding: 12px 18px; border-bottom: 1px solid #21262d; color: var(--text-primary); font-weight: 600; font-size: 14px; background: #0d1117; }
-    .gh-readme .b { padding: 18px 20px; font-size: 13.5px; color: #c9d1d9; line-height: 1.7; }
-    .gh-readme .b code { background: rgba(110,118,129,.25); padding: 2px 6px; border-radius: 5px; font-size: 12px; font-family: 'Geist Mono', monospace; }
     .page-docs { padding: 40px 56px; }
     .page-docs .kicker { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
     .page-docs h2 { font-size: 26px; font-weight: 700; margin: 10px 0 16px; }
@@ -814,7 +795,6 @@
       .dp-sidebar .name, .dp-sidebar .close, .ws-head span:not(.ws-dot), .ws-chev, .new-tab span, .side-foot .row span { display: none; }
       .tab { justify-content: center; padding: 9px; }
       .dp-title { display: none; }
-      .gh-file .msg { display: none; }
       .hero { padding-top: 120px; }
     }
     @media (max-width: 640px) {
@@ -824,7 +804,6 @@
       }
       .dp-body { height: 480px; }
       .page-docs { padding: 26px 22px; }
-      .gh-top, .gh-meta, .gh-files, .gh-readme { padding-left: 18px; padding-right: 18px; margin-left: 0; margin-right: 0; }
       .foot-grid { grid-template-columns: 1fr 1fr; }
       .price-card { padding: 30px 24px 28px; }
       .hero-cta .btn-primary, .hero-cta .btn-ghost { width: 100%; justify-content: center; }
@@ -849,7 +828,7 @@
       <a href="docs.html">Docs</a>
       <a href="faq.html">FAQ</a>
     </div>
-    <a class="nav-cta" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">
+    <a class="nav-cta" href="download.html" target="_blank" rel="noopener">
       <span>Download</span>
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
     </a>
@@ -867,7 +846,7 @@
   <a href="docs.html">Docs</a>
   <a href="faq.html">FAQ</a>
   <a href="changelog.html">What's New</a>
-  <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download ↓</a>
+  <a href="download.html" target="_blank" rel="noopener">Download ↓</a>
 </div>
 
 <main id="top">
@@ -881,7 +860,7 @@
       <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> from anywhere. Work, dismiss, resume. Never switch apps again.
     </p>
     <div class="hero-cta reveal reveal-d2">
-      <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">
+      <a class="btn-primary" href="download.html" target="_blank" rel="noopener">
         Download Free
         <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
       </a>
@@ -946,7 +925,7 @@
                 <button class="nav-btn" id="reload" title="Reload"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M20 9a8 8 0 00-14.9-3M4 15a8 8 0 0014.9 3"/></svg></button>
                 <label class="addr">
                   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                  <input id="addr" value="github.com/pekaboo/ZPad" spellcheck="false" />
+                  <input id="addr" value="developer.apple.com" spellcheck="false" />
                 </label>
                 <button class="nav-btn" title="Open in new" id="go"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5v5M19 5l-7 7M12 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-6"/></svg></button>
               </div>
@@ -956,10 +935,10 @@
             <!-- Terminal pane -->
             <div class="pane" data-pane="terminal">
               <div class="term">
-                <div class="term-head"><span>●</span><span>zsh — 120×34</span><span class="t" style="margin-left:auto">pekaboo@zpad — ~/ZPad</span></div>
+                <div class="term-head"><span>●</span><span>zsh — 120×34</span><span class="t" style="margin-left:auto">dev@zpad — ~/ZPad</span></div>
                 <div class="term-out" id="termOut"></div>
                 <div class="term-input-line" id="termLine">
-                  <span class="term-prompt"><span class="t-user">pekaboo</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path" id="termPath">~</span> <span class="t-dim">%</span></span>
+                  <span class="term-prompt"><span class="t-user">dev</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path" id="termPath">~</span> <span class="t-dim">%</span></span>
                   <input id="termInput" autofocus spellcheck="false" autocomplete="off" />
                 </div>
               </div>
@@ -1152,7 +1131,7 @@
     <h2 class="reveal">Stop switching.<br>Start shipping.</h2>
     <p class="reveal reveal-d1">30 seconds to install. 30 days free. One hotkey to a cleaner desktop.</p>
     <div class="hero-cta reveal reveal-d2">
-      <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">
+      <a class="btn-primary" href="download.html" target="_blank" rel="noopener">
         Download Free
         <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
       </a>
@@ -1177,7 +1156,7 @@
       <a href="#features">Features</a>
       <a href="#demo">Live demo</a>
       <a href="#pricing">Pricing</a>
-      <a href="https://github.com/pekaboo/ZPad/releases" target="_blank" rel="noopener">Download</a>
+      <a href="download.html" target="_blank" rel="noopener">Download</a>
     </div>
     <div class="foot-col">
       <h4>Resources</h4>
@@ -1195,7 +1174,7 @@
     </div>
   </div>
   <div class="foot-bottom">
-    <span>© 2024-2026 pekaboo. Built for focused work.</span>
+    <span>© 2024-2026 ZPad. Built for focused work.</span>
     <span>macOS 15.1+ · Apple Silicon · All prices USD</span>
   </div>
 </footer>
@@ -1260,7 +1239,7 @@ const tabsEl = document.getElementById('tabs');
 const mainEl = document.getElementById('main');
 
 const FAV = {
-  github: { bg: '#6e5494', t: 'GH' },
+  apple: { bg: '#60a5fa', t: '' },
   terminal: { bg: '#1a1a1a', t: '>_' },
   claude: { bg: '#c084fc', t: 'C' },
   docs: { bg: '#ef4444', t: 'D' },
@@ -1300,7 +1279,7 @@ function closeTab(id) {
   if (idx < 0) return;
   tabs.splice(idx, 1);
   if (!tabs.length) {
-    addTab({ type: 'web', favKey: 'github', name: 'GitHub', url: 'github.com/pekaboo/ZPad' });
+    addTab({ type: 'web', favKey: 'apple', name: 'Apple Dev', url: 'developer.apple.com' });
     return;
   }
   if (activeId === id) activate(tabs[Math.min(idx, tabs.length - 1)].id);
@@ -1356,14 +1335,12 @@ const ICO_FILE = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.75 1.
 
 function renderWeb(url) {
   url = (url || '').trim().replace(/^https?:\/\//, '');
-  if (url.includes('github.com')) {
-    webFrame.innerHTML = githubPage(url);
-  } else if (url.includes('duckduckgo.com') || url === '') {
+  if (url.includes('duckduckgo.com') || url === '') {
     webFrame.innerHTML = ddgPage();
   } else if (url.includes('developer.apple.com') || url.includes('apple.com')) {
     webFrame.innerHTML = applePage();
   } else if (url.includes('swift.org')) {
-    webFrame.innerHTML = docsPage('Swift.org', 'A powerful open-source language from Apple.');
+    webFrame.innerHTML = docsPage('Swift.org', 'A powerful language from Apple.');
   } else if (url.includes('zpad')) {
     webFrame.innerHTML = docsPage('ZPad Docs', 'Everything about the focus panel.');
   } else {
@@ -1371,40 +1348,6 @@ function renderWeb(url) {
   }
 }
 
-function githubPage(url) {
-  return `
-  <div class="page-github">
-    <div class="gh-top">
-      <svg fill="#8b949e" viewBox="0 0 16 16" width="20" height="20"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      <span class="gh-repo">pekaboo / <b>ZPad</b></span>
-      <span class="gh-badge">Public</span>
-    </div>
-    <div class="gh-meta">
-      <span>★ 1.2k stars</span>
-      <span>⑂ 87 forks</span>
-      <span>Swift 96% · C 3%</span>
-      <span style="margin-left:auto">EULA License</span>
-    </div>
-    <div class="gh-files">
-      <div class="gh-file"><span class="ico">${ICO_FOLDER}</span><span class="nm folder">ZPad</span><span class="msg">refactor: strategy pattern for tabs</span></div>
-      <div class="gh-file"><span class="ico">${ICO_FOLDER}</span><span class="nm folder">SwiftTerm-fork</span><span class="msg">fork SwiftTerm for panel use</span></div>
-      <div class="gh-file"><span class="ico">${ICO_FILE}</span><span class="nm">ZPadApp.swift</span><span class="msg">hotkey: Cmd+Opt+P</span></div>
-      <div class="gh-file"><span class="ico">${ICO_FILE}</span><span class="nm">PanelManager.swift</span><span class="msg">4 display modes</span></div>
-      <div class="gh-file"><span class="ico">${ICO_FILE}</span><span class="nm">HomepageView.swift</span><span class="msg">sidebar + web + terminal</span></div>
-      <div class="gh-file"><span class="ico">${ICO_FILE}</span><span class="nm">README.md</span><span class="msg">initial commit</span></div>
-    </div>
-    <div class="gh-readme">
-      <div class="h">README.md</div>
-      <div class="b">
-        <strong style="color:#fff;font-size:16px">ZPad</strong><br>
-        A real terminal and a real browser, one hotkey away. Pure native Swift + SwiftUI for macOS 15.1+.<br><br>
-        <span class="t-acc">★</span> <code>Cmd + Opt + P</code> slides the panel out in 0.3s<br>
-        <span class="t-acc">★</span> 4 display modes · workspaces · compatible CLI tools<br>
-        <span class="t-acc">★</span> Not Electron. Pure native performance.
-      </div>
-    </div>
-  </div>`;
-}
 
 function ddgPage() {
   return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;padding:30px">
@@ -1450,7 +1393,7 @@ function genericPage(url) {
     <div class="kicker">${url}</div>
     <h2>${url.split('/')[0]}</h2>
     <p>This is a live preview of the ZPad in-app browser. In the real app, this loads the actual page with full WKWebView — JavaScript, logins, everything.</p>
-    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">github.com</code> · <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">developer.apple.com</code> · <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
+    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">developer.apple.com</code> · <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
   </div>`;
 }
 
@@ -1470,7 +1413,6 @@ document.getElementById('reload').addEventListener('click', () => {
 });
 function prettyName(url) {
   url = url.replace(/^https?:\/\//, '');
-  if (url.includes('github.com')) return 'GitHub';
   if (url.includes('duckduckgo')) return 'DuckDuckGo';
   const host = url.split('/')[0].replace('www.', '');
   return host.charAt(0).toUpperCase() + host.slice(1);
@@ -1492,7 +1434,7 @@ function termPrint(html) {
   termOut.scrollTop = termOut.scrollHeight;
 }
 function promptHtml() {
-  return `<span class="t-user">pekaboo</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path">${cwd}</span> <span class="t-dim">%</span>`;
+  return `<span class="t-user">dev</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path">${cwd}</span> <span class="t-dim">%</span>`;
 }
 
 const FS = {
@@ -1540,7 +1482,7 @@ const commands = {
       return isDir ? `<span class="t-blu">${k}/</span>` : (k.endsWith('.md') ? `<span class="t-grn">${k}</span>` : k);
     }).join('   ');
   },
-  pwd() { return '/Users/pekaboo/ZPad'; },
+  pwd() { return '/Users/dev/ZPad'; },
   cd(args) {
     const dir = args[0] || '~';
     if (dir === '..' || dir === '~' || dir === '/') { cwd = '~'; termPath.textContent = '~'; return ''; }
@@ -1572,7 +1514,7 @@ const commands = {
     if (sub === 'log') {
       return [
         '<span class="t-yel">commit a1b2c3d</span> (HEAD -> main, origin/main)',
-        'Author: pekaboo &lt;pekaboo@zpad.app&gt;',
+        'Author: dev &lt;dev@zpad.app&gt;',
         'Date:   Fri Jun 20 09:30:00 2026',
         '',
         '    feat: add 4 display modes + terminal tabs',
@@ -1589,7 +1531,7 @@ const commands = {
     if (args[0] === 'install' || args[0] === 'i') return ['<span class="t-dim">added 1 package in 1.2s</span>'].join('\n');
     return 'npm: try <span class="t-yel">npm test</span>';
   },
-  whoami() { return 'pekaboo'; },
+  whoami() { return 'dev'; },
   date() { return new Date().toString(); },
   zpad() {
     return [
@@ -1606,7 +1548,7 @@ const commands = {
   },
   neofetch() {
     return [
-      '<span class="t-acc">                    \'c.          </span>  <span class="t-grn">pekaboo@zpad</span>',
+      '<span class="t-acc">                    \'c.          </span>  <span class="t-grn">dev@zpad</span>',
       '<span class="t-acc">                 ,xNMM.          </span>  ----------------',
       '<span class="t-acc">               .OMMMMo           </span>  <span class="t-yel">OS</span>:      macOS Sequoia 15.1',
       '<span class="t-acc">               OMMM0,            </span>  <span class="t-yel">Host</span>:    MacBook Pro (M3)',
@@ -1623,7 +1565,7 @@ const commands = {
     ].join('\n');
   },
   clear() { termOut.innerHTML = ''; return null; },
-  sudo() { return '<span class="t-acc">pekaboo is not in the sudoers file. This incident will be reported.</span>'; },
+  sudo() { return '<span class="t-acc">dev is not in the sudoers file. This incident will be reported.</span>'; },
   exit() { return '<span class="t-dim">use the traffic light or switch tabs to leave the terminal.</span>'; }
 };
 
@@ -1714,7 +1656,7 @@ claudeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { claude
 document.querySelectorAll('#claudeSuggest button').forEach(b => b.addEventListener('click', () => claudeSend(b.textContent)));
 
 /* ===== Init ===== */
-addTab({ type: 'web', favKey: 'github', name: 'GitHub', url: 'github.com/pekaboo/ZPad' });
+addTab({ type: 'web', favKey: 'apple', name: 'Apple Dev', url: 'developer.apple.com' });
 addTab({ type: 'terminal', favKey: 'terminal', name: 'Terminal' });
 addTab({ type: 'claude', favKey: 'claude', name: 'Claude Code' });
 activate(1);

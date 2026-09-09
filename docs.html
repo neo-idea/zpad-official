@@ -293,7 +293,7 @@
     <a href="faq.html">FAQ</a>
     <a href="changelog.html">What's New</a>
     <a href="support.html">Support</a>
-    <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download</a>
+    <a class="btn-primary" href="download.html" target="_blank" rel="noopener">Download</a>
   </nav>
 </header>
 
@@ -336,7 +336,7 @@
       <h1>Everything ZPad can do,<br>in one page.</h1>
       <p>ZPad keeps a real multi-tab browser and a real terminal one hotkey away — <kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd> from anywhere. This guide covers install, every feature, licensing, and fixes for anything that can go wrong.</p>
       <div class="hero-actions">
-        <a class="btn-primary" href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Download Free — 30-Day Trial</a>
+        <a class="btn-primary" href="download.html" target="_blank" rel="noopener">Download Free — 30-Day Trial</a>
         <a class="btn-ghost" href="demo.html">Try the live demo →</a>
       </div>
     </div>
@@ -355,7 +355,7 @@
 
       <h3>Install</h3>
       <ol class="steps">
-        <li><p><strong>Download the <code>.dmg</code></strong> from the official <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases page</a>. Every release build is Developer ID–signed, Apple-notarized, and stapled.</p></li>
+        <li><p><strong>Download the <code>.dmg</code></strong> from the official <a href="download.html" target="_blank" rel="noopener">Releases page</a>. Every release build is Developer ID–signed, Apple-notarized, and stapled.</p></li>
         <li><p><strong>Open the disk image</strong> and drag <strong>ZPad</strong> into <strong>Applications</strong>.</p></li>
         <li><p><strong>Launch ZPad.</strong> macOS may ask you to confirm opening an app downloaded from the internet — this is normal Gatekeeper behavior for notarized apps. Click <strong>Open</strong>.</p></li>
         <li><p><strong>First-run onboarding</strong> walks you through the hotkey and the trial: <strong>30 days, fully functional, no credit card</strong>. The trial starts when you accept the offer — launching alone never consumes a trial day.</p></li>
@@ -603,7 +603,7 @@
         <li><strong>Automatic checks</strong> can be enabled or disabled in Settings → Privacy. Disabled means ZPad only checks when <em>you</em> ask.</li>
         <li><strong>Check manually:</strong> Settings → System → <em>Check for updates</em>.</li>
         <li>Update metadata is signed; the app verifies it before offering anything.</li>
-        <li>Prefer manual installs? Grab the latest <code>.dmg</code> from <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases</a> and drag over the old app — your settings and license carry over.</li>
+        <li>Prefer manual installs? Grab the latest <code>.dmg</code> from <a href="download.html" target="_blank" rel="noopener">Releases</a> and drag over the old app — your settings and license carry over.</li>
       </ul>
       <p>See what shipped in each version on the <a href="changelog.html">changelog</a>.</p>
     </section>
@@ -620,12 +620,12 @@
         <tr><td>Stripe</td><td>Checkout</td><td>Only when you buy</td><td>n/a (hosted page)</td></tr>
         <tr><td>Resend</td><td>License email delivery</td><td>Only after purchase</td><td>n/a</td></tr>
         <tr><td>ZPad license API</td><td>Activation, device limits, recovery</td><td>Licensing actions; installed licenses re-report on launch (14-day offline grace)</td><td>Inherent to licensing</td></tr>
-        <tr><td>GitHub</td><td>Signed update metadata</td><td>Manual checks, or automatic if enabled</td><td>Yes — Settings → Privacy</td></tr>
+        <tr><td>Update service</td><td>Signed update metadata</td><td>Manual checks, or automatic if enabled</td><td>Yes — Settings → Privacy</td></tr>
         <tr><td>Analytics</td><td>Product usage stats</td><td><strong>Never, unless you opt in</strong></td><td>Off by default</td></tr>
         <tr><td>Your AI provider</td><td>Chat completions</td><td>Only when you send a chat message</td><td>Don't configure a provider</td></tr>
       </table>
       </div>
-      <p>Full disclosure — what's sent, why, and how to switch each integration off — lives in <a href="privacy.html">PRIVACY.md</a>. Release builds are Developer ID–signed and Apple-notarized; the source is available on <a href="https://github.com/pekaboo/ZPad" target="_blank" rel="noopener">GitHub</a>.</p>
+      <p>Full disclosure — what's sent, why, and how to switch each integration off — lives in <a href="privacy.html">PRIVACY.md</a>. Release builds are Developer ID–signed and Apple-notarized.</p>
     </section>
 
     <!-- ================= 13. TROUBLESHOOTING ================= -->
@@ -635,7 +635,7 @@
 
       <details class="faqitem">
         <summary>macOS says ZPad is “damaged” or won't open</summary>
-        <div class="a"><p>This happens with corrupted or unofficial downloads. <strong>Do not bypass Gatekeeper</strong> (no <code>xattr</code> tricks). Delete the copy, download again from the official <a href="https://github.com/pekaboo/ZPad/releases/latest" target="_blank" rel="noopener">Releases page</a>, and confirm the download completes fully before opening.</p></div>
+        <div class="a"><p>This happens with corrupted or unofficial downloads. <strong>Do not bypass Gatekeeper</strong> (no <code>xattr</code> tricks). Delete the copy, download again from the official <a href="download.html" target="_blank" rel="noopener">Releases page</a>, and confirm the download completes fully before opening.</p></div>
       </details>
       <details class="faqitem">
         <summary>The panel doesn't appear when I press ⌘⌥P</summary>
@@ -692,7 +692,7 @@ defaults delete com.zpad.app 2>/dev/null</code></pre></li>
     </section>
 
     <div class="doc-footer">
-      <p style="font-size:13.5px;color:var(--text-tertiary);">Was this page helpful? Spotted something wrong or missing? <a href="https://github.com/pekaboo/ZPad/issues" target="_blank" rel="noopener">Open an issue</a> or <a href="mailto:hello@zpad.app?subject=ZPad%20Docs%20Feedback">email us</a>.</p>
+      <p style="font-size:13.5px;color:var(--text-tertiary);">Was this page helpful? Spotted something wrong or missing? <a href="support.html" target="_blank" rel="noopener">Open an issue</a> or <a href="mailto:hello@zpad.app?subject=ZPad%20Docs%20Feedback">email us</a>.</p>
       <div class="links" style="margin-top:14px;">
         <a href="index.html">← Back to homepage</a>
         <a href="faq.html">FAQ</a>
@@ -707,7 +707,7 @@ defaults delete com.zpad.app 2>/dev/null</code></pre></li>
 </div>
 
 <footer class="footer">
-  <p>&copy; 2024-2026 pekaboo · ZPad for macOS 15.1+ (Apple Silicon) · <a href="index.html#pricing">$79 lifetime · 5 devices · 14-day refund</a></p>
+  <p>&copy; 2024-2026 ZPad · ZPad for macOS 15.1+ (Apple Silicon) · <a href="index.html#pricing">$79 lifetime · 5 devices · 14-day refund</a></p>
 </footer>
 
 <script>
