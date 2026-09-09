@@ -103,30 +103,17 @@
     .intro .legend i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
 
     /* ---------- macOS 舞台（菜单栏 + 热区 + 引导） ---------- */
-    #stage { border-radius: 18px; border: 1px solid rgba(255,255,255,.08); overflow: hidden;
-      background: linear-gradient(160deg, #1a1a2e 0%, #16162a 40%, #101018 100%); padding-top: 28px; }
-    .mac-bar { position: absolute; top: 0; left: 0; right: 0; height: 28px; z-index: 40;
-      display: flex; align-items: center; gap: 18px; padding: 0 16px;
-      background: rgba(10,10,14,.72); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      font-size: 12.5px; color: rgba(255,255,255,.78); user-select: none; }
-    .mac-bar .mb-apple { font-size: 14px; }
-    .mac-bar .mb-title { font-weight: 600; }
-    .mac-bar .mb-time { margin-left: auto; font-variant-numeric: tabular-nums; }
-    .mb-zpad { width: 22px; height: 22px; margin-left: 14px; border-radius: 6px; cursor: pointer;
-      background: var(--accent); color: #fff; font-weight: 800; font-size: 12px;
-      display: flex; align-items: center; justify-content: center; transition: transform .15s ease, box-shadow .2s; }
-    .mb-zpad:hover { transform: scale(1.12); box-shadow: 0 0 14px rgba(239,68,68,.55); }
-    .mb-zpad.on { box-shadow: 0 0 0 2px rgba(239,68,68,.35), 0 0 16px rgba(239,68,68,.5); }
+    /* 页面即桌面：引导卡（面板为 fixed 视口贴缘层，独立于文档流） */
 
     /* 面板滑入/滑出（复现 App 热区唤出动画） */
-    #window { transition: transform .42s cubic-bezier(.32,.72,.22,1), opacity .3s ease; }
-    #window.away-right { transform: translateX(calc(100% + 48px)) !important; opacity: .4; pointer-events: none; }
-    #window.away-left { transform: translateX(calc(-100% - 48px)) !important; opacity: .4; pointer-events: none; }
-    #window.away-navbar, #window.away-centered { transform: translateY(-16px) !important; opacity: 0; pointer-events: none; }
+    #window { transition: transform .42s cubic-bezier(.3,1,.25,1), opacity .32s ease; will-change: transform; }
+    #window.away-right { transform: translateX(calc(100% + 4px)); pointer-events: none; }
+    #window.away-left { transform: translateX(calc(-100% - 4px)); pointer-events: none; }
+    #window.away-navbar { transform: translateY(calc(-100% - 4px)); opacity: 1; pointer-events: none; }
+    #window.away-centered { transform: translate(-50%, -50%) scale(.96); opacity: 0; pointer-events: none; }
 
     /* 热区可视化覆盖层（拖滑条时实时显示，复现 App） */
-    .hz-overlay { position: absolute; z-index: 30; pointer-events: none; opacity: 0; transition: opacity .25s ease;
+    .hz-overlay { position: fixed; z-index: 1200; pointer-events: none; opacity: 0; transition: opacity .25s ease;
       border: 1.5px dashed rgba(239,68,68,.9); background: rgba(239,68,68,.14); border-radius: 6px; }
     .hz-overlay.show { opacity: 1; }
     .hz-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
@@ -134,7 +121,7 @@
       border-radius: 999px; white-space: nowrap; box-shadow: 0 4px 14px rgba(239,68,68,.4); }
 
     /* 引导提示 */
-    .coach { position: absolute; z-index: 35; right: 18px; top: 50%; transform: translateY(-50%);
+    .coach { position: fixed; z-index: 1100; right: 10px; top: 50%; transform: translateY(-50%);
       display: flex; align-items: center; gap: 10px; pointer-events: none;
       background: rgba(20,20,26,.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.12);
       padding: 10px 14px; border-radius: 12px; font-size: 13px; color: var(--text-primary);
@@ -147,7 +134,7 @@
     .coach.hide { opacity: 0; }
 
     /* 设置弹层（侧栏 Settings 上方弹出，复现 App 设置） */
-    .settings-pop { position: absolute; left: 12px; bottom: 118px; z-index: 45; width: 264px;
+    .settings-pop { position: absolute; left: 10px; bottom: 62px; z-index: 45; width: 264px;
       background: rgba(18,18,24,.96); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12);
       border-radius: 14px; padding: 14px 16px; box-shadow: 0 18px 50px rgba(0,0,0,.55);
       opacity: 0; transform: translateY(8px) scale(.97); pointer-events: none;
@@ -163,57 +150,72 @@
     /* ---------- Stage (desktop backdrop) ---------- */
     .stage {
       position: relative;
-      max-width: 1320px;
-      margin: 8px auto 60px;
-      padding: 0 40px;
-      min-height: 660px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
+      max-width: 680px;
+      margin: 24px auto 80px;
+      padding: 0 20px;
     }
-    .stage::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(900px 420px at 70% -10%, rgba(239,68,68,.10), transparent 60%),
-        radial-gradient(700px 400px at 10% 20%, rgba(80,120,255,.06), transparent 60%);
-      pointer-events: none;
-      border-radius: 24px;
+    .stage-card {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      background: rgba(255,255,255,.03);
+      padding: 34px 36px 26px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
     }
+    .stage-card .sc-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .stage-card .sc-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, #ef4444, #b91c1c); display: flex; align-items: center; justify-content: center; font-size: 22px;
+      box-shadow: 0 8px 24px rgba(239,68,68,.35); }
+    .stage-card h3 { font-size: 19px; font-weight: 700; }
+    .stage-card .sc-sub { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+    .stage-card ol { list-style: none; display: grid; gap: 10px; margin: 16px 0 20px; }
+    .stage-card ol li { display: flex; gap: 12px; align-items: baseline; font-size: 14px; color: var(--text-secondary); }
+    .stage-card ol li i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(239,68,68,.15); color: var(--accent); font-size: 12px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; transform: translateY(4px); }
+    .stage-card kbd { font-family: inherit; font-size: 11.5px; padding: 2px 6px; border-radius: 5px;
+      border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); }
+    .stage-card .sc-sliders { border-top: 1px solid rgba(255,255,255,.08); padding-top: 16px; margin-top: 4px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .stage-card .sc-sliders .sp-row { margin-bottom: 0; }
+    @media (max-width: 620px) { .stage-card .sc-sliders { grid-template-columns: 1fr; } }
 
-    /* ---------- The ZPad window ---------- */
-    .dp-window {
-      position: relative;
-      width: 100%;
-      max-width: 1080px;
+    /* ---------- The ZPad window（fixed 视口贴缘，如真实 App 侧板） ---------- */
+    #window {
+      position: fixed;
+      z-index: 1000;
+      display: flex; flex-direction: column;
       background: var(--win-bg);
-      border-radius: 16px;
       border: 1px solid var(--border-light);
-      box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.02) inset;
+      box-shadow: -36px 0 110px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.02) inset;
       overflow: hidden;
-      transition: all .45s cubic-bezier(.2,.8,.2,1);
-      z-index: 2;
     }
 
-    /* display modes */
-    .dp-window.mode-centered { margin: 10px auto; }
-    .dp-window.mode-left { margin-right: auto; margin-left: 0; max-width: 720px; border-top-left-radius: 0; border-bottom-left-radius: 0; transform: none; }
-    .dp-window.mode-right { margin-left: auto; margin-right: 0; max-width: 720px; border-top-right-radius: 0; border-bottom-right-radius: 0; }
-    .dp-window.mode-navbar { max-width: 100%; }
-    .dp-window.mode-navbar .dp-body { height: 380px; }
+    /* display modes —— 视口定位 */
+    #window.mode-right { top: 0; right: 0; bottom: 0; left: auto; width: min(640px, 94vw); height: auto;
+      border-radius: 14px 0 0 14px; border-right: none; }
+    #window.mode-left { top: 0; left: 0; bottom: 0; right: auto; width: min(640px, 94vw); height: auto;
+      border-radius: 0 14px 14px 0; border-left: none; box-shadow: 36px 0 110px rgba(0,0,0,.55); }
+    #window.mode-centered { top: 50%; left: 50%; right: auto; bottom: auto; transform: translate(-50%,-50%);
+      width: min(920px, 94vw); height: min(660px, 88vh); border-radius: 14px; box-shadow: 0 40px 130px rgba(0,0,0,.6); }
+    #window.mode-navbar { top: 0; left: 0; right: 0; bottom: auto; width: auto; height: min(560px, 84vh);
+      border-radius: 0 0 14px 14px; border-top: none; }
+    #window.mode-navbar .dp-body, #window.mode-right .dp-body, #window.mode-left .dp-body { height: auto; flex: 1; }
+    #window .dp-body { height: 100%; }
+    #window.mode-navbar .dp-body { height: auto; }
 
     /* title bar */
     .dp-titlebar {
-      height: 44px;
-      background: rgba(255,255,255,.04);
+      height: 38px; flex-shrink: 0;
+      background: rgba(255,255,255,.045);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center;
-      padding: 0 14px;
-      gap: 12px;
+      padding: 0 12px;
+      gap: 10px;
       user-select: none;
     }
-    .traffic { display: flex; gap: 8px; }
-    .tl { width: 12px; height: 12px; border-radius: 50%; }
+    .traffic { display: flex; gap: 7px; }
+    .tl { width: 11px; height: 11px; border-radius: 50%; }
     .tl.r { background: #ff5f57; } .tl.y { background: #febc2e; } .tl.g { background: #28c840; }
     .dp-title {
       font-size: 12.5px; color: var(--text-tertiary); font-weight: 500;
@@ -235,7 +237,7 @@
     .mode-switch button.active { background: var(--accent-dim); color: var(--accent); }
 
     /* body: sidebar + main */
-    .dp-body { display: flex; height: 560px; }
+    .dp-body { display: flex; min-height: 0; }
     .dp-sidebar {
       width: 212px; flex-shrink: 0;
       background: rgba(255,255,255,.02);
@@ -415,16 +417,16 @@
       .nav { display: none; }
       .menu-toggle { display: flex; }
       .intro { padding: 100px 20px 20px; }
-      #stage { padding: 28px 12px 0; border-radius: 12px; }
       .coach { display: none; }
-      .dp-window.mode-left, .dp-window.mode-right { max-width: 100%; }
+      .stage { margin-top: 12px; }
       .dp-sidebar { width: 58px; padding: 10px 6px; }
       .dp-sidebar .name, .dp-sidebar .close, .ws-head span:not(.ws-dot), .ws-chev, .new-tab span, .side-foot .row span { display: none; }
       .tab { justify-content: center; padding: 9px; }
       .dp-title { display: none; }
     }
     @media (max-width: 560px) {
-      .dp-body { height: 480px; }
+      #window.mode-right, #window.mode-left { width: 100vw; border-radius: 0; }
+      #window.mode-centered { width: 96vw; height: 82vh; }
       .footer-content { grid-template-columns: 1fr; gap: 28px; }
       .page-docs { padding: 26px 22px; }
       .gh-top, .gh-meta, .gh-files, .gh-readme { padding-left: 18px; padding-right: 18px; margin-left: 0; margin-right: 0; }
@@ -457,7 +459,7 @@
   <section class="intro">
     <span class="eyebrow">● Interactive Demo · Live in your browser</span>
     <h1>This is the real ZPad UI.</h1>
-    <p>No download needed. Click the sidebar tabs, type real commands into the terminal, browse sites, and chat with Claude Code — everything is interactive.</p>
+    <p>No download needed. This page is your desktop — flick your mouse to the <b>right edge of the browser window</b> and ZPad slides in, exactly like the real app. Move away and it retracts. <kbd>⌘⌥P</kbd> toggles anytime.</p>
     <div class="legend">
       <span><i></i>Click tabs to switch</span>
       <span><i></i>Type in the terminal</span>
@@ -467,42 +469,62 @@
 
   <!-- Stage -->
   <div class="stage" id="stage">
-    <!-- macOS 菜单栏（含 ZPad 状态图标） -->
-    <div class="mac-bar">
-      <span class="mb-apple">🍎</span>
-      <span class="mb-title">ZPad</span>
-      <span>File</span><span>View</span><span>Window</span>
-      <span class="mb-time" id="macTime">--:--</span>
-      <div class="mb-zpad" id="zpadStatus" title="点击唤出 / 收起 ZPad（也可用 ⌘⌥P）">Z</div>
-    </div>
-
     <!-- 热区可视化覆盖层（调节时实时镜像感应范围） -->
     <div class="hz-overlay" id="hzOverlay"><span class="hz-tag" id="hzTag"></span></div>
 
-    <!-- 首次引导：把鼠标甩到屏幕边缘 -->
+    <!-- 首次引导：指向浏览器右缘 -->
     <div class="coach" id="coach">
       <span class="arrow">→</span>
-      <span>把鼠标移到<b>右边缘</b>，唤出 ZPad</span>
+      <span>鼠标移到<b>窗口右缘</b></span>
     </div>
 
-    <!-- 设置弹层：热区宽度 / 高度 / 触发延迟 -->
-    <div class="settings-pop" id="settingsPop">
-      <h4>触发设置</h4>
-      <div class="sp-row">
-        <label>热区宽度 <b id="hzWVal">30 px</b></label>
-        <input type="range" id="hzWidth" min="5" max="100" step="5" value="30" />
+    <!-- 引导卡：页面即桌面 -->
+    <div class="stage-card">
+      <div class="sc-head">
+        <div class="sc-icon">🖱</div>
+        <div>
+          <h3>这个页面就是你的桌面</h3>
+          <div class="sc-sub">ZPad 已在屏幕右缘待命 — 用真实的方式唤出它</div>
+        </div>
       </div>
-      <div class="sp-row">
-        <label>热区高度 <b id="hzHVal">100 %</b></label>
-        <input type="range" id="hzHeight" min="10" max="100" step="5" value="100" />
-      </div>
-      <div class="sp-row" style="margin-bottom:2px">
-        <label>触发延迟 <b id="hzDVal">0.15 s</b></label>
-        <input type="range" id="hzDelay" min="0.05" max="0.8" step="0.05" value="0.15" />
+      <ol>
+        <li><i>1</i><span>把鼠标移到<b>浏览器窗口最右侧边缘</b></span></li>
+        <li><i>2</i><span>停留片刻，面板从右侧滑入 — 移开鼠标自动收起</span></li>
+        <li><i>3</i><span>随时按 <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> 切换，面板内可切四种显示模式</span></li>
+      </ol>
+      <div class="sc-sliders">
+        <div class="sp-row">
+          <label>热区宽度 <b id="hzWVal2">30 px</b></label>
+          <input type="range" id="hzWidth2" min="5" max="100" step="5" value="30" />
+        </div>
+        <div class="sp-row">
+          <label>热区高度 <b id="hzHVal2">100 %</b></label>
+          <input type="range" id="hzHeight2" min="10" max="100" step="5" value="100" />
+        </div>
+        <div class="sp-row">
+          <label>触发延迟 <b id="hzDVal2">0.15 s</b></label>
+          <input type="range" id="hzDelay2" min="0.05" max="0.8" step="0.05" value="0.15" />
+        </div>
       </div>
     </div>
 
     <div class="dp-window mode-centered" id="window">
+      <!-- 设置弹层：热区宽度 / 高度 / 触发延迟（面板内，随面板滑入滑出） -->
+      <div class="settings-pop" id="settingsPop">
+        <h4>触发设置</h4>
+        <div class="sp-row">
+          <label>热区宽度 <b id="hzWVal">30 px</b></label>
+          <input type="range" id="hzWidth" min="5" max="100" step="5" value="30" />
+        </div>
+        <div class="sp-row">
+          <label>热区高度 <b id="hzHVal">100 %</b></label>
+          <input type="range" id="hzHeight" min="10" max="100" step="5" value="100" />
+        </div>
+        <div class="sp-row" style="margin-bottom:2px">
+          <label>触发延迟 <b id="hzDVal">0.15 s</b></label>
+          <input type="range" id="hzDelay" min="0.05" max="0.8" step="0.05" value="0.15" />
+        </div>
+      </div>
 
       <!-- Title bar -->
       <div class="dp-titlebar">
@@ -733,13 +755,10 @@ document.getElementById('newTab').addEventListener('click', () => {
 /* =========================================================
    Display modes
    ========================================================= */
-const win = document.getElementById('window');
 document.querySelectorAll('.mode-switch button').forEach(b => {
   b.addEventListener('click', () => {
     document.querySelectorAll('.mode-switch button').forEach(x => x.classList.remove('active'));
     b.classList.add('active');
-    const m = b.dataset.mode;
-    win.className = 'dp-window mode-' + m;
   });
 });
 
@@ -1080,34 +1099,26 @@ claudeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { claude
 document.querySelectorAll('#claudeSuggest button').forEach(b => b.addEventListener('click', () => claudeSend(b.textContent)));
 
 /* =========================================================
-   Hot-Zone Engine — 复现 App 招牌交互
-   鼠标甩到舞台边缘（宽度×高度% 垂直居中）→ 停留触发延迟 → 面板滑入；
-   离开面板与热区 0.3s → 自动滑出；⌘⌥P / 状态栏图标 随时切换
+   Hot-Zone Engine v2 — 页面即桌面
+   浏览器视口右/左缘 = App 热区；鼠标甩到缘停留 → 面板贴缘滑入；
+   离开面板与热区 0.3s → 自动收起；⌘⌥P 随时切换
    ========================================================= */
-const stage = document.getElementById('stage');
 const winEl = document.getElementById('window');
 const hzOverlay = document.getElementById('hzOverlay');
 const hzTag = document.getElementById('hzTag');
 const coach = document.getElementById('coach');
-const zpadStatus = document.getElementById('zpadStatus');
 const settingsPop = document.getElementById('settingsPop');
 
 const HZ = { width: 30, heightPct: 100, delay: 150 };   // px / % / ms
-let appMode = 'centered';      // navbar | left | centered | right
-let panelOpen = true;
+let appMode = 'right';
+let panelOpen = false;
 let enterTimer = null, leaveTimer = null, hzFadeTimer = null;
 let mouseInPanel = false;
 
 function isSideMode() { return appMode === 'left' || appMode === 'right'; }
 
 function applyAway() {
-  winEl.classList.remove('away-right', 'away-left', 'away-navbar', 'away-centered');
-  if (!panelOpen) {
-    if (appMode === 'right') winEl.classList.add('away-right');
-    else if (appMode === 'left') winEl.classList.add('away-left');
-    else winEl.classList.add('away-' + appMode);
-  }
-  zpadStatus.classList.toggle('on', panelOpen);
+  winEl.className = 'dp-window mode-' + appMode + (panelOpen ? '' : ' away-' + appMode);
 }
 
 function openPanel() {
@@ -1125,71 +1136,54 @@ function closePanel() {
 }
 function togglePanel() { panelOpen ? closePanel() : openPanel(); }
 
+/* 视口级热区命中：宽度 × 高度%（垂直居中） */
 function inHotZone(e) {
   if (!isSideMode() || panelOpen) return false;
-  const r = stage.getBoundingClientRect();
-  const x = e.clientX - r.left, y = e.clientY - r.top;
-  const h = r.height * HZ.heightPct / 100;
-  const top = (r.height - h) / 2;
-  if (y < top || y > top + h) return false;
-  return appMode === 'right' ? (x > r.width - HZ.width) : (x < HZ.width);
+  const W = window.innerWidth, H = window.innerHeight;
+  const h = H * HZ.heightPct / 100, top = (H - h) / 2;
+  if (e.clientY < top || e.clientY > top + h) return false;
+  return appMode === 'right' ? (e.clientX > W - HZ.width) : (e.clientX < HZ.width);
 }
 
-stage.addEventListener('mousemove', (e) => {
+document.addEventListener('mousemove', (e) => {
   if (inHotZone(e)) {
     clearTimeout(enterTimer);
     clearTimeout(leaveTimer);
-    enterTimer = setTimeout(openPanel, HZ.delay);   // hover-intent：停留才触发
+    enterTimer = setTimeout(openPanel, HZ.delay);
   } else {
     clearTimeout(enterTimer);
   }
-  // auto-close：鼠标不在面板、不在热区 → 0.3s 后收起（复现 App 行为）
-  if (panelOpen && !mouseInPanel && isSideMode()) {
-    clearTimeout(leaveTimer);
-    leaveTimer = setTimeout(() => {
-      const r = stage.getBoundingClientRect();
-      if (!pointInStageEdge(e, r)) closePanel();
-    }, 300);
+  // auto-close：面板开着、鼠标不在面板上、不在触发缘 → 0.3s 收起
+  if (panelOpen && isSideMode() && !mouseInPanel) {
+    const W = window.innerWidth;
+    const nearEdge = appMode === 'right' ? e.clientX > W - HZ.width - 36 : e.clientX < HZ.width + 36;
+    if (!nearEdge) {
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(closePanel, 300);
+    } else clearTimeout(leaveTimer);
   }
-});
-function pointInStageEdge(e, r) {
-  // 鼠标仍在舞台内且贴近触发边 → 视为仍在热区附近，不关
-  if (e.clientX < r.left - 40 || e.clientX > r.right + 40 || e.clientY < r.top || e.clientY > r.bottom) return false;
-  const x = e.clientX - r.left;
-  return appMode === 'right' ? x > r.width - HZ.width - 30 : x < HZ.width + 30;
-}
+}, { passive: true });
 
-winEl.addEventListener('mouseenter', () => { mouseInPanel = true; clearTimeout(leaveTimer); });
-winEl.addEventListener('mouseleave', () => { mouseInPanel = false; });
-// 鼠标整个离开舞台 → 0.3s 后收起（快速甩出也能关）
-stage.addEventListener('mouseleave', () => {
+/* 鼠标离开整个文档 → 收起（快速甩出浏览器也能关） */
+document.documentElement.addEventListener('mouseleave', () => {
   if (panelOpen && isSideMode()) { clearTimeout(leaveTimer); leaveTimer = setTimeout(closePanel, 300); }
 });
 
-// 状态栏图标 + 全局快捷键 ⌘⌥P（Web 复现为 Ctrl/Cmd+Alt+P）
-zpadStatus.addEventListener('click', togglePanel);
+winEl.addEventListener('mouseenter', () => { mouseInPanel = true; clearTimeout(leaveTimer); });
+winEl.addEventListener('mouseleave', () => { mouseInPanel = false; });
+
+// 全局快捷键 ⌘⌥P（e.code 避开 ⌥ 特殊字符）
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.altKey && e.code === 'KeyP') { e.preventDefault(); togglePanel(); }
 });
 
-// 菜单栏时钟
-function tickClock() {
-  const d = new Date();
-  const wd = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
-  document.getElementById('macTime').textContent =
-    `${wd} ${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
-tickClock(); setInterval(tickClock, 15000);
-
-/* ---------- 热区可视化预览（拖滑条时实时镜像，1.2s 后淡出——同 App） ---------- */
+/* ---------- 热区可视化预览（拖滑条实时镜像视口缘感应范围，1.2s 淡出——同 App） ---------- */
 function showHzPreview() {
-  const r = stage.getBoundingClientRect();
-  const h = r.height * HZ.heightPct / 100;
-  const top = (r.height - h) / 2;
-  const w = Math.min(HZ.width, r.width);
+  const W = window.innerWidth, H = window.innerHeight;
+  const h = H * HZ.heightPct / 100, top = (H - h) / 2;
   hzOverlay.style.height = h + 'px';
   hzOverlay.style.top = top + 'px';
-  hzOverlay.style.width = w + 'px';
+  hzOverlay.style.width = Math.min(HZ.width, W) + 'px';
   hzOverlay.style[appMode === 'left' ? 'left' : 'right'] = '0px';
   hzOverlay.style[appMode === 'left' ? 'right' : 'left'] = 'auto';
   hzTag.textContent = `宽 ${HZ.width} · 高 ${HZ.heightPct}%`;
@@ -1198,12 +1192,9 @@ function showHzPreview() {
   hzFadeTimer = setTimeout(() => hzOverlay.classList.remove('show'), 1200);
 }
 
-/* ---------- 设置弹层 ---------- */
+/* ---------- 设置入口（面板内 Settings 行） ---------- */
 document.getElementById('settingsRow').addEventListener('click', (e) => {
   e.stopPropagation();
-  const sr = stage.getBoundingClientRect(), wr = winEl.getBoundingClientRect();
-  settingsPop.style.left = Math.max(10, wr.left - sr.left + 8) + 'px';
-  settingsPop.style.bottom = (sr.height - (wr.bottom - sr.top) + 66) + 'px';
   settingsPop.classList.toggle('open');
 });
 document.addEventListener('click', (e) => {
@@ -1211,24 +1202,38 @@ document.addEventListener('click', (e) => {
     settingsPop.classList.remove('open');
 });
 
+/* ---------- 双组滑条绑定（面板内 + 页面引导卡）共享 HZ ---------- */
 function bindSlider(id, valId, fmt, apply) {
   const el = document.getElementById(id), v = document.getElementById(valId);
-  el.addEventListener('input', () => { apply(parseFloat(el.value)); v.textContent = fmt(parseFloat(el.value)); showHzPreview(); });
+  if (!el) return;
+  el.addEventListener('input', () => {
+    const x = parseFloat(el.value);
+    apply(x); v.textContent = fmt(x);
+    // 双组同步
+    const pair = id.endsWith('2') ? id.slice(0, -1) : id + '2';
+    const pe = document.getElementById(pair), pv = document.getElementById(valId.replace(/(2)$/, '') + (id.endsWith('2') ? '' : '2'));
+    if (pe) pe.value = el.value;
+    if (pv) pv.textContent = fmt(x);
+    showHzPreview();
+  });
 }
-bindSlider('hzWidth', 'hzWVal', x => x + ' px', x => HZ.width = x);
-bindSlider('hzHeight', 'hzHVal', x => x + ' %', x => HZ.heightPct = x);
-bindSlider('hzDelay', 'hzDVal', x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
+bindSlider('hzWidth',  'hzWVal',  x => x + ' px', x => HZ.width = x);
+bindSlider('hzWidth2', 'hzWVal2', x => x + ' px', x => HZ.width = x);
+bindSlider('hzHeight', 'hzHVal',  x => x + ' %',  x => HZ.heightPct = x);
+bindSlider('hzHeight2','hzHVal2', x => x + ' %',  x => HZ.heightPct = x);
+bindSlider('hzDelay',  'hzDVal',  x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
+bindSlider('hzDelay2', 'hzDVal2', x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
 
 /* ---------- 显示模式 × 热区联动 ---------- */
 function setAppMode(m) {
   appMode = m;
+  winEl.className = 'dp-window mode-' + m + (panelOpen ? '' : ' away-' + m);
   if (isSideMode()) {
-    // 侧板模式：收起面板，让用户体验「甩鼠标到边缘唤出」
     panelOpen = false;
     coach.classList.toggle('left', m === 'left');
     coach.querySelector('span:last-child').innerHTML = m === 'left'
-      ? '把鼠标移到<b>左边缘</b>，唤出 ZPad' : '把鼠标移到<b>右边缘</b>，唤出 ZPad';
-    if (!coach.classList.contains('hinted-forever')) coach.classList.remove('hide');
+      ? '鼠标移到<b>窗口左缘</b>' : '鼠标移到<b>窗口右缘</b>';
+    coach.classList.remove('hide');
     setTimeout(() => coach.classList.add('hide'), 4000);
   } else {
     panelOpen = true;
@@ -1236,16 +1241,13 @@ function setAppMode(m) {
   }
   applyAway();
 }
-// 接管既有模式切换按钮
 document.querySelectorAll('.mode-switch button').forEach(b => {
   b.addEventListener('click', () => setTimeout(() => setAppMode(b.dataset.mode), 0));
 });
 
-/* ---------- 初始状态：默认右侧板 + 收起，引导用户甩鼠标 ---------- */
+/* ---------- 初始：右侧板 + 收起，等待用户甩鼠标 ---------- */
 setAppMode('right');
-// 同步模式按钮高亮
 document.querySelectorAll('.mode-switch button').forEach(x => x.classList.toggle('active', x.dataset.mode === 'right'));
-winEl.className = 'dp-window mode-right';
 
 /* =========================================================
    Init
