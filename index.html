@@ -615,9 +615,9 @@
     }
 
     /* =====================================================
-       Live ZPad panel（fixed 视口贴缘，页面即桌面）
+       Live ZPad panel (fixed to viewport edge, page-as-desktop)
        ===================================================== */
-    /* 热区可视化覆盖层（拖滑条时实时显示，复现 App） */
+    /* Hot-zone overlay: mirrors sensing range live while dragging sliders */
     .hz-overlay { position: fixed; z-index: 1200; pointer-events: none; opacity: 0; transition: opacity .25s ease;
       border: 1.5px dashed rgba(239,68,68,.9); background: rgba(239,68,68,.14); border-radius: 6px; }
     .hz-overlay.show { opacity: 1; }
@@ -625,7 +625,7 @@
       background: var(--accent); color: #fff; font-size: 11.5px; font-weight: 700; padding: 4px 10px;
       border-radius: 999px; white-space: nowrap; box-shadow: 0 4px 14px rgba(239,68,68,.4); }
 
-    /* 引导提示 */
+    /* First-run coach hint */
     .coach { position: fixed; z-index: 1100; right: 10px; top: 50%; transform: translateY(-50%);
       display: flex; align-items: center; gap: 10px; pointer-events: none;
       background: rgba(20,20,26,.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.12);
@@ -638,7 +638,7 @@
     @keyframes nudgeL { 0%,100% { transform: translateX(0);} 50% { transform: translateX(-6px);} }
     .coach.hide { opacity: 0; }
 
-    /* 设置弹层（侧栏 Settings 上方弹出，复现 App 设置） */
+    /* Settings popover above sidebar Settings row (as in the app) */
     .settings-pop { position: absolute; left: 48px; bottom: 34px; z-index: 45; width: 264px;
       background: rgba(18,18,24,.96); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12);
       border-radius: 14px; padding: 14px 16px; box-shadow: 0 18px 50px rgba(0,0,0,.55);
@@ -659,32 +659,7 @@
       margin: 24px auto 80px;
       padding: 0 20px;
     }
-    .stage-card {
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 20px;
-      background: rgba(255,255,255,.03);
-      padding: 34px 36px 26px;
-      box-shadow: 0 24px 70px rgba(0,0,0,.35);
-    }
-    .stage-card .sc-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-    .stage-card .sc-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
-      background: linear-gradient(135deg, #ef4444, #b91c1c); display: flex; align-items: center; justify-content: center; font-size: 22px;
-      box-shadow: 0 8px 24px rgba(239,68,68,.35); }
-    .stage-card h3 { font-size: 19px; font-weight: 700; }
-    .stage-card .sc-sub { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
-    .stage-card ol { list-style: none; display: grid; gap: 10px; margin: 16px 0 20px; }
-    .stage-card ol li { display: flex; gap: 12px; align-items: baseline; font-size: 14px; color: var(--text-secondary); }
-    .stage-card ol li i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(239,68,68,.15); color: var(--accent); font-size: 12px; font-weight: 700;
-      display: inline-flex; align-items: center; justify-content: center; transform: translateY(4px); }
-    .stage-card kbd { font-family: inherit; font-size: 11.5px; padding: 2px 6px; border-radius: 5px;
-      border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); }
-    .stage-card .sc-sliders { border-top: 1px solid rgba(255,255,255,.08); padding-top: 16px; margin-top: 4px;
-      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-    .stage-card .sc-sliders .sp-row { margin-bottom: 0; }
-    @media (max-width: 620px) { .stage-card .sc-sliders { grid-template-columns: 1fr; } }
-
-    /* ---------- The ZPad window（fixed 视口贴缘，如真实 App 侧板） ---------- */
+    /* ---------- The ZPad window (fixed to viewport edge, like the real app) ---------- */
     #window {
       position: fixed;
       z-index: 1000;
@@ -696,7 +671,7 @@
       overflow: hidden;
     }
 
-    /* display modes —— 视口定位（侧板：60% 高 · 垂直居中 · 贴缘） */
+    /* display modes — viewport positioning (side panel: 60% height, centered) */
     #window.mode-right { top: 20vh; right: 0; bottom: auto; left: auto; width: min(540px, 92vw); height: 64vh;
       border-radius: 14px 0 0 14px; border-right: none; }
     #window.mode-left { top: 20vh; left: 0; bottom: auto; right: auto; width: min(540px, 92vw); height: 64vh;
@@ -712,7 +687,7 @@
     /* body: sidebar + main */
     .dp-body { display: flex; flex: 1; min-height: 0; }
 
-    /* ---------- 侧栏：实测 40px 窄条 ---------- */
+    /* ---------- Sidebar: measured 40px rail ---------- */
     .dp-sidebar {
       width: 40px; flex-shrink: 0;
       border-right: 1px solid rgba(255,255,255,.05);
@@ -827,7 +802,7 @@
     .page-docs .card b { display: block; font-size: 14px; margin-bottom: 4px; }
     .page-docs .card span { font-size: 12.5px; color: var(--text-tertiary); }
 
-    /* ---------- Chat pane（App ChatContainerView 布局） ---------- */
+    /* ---------- Chat pane (mirrors the app's ChatContainerView) ---------- */
     .chatui { flex: 1; display: flex; flex-direction: column; min-height: 0; background: rgba(0,0,0,.14); }
     .chat-head {
       height: 38px; flex-shrink: 0; display: flex; align-items: center; gap: 8px;
@@ -925,7 +900,7 @@
     .term-sel { background: rgba(96,165,250,.25); }
     .term-link { color: #60a5ff; text-decoration: underline; cursor: pointer; }
 
-    /* ---------- Claude Code pane（终端界面） ---------- */
+    /* ---------- Claude Code pane (terminal UI) ---------- */
     .cc {
       flex: 1; display: flex; flex-direction: column; min-height: 0;
       background: var(--term-bg);
@@ -1053,19 +1028,19 @@
     <p class="hero-hint reveal reveal-d2">Press <kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd> anywhere on this page — the demo answers, just like the app.</p>
   </section>
 
-  <!-- ZPad 真面板（fixed 视口贴缘）+ 热区层 + 引导 -->
-    <!-- 热区可视化覆盖层（调节时实时镜像感应范围） -->
+  <!-- ZPad live panel (fixed to viewport edge) + hot-zone overlay + coach -->
+    <!-- hot-zone overlay, mirrors the sensing range while adjusting -->
     <div class="hz-overlay" id="hzOverlay"><span class="hz-tag" id="hzTag"></span></div>
 
-    <!-- 首次引导：指向浏览器右缘 -->
+    <!-- first-run coach: points at the right edge -->
     <div class="coach" id="coach">
       <span class="arrow">→</span>
       <span>Fling your mouse to the <b>right edge</b></span>
     </div>
 
-    <!-- 引导卡：页面即桌面 -->
+    <!-- guide card (page as desktop) -->
     <div class="dp-window mode-centered" id="window">
-      <!-- 设置弹层：热区宽度 / 高度 / 触发延迟（面板内，随面板滑入滑出） -->
+      <!-- settings popover: zone width / height / delay (slides with the panel) -->
       <div class="settings-pop" id="settingsPop">
         <h4>Trigger Settings</h4>
         <div class="sp-row">
@@ -1082,11 +1057,11 @@
         </div>
       </div>
 
-      <!-- 无标题栏（真实 App：全尺寸内容视图）；模式切换为浮动小组件 -->
+      <!-- no titlebar (real app: full-size content view) -->
 
       <!-- Body -->
       <div class="dp-body">
-        <!-- Sidebar：实测 40px 窄条 -->
+        <!-- sidebar: measured 40px rail -->
         <aside class="dp-sidebar">
           <button class="rail-btn" id="collapseBtn" title="Collapse panel">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
@@ -1130,7 +1105,7 @@
             <div class="web-frame" id="webFrame"></div>
           </div>
 
-          <!-- Chat pane（按 App ChatContainerView 布局） -->
+          <!-- chat pane (mirrors ChatContainerView) -->
           <div class="pane" data-pane="chat">
             <div class="chatui">
               <div class="chat-head">
@@ -1166,7 +1141,7 @@
             </div>
           </div>
 
-          <!-- Claude Code pane：终端界面 -->
+          <!-- claude code pane: terminal UI -->
           <div class="pane" data-pane="claude">
             <div class="cc">
               <div class="cc-out" id="ccOut"></div>
@@ -1467,7 +1442,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   });
 });
 
-/* ===== Live ZPad panel（全局面板引擎） ===== */
+/* ===== Live ZPad panel (global engine) ===== */
 (function(){
 
 /* =========================================================
@@ -1949,7 +1924,7 @@ function claudeAnswer(q) {
   return claudeDefault;
 }
 
-/* boot 画面（动态时间，无 MCP/hook 报错块） */
+/* boot screen (live timestamp, no MCP/hook noise) */
 (function ccBoot() {
   const t = new Date(), pad = n => String(n).padStart(2, '0');
   const ts = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
@@ -1990,7 +1965,7 @@ function claudeSend(q) {
 claudeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { claudeSend(claudeInput.value); claudeInput.value = ''; } });
 
 /* =========================================================
-   Chat pane（App ChatContainerView 风格）
+   Chat pane (mirrors the app's ChatContainerView)
    ========================================================= */
 const chatBody = document.getElementById('chatBody');
 const chatInput = document.getElementById('chatInput');
@@ -2019,7 +1994,7 @@ function appendMsg(role, html) {
   return d;
 }
 
-/* 预置对话 */
+/* seeded conversation */
 appendMsg('user', 'How does the hot-zone trigger work?');
 appendMsg('ai', 'A sensing rectangle at the screen edge (width × height% × vertically centered). Rest there past the trigger delay and the panel slides in. <code>PanelManager+Mouse.swift</code> — width, height and delay all adjustable.');
 appendMsg('user', 'Can it live on the left instead?');
@@ -2054,9 +2029,9 @@ document.querySelectorAll('.cm').forEach(b => b.addEventListener('click', () => 
 }));
 
 /* =========================================================
-   Hot-Zone Engine v2 — 页面即桌面
-   浏览器视口右/左缘 = App 热区；鼠标甩到缘停留 → 面板贴缘滑入；
-   离开面板与热区 0.3s → 自动收起；⌘⌥P 随时切换
+   Hot-Zone Engine v2 — page as desktop
+   the browser viewport edge = the app's hot zone; rest there and the panel slides in,
+   leaving panel+zone 0.3s auto-hides; ⌘⌥P toggles
    ========================================================= */
 const winEl = document.getElementById('window');
 const hzOverlay = document.getElementById('hzOverlay');
@@ -2091,7 +2066,7 @@ function closePanel() {
 }
 function togglePanel() { panelOpen ? closePanel() : openPanel(); }
 
-/* 视口级热区命中：宽度 × 高度%（垂直居中） */
+/* viewport-level hot-zone hit test: width × height% (centered) */
 function inHotZone(e) {
   if (!isSideMode() || panelOpen || !hoverEnabled) return false;
   const W = window.innerWidth, H = window.innerHeight;
@@ -2108,7 +2083,7 @@ document.addEventListener('mousemove', (e) => {
   } else {
     clearTimeout(enterTimer);
   }
-  // auto-close：面板开着、鼠标不在面板上、不在触发缘 → 0.3s 收起
+  // auto-close: panel open, pointer outside panel+edge for 0.3s -> hide
   if (panelOpen && isSideMode() && !mouseInPanel) {
     const W = window.innerWidth;
     const nearEdge = appMode === 'right' ? e.clientX > W - HZ.width - 36 : e.clientX < HZ.width + 36;
@@ -2119,7 +2094,7 @@ document.addEventListener('mousemove', (e) => {
   }
 }, { passive: true });
 
-/* 鼠标离开整个文档 → 收起（快速甩出浏览器也能关） */
+/* pointer left the document entirely -> hide (fast escape works) */
 document.documentElement.addEventListener('mouseleave', () => {
   if (panelOpen && isSideMode()) { clearTimeout(leaveTimer); leaveTimer = setTimeout(closePanel, 300); }
 });
@@ -2127,7 +2102,7 @@ document.documentElement.addEventListener('mouseleave', () => {
 winEl.addEventListener('mouseenter', () => { mouseInPanel = true; clearTimeout(leaveTimer); });
 winEl.addEventListener('mouseleave', () => { mouseInPanel = false; });
 
-// 侧栏顶部操作（真实 App 语义：收起面板 / 悬停触发开关）
+// sidebar top actions (real app semantics: collapse / hover-trigger toggle)
 document.getElementById('collapseBtn').addEventListener('click', closePanel);
 let hoverEnabled = true;
 document.getElementById('hoverToggle').addEventListener('click', function () {
@@ -2147,12 +2122,12 @@ function showToastMini(msg) {
   clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translate(-50%,-8px)'; }, 2200);
 }
 
-// 全局快捷键 ⌘⌥P（e.code 避开 ⌥ 特殊字符）
+// global shortcut ⌘⌥P (e.code avoids ⌥ special chars)
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.altKey && e.code === 'KeyP') { e.preventDefault(); togglePanel(); }
 });
 
-/* ---------- 热区可视化预览（拖滑条实时镜像视口缘感应范围，1.2s 淡出——同 App） ---------- */
+/* ---------- hot-zone preview overlay (live mirror while dragging, 1.2s fade — like the app) ---------- */
 function showHzPreview() {
   const W = window.innerWidth, H = window.innerHeight;
   const h = H * HZ.heightPct / 100, top = (H - h) / 2;
@@ -2167,7 +2142,7 @@ function showHzPreview() {
   hzFadeTimer = setTimeout(() => hzOverlay.classList.remove('show'), 1200);
 }
 
-/* ---------- 设置入口（面板内 Settings 行） ---------- */
+/* ---------- settings entry (sidebar Settings row) ---------- */
 document.getElementById('settingsRow').addEventListener('click', (e) => {
   e.stopPropagation();
   settingsPop.classList.toggle('open');
@@ -2177,14 +2152,14 @@ document.addEventListener('click', (e) => {
     settingsPop.classList.remove('open');
 });
 
-/* ---------- 双组滑条绑定（面板内 + 页面引导卡）共享 HZ ---------- */
+/* ---------- slider bindings share the HZ state ---------- */
 function bindSlider(id, valId, fmt, apply) {
   const el = document.getElementById(id), v = document.getElementById(valId);
   if (!el) return;
   el.addEventListener('input', () => {
     const x = parseFloat(el.value);
     apply(x); v.textContent = fmt(x);
-    // 双组同步
+    // dual-group sync
     const pair = id.endsWith('2') ? id.slice(0, -1) : id + '2';
     const pe = document.getElementById(pair), pv = document.getElementById(valId.replace(/(2)$/, '') + (id.endsWith('2') ? '' : '2'));
     if (pe) pe.value = el.value;
@@ -2199,7 +2174,7 @@ bindSlider('hzHeight2','hzHVal2', x => x + ' %',  x => HZ.heightPct = x);
 bindSlider('hzDelay',  'hzDVal',  x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
 bindSlider('hzDelay2', 'hzDVal2', x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
 
-/* ---------- 显示模式 × 热区联动 ---------- */
+/* ---------- display mode × hot-zone sync ---------- */
 function setAppMode(m) {
   appMode = m;
   winEl.className = 'dp-window mode-' + m + (panelOpen ? '' : ' away-' + m);
@@ -2216,17 +2191,17 @@ function setAppMode(m) {
   }
   applyAway();
 }
-/* ---------- 初始：右侧板 + 收起，等待用户甩鼠标（固定右板模式，如真实 App） ---------- */
+/* ---------- initial: right panel + hidden, waiting for the fling (fixed right, like the app default) ---------- */
 setAppMode('right');
 
 /* =========================================================
    Init
    ========================================================= */
-// 三个 Tab：1 网页 · 2 Chat · 3 Claude Code
+// three tabs: 1 web · 2 Chat · 3 Claude Code
 addTab({ type: 'web', favKey: 'chatgpt', name: 'ChatGPT', url: 'chatgpt.com' });
 addTab({ type: 'chat', favKey: 'chat', name: 'Chat' });
 addTab({ type: 'claude', favKey: 'claude', name: 'Claude Code' });
-activate(1);  // id=1 → 第一个 Tab（网页）
+activate(1);  // first tab (web)
 boot();
 
 })();
