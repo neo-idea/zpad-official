@@ -615,127 +615,217 @@
     }
 
     /* =====================================================
-       Interactive demo (ported styles)
+       Live ZPad panel（fixed 视口贴缘，页面即桌面）
        ===================================================== */
-    .product-demo { position: relative; width: 100%; }
-    .dp-window {
-      position: relative; width: 100%; max-width: 1080px;
-      margin: 0 auto;
-      background: var(--win-bg);
-      border-radius: 16px;
-      border: 1px solid var(--border-light);
-      box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.02) inset;
+    /* 页面即桌面：引导卡（面板为 fixed 视口贴缘层，独立于文档流） */
+
+    /* 面板滑入/滑出（复现 App 热区唤出动画） */
+    #window { transition: transform .42s cubic-bezier(.3,1,.25,1), opacity .32s ease; will-change: transform; }
+    #window.away-right { transform: translateX(calc(100% + 4px)); pointer-events: none; }
+    #window.away-left { transform: translateX(calc(-100% - 4px)); pointer-events: none; }
+    #window.away-navbar { transform: translateY(calc(-100% - 4px)); opacity: 1; pointer-events: none; }
+    #window.away-centered { transform: translate(-50%, -50%) scale(.96); opacity: 0; pointer-events: none; }
+
+    /* 热区可视化覆盖层（拖滑条时实时显示，复现 App） */
+    .hz-overlay { position: fixed; z-index: 1200; pointer-events: none; opacity: 0; transition: opacity .25s ease;
+      border: 1.5px dashed rgba(239,68,68,.9); background: rgba(239,68,68,.14); border-radius: 6px; }
+    .hz-overlay.show { opacity: 1; }
+    .hz-tag { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+      background: var(--accent); color: #fff; font-size: 11.5px; font-weight: 700; padding: 4px 10px;
+      border-radius: 999px; white-space: nowrap; box-shadow: 0 4px 14px rgba(239,68,68,.4); }
+
+    /* 引导提示 */
+    .coach { position: fixed; z-index: 1100; right: 10px; top: 50%; transform: translateY(-50%);
+      display: flex; align-items: center; gap: 10px; pointer-events: none;
+      background: rgba(20,20,26,.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.12);
+      padding: 10px 14px; border-radius: 12px; font-size: 13px; color: var(--text-primary);
+      transition: opacity .4s ease; }
+    .coach .arrow { animation: nudge 1.2s ease-in-out infinite; font-size: 16px; color: var(--accent); }
+    @keyframes nudge { 0%,100% { transform: translateX(0);} 50% { transform: translateX(6px);} }
+    .coach.left { right: auto; left: 18px; }
+    .coach.left .arrow { animation: nudgeL 1.2s ease-in-out infinite; }
+    @keyframes nudgeL { 0%,100% { transform: translateX(0);} 50% { transform: translateX(-6px);} }
+    .coach.hide { opacity: 0; }
+
+    /* 设置弹层（侧栏 Settings 上方弹出，复现 App 设置） */
+    .settings-pop { position: absolute; left: 48px; bottom: 34px; z-index: 45; width: 264px;
+      background: rgba(18,18,24,.96); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px; padding: 14px 16px; box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      opacity: 0; transform: translateY(8px) scale(.97); pointer-events: none;
+      transition: all .22s cubic-bezier(.32,.72,.22,1); }
+    .settings-pop.open { opacity: 1; transform: none; pointer-events: auto; }
+    .settings-pop h4 { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--text-tertiary); margin-bottom: 10px; }
+    .sp-row { margin-bottom: 12px; }
+    .sp-row label { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 6px; }
+    .sp-row label b { color: var(--text-primary); font-variant-numeric: tabular-nums; font-weight: 600; }
+    .sp-row input[type=range] { width: 100%; accent-color: var(--accent); height: 4px; cursor: pointer; }
+
+    /* ---------- Stage (desktop backdrop) ---------- */
+    .stage {
+      position: relative;
+      max-width: 680px;
+      margin: 24px auto 80px;
+      padding: 0 20px;
+    }
+    .stage-card {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      background: rgba(255,255,255,.03);
+      padding: 34px 36px 26px;
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+    }
+    .stage-card .sc-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .stage-card .sc-icon { width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, #ef4444, #b91c1c); display: flex; align-items: center; justify-content: center; font-size: 22px;
+      box-shadow: 0 8px 24px rgba(239,68,68,.35); }
+    .stage-card h3 { font-size: 19px; font-weight: 700; }
+    .stage-card .sc-sub { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+    .stage-card ol { list-style: none; display: grid; gap: 10px; margin: 16px 0 20px; }
+    .stage-card ol li { display: flex; gap: 12px; align-items: baseline; font-size: 14px; color: var(--text-secondary); }
+    .stage-card ol li i { font-style: normal; width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(239,68,68,.15); color: var(--accent); font-size: 12px; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; transform: translateY(4px); }
+    .stage-card kbd { font-family: inherit; font-size: 11.5px; padding: 2px 6px; border-radius: 5px;
+      border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); }
+    .stage-card .sc-sliders { border-top: 1px solid rgba(255,255,255,.08); padding-top: 16px; margin-top: 4px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .stage-card .sc-sliders .sp-row { margin-bottom: 0; }
+    @media (max-width: 620px) { .stage-card .sc-sliders { grid-template-columns: 1fr; } }
+
+    /* ---------- The ZPad window（fixed 视口贴缘，如真实 App 侧板） ---------- */
+    #window {
+      position: fixed;
+      z-index: 1000;
+      display: flex; flex-direction: column;
+      background: rgba(30,30,34,.78);
+      backdrop-filter: blur(40px) saturate(1.4); -webkit-backdrop-filter: blur(40px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,.1);
+      box-shadow: -24px 20px 90px rgba(0,0,0,.45);
       overflow: hidden;
-      transition: all .45s cubic-bezier(.2,.8,.2,1);
-      z-index: 2;
     }
-    .dp-window.mode-left { max-width: 820px; margin: 0 auto 0 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
-    .dp-window.mode-right { max-width: 820px; margin: 0 0 0 auto; border-top-right-radius: 0; border-bottom-right-radius: 0; }
-    .dp-window.mode-navbar { max-width: 100%; }
-    .dp-window.mode-navbar .dp-body { height: 380px; }
-    @keyframes dpSummonPulse {
-      0% { box-shadow: 0 0 0 0 rgba(239,68,68,.55), 0 40px 120px rgba(0,0,0,.6); }
-      100% { box-shadow: 0 0 0 26px rgba(239,68,68,0), 0 40px 120px rgba(0,0,0,.6); }
-    }
-    .product-demo .dp-window.pulse { animation: dpSummonPulse .9s ease-out; }
-    .dp-titlebar {
-      height: 44px; background: rgba(255,255,255,.04);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; padding: 0 14px; gap: 12px; user-select: none;
-    }
-    .traffic { display: flex; gap: 8px; }
-    .tl { width: 12px; height: 12px; border-radius: 50%; }
-    .tl.r { background: #ff5f57; } .tl.y { background: #febc2e; } .tl.g { background: #28c840; }
-    .dp-title {
-      font-size: 12.5px; color: var(--text-tertiary); font-weight: 500;
-      margin: 0 auto; transform: translateX(-30px);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40%;
-    }
-    .mode-switch {
-      display: flex; gap: 4px; margin-left: auto;
-      background: rgba(0,0,0,.3); border: 1px solid var(--border);
-      padding: 3px; border-radius: 8px;
-    }
-    .mode-switch button {
-      width: 26px; height: 24px; border-radius: 6px; border: none;
-      background: transparent; color: var(--text-tertiary); cursor: pointer;
-      display: flex; align-items: center; justify-content: center; transition: all .2s;
-    }
-    .mode-switch button svg { width: 14px; height: 14px; }
-    .mode-switch button:hover { color: var(--text-secondary); background: rgba(255,255,255,.05); }
-    .mode-switch button.active { background: var(--accent-dim); color: var(--accent); }
-    .dp-body { display: flex; height: 560px; }
+
+    /* display modes —— 视口定位（侧板：60% 高 · 垂直居中 · 贴缘） */
+    #window.mode-right { top: 20vh; right: 0; bottom: auto; left: auto; width: min(540px, 92vw); height: 64vh;
+      border-radius: 14px 0 0 14px; border-right: none; }
+    #window.mode-left { top: 20vh; left: 0; bottom: auto; right: auto; width: min(540px, 92vw); height: 64vh;
+      border-radius: 0 14px 14px 0; border-left: none; box-shadow: 36px 0 110px rgba(0,0,0,.55); }
+    #window.mode-centered { top: 50%; left: 50%; right: auto; bottom: auto; transform: translate(-50%,-50%);
+      width: min(920px, 94vw); height: min(660px, 88vh); border-radius: 14px; box-shadow: 0 40px 130px rgba(0,0,0,.6); }
+    #window.mode-navbar { top: 0; left: 0; right: 0; bottom: auto; width: auto; height: 60vh;
+      border-radius: 0 0 14px 14px; border-top: none; }
+    #window.mode-navbar .dp-body, #window.mode-right .dp-body, #window.mode-left .dp-body { height: auto; flex: 1; }
+    #window .dp-body { height: 100%; }
+    #window.mode-navbar .dp-body { height: auto; }
+
+    /* body: sidebar + main */
+    .dp-body { display: flex; flex: 1; min-height: 0; }
+
+    /* ---------- 侧栏：实测 40px 窄条 ---------- */
     .dp-sidebar {
-      width: 212px; flex-shrink: 0;
-      background: rgba(255,255,255,.02);
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column; padding: 12px 10px;
+      width: 40px; flex-shrink: 0;
+      border-right: 1px solid rgba(255,255,255,.05);
+      display: flex; flex-direction: column; align-items: center;
+      padding: 16px 0 10px;
     }
-    .ws-head {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 10px; border-radius: 8px; cursor: pointer;
-      font-size: 12.5px; font-weight: 600; color: var(--text-secondary); transition: background .2s;
-    }
-    .ws-head:hover { background: rgba(255,255,255,.04); }
-    .ws-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
-    .ws-chev { margin-left: auto; color: var(--text-quaternary); }
-    .ws-chev svg { width: 14px; height: 14px; }
-    .tabs { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; flex: 1; overflow-y: auto; }
-    .tab {
-      display: flex; align-items: center; gap: 9px;
-      padding: 8px 10px; border-radius: 8px;
-      font-size: 13px; color: var(--text-tertiary); cursor: pointer;
-      border: 1px solid transparent; transition: all .18s; user-select: none;
-    }
-    .tab:hover { background: rgba(239,68,68,.08); border-color: rgba(239,68,68,.25); color: var(--text-secondary); }
-    .tab.active { background: var(--accent-dim); border-color: var(--accent); color: var(--text-primary); }
-    .tab .fav {
-      width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
+    .rail-btn {
+      width: 28px; height: 28px; margin-bottom: 7px; border-radius: 8px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 700;
+      color: rgba(235,235,240,.55); transition: background .15s, color .15s; user-select: none;
+      position: relative; background: none; border: none;
     }
-    .tab .name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .tab .close { opacity: 0; width: 16px; height: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--text-tertiary); transition: opacity .15s, background .15s; }
-    .tab:hover .close, .tab.active .close { opacity: .7; }
-    .tab .close:hover { opacity: 1; background: rgba(255,255,255,.1); }
-    .tab .close svg { width: 11px; height: 11px; }
-    .new-tab {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 10px; border-radius: 8px; cursor: pointer; margin-top: 6px;
-      font-size: 13px; color: var(--text-quaternary); transition: all .18s;
+    .rail-btn:hover { background: rgba(255,255,255,.07); color: rgba(235,235,240,.85); }
+    .rail-btn svg { width: 15px; height: 15px; }
+    .rail-btn.on { color: #4ade80; }
+    .rail-btn.on::after {
+      content: ''; position: absolute; right: 1px; top: 1px; width: 5px; height: 5px; border-radius: 50%;
+      background: linear-gradient(180deg, #4ade80, #22c55e);
+      box-shadow: 0 0 0 1.5px rgba(30,30,34,.9);
     }
-    .new-tab:hover { background: rgba(255,255,255,.04); color: var(--text-secondary); }
-    .new-tab svg { width: 15px; height: 15px; }
-    .side-foot { padding: 10px 6px 2px; border-top: 1px solid var(--border); margin-top: 8px; }
-    .side-foot .row {
-      display: flex; align-items: center; gap: 9px; padding: 6px 8px; border-radius: 8px;
-      font-size: 12px; color: var(--text-tertiary); cursor: pointer; transition: background .2s;
+    .rail-div { width: 22px; height: 1px; background: rgba(255,255,255,.14); margin: 6px 0 10px; flex-shrink: 0; }
+
+    .tabs { display: flex; flex-direction: column; align-items: center; flex: 1; overflow-y: auto; padding: 4px 0; width: 100%; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      position: relative; width: 31px; height: 31px; border-radius: 10px; cursor: pointer; margin-bottom: 4px;
+      display: flex; align-items: center; justify-content: center; user-select: none;
+      background: transparent; flex-shrink: 0;
+      border: 1.5px solid transparent; transition: background .15s, border-color .15s;
     }
-    .side-foot .row:hover { background: rgba(255,255,255,.04); }
-    .side-foot svg { width: 15px; height: 15px; }
+    .tab:hover { background: rgba(255,255,255,.07); }
+    .tab.active {
+      background: rgba(239,68,68,.15);
+      border-color: rgba(239,68,68,.3);
+    }
+    .tab .fav {
+      width: 17px; height: 17px; border-radius: 4.5px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9.5px; font-weight: 800; color: #fff;
+    }
+    .tab .fav.term-ico { background: none !important; border-radius: 0; }
+    .tab .fav.term-ico svg { width: 18px; height: 18px; }
+    .tab img.fav { object-fit: cover; background: #fff; }
+    .tab .dot {
+      position: absolute; right: 3px; bottom: 3px; width: 5px; height: 5px; border-radius: 50%;
+      background: linear-gradient(180deg, #4ade80, #22c55e);
+      box-shadow: 0 0 0 1.5px rgba(30,30,34,.9); display: none;
+    }
+    .tab.loaded .dot { display: block; }
+    .tab .close {
+      position: absolute; top: -4px; right: -4px; width: 14px; height: 14px; border-radius: 50%;
+      background: rgba(40,40,46,.97); border: 1px solid rgba(255,255,255,.16);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(235,235,240,.6); opacity: 0; transition: opacity .12s; cursor: pointer; padding: 0;
+    }
+    .tab:hover .close { opacity: 1; }
+    .tab .close:hover { color: #fff; background: var(--accent); border-color: var(--accent); }
+    .tab .close svg { width: 8px; height: 8px; }
+    .tab[data-hint]:hover::before {
+      content: attr(data-hint); position: absolute; left: calc(100% + 8px); top: 50%; transform: translateY(-50%);
+      background: rgba(38,38,44,.95); border: 1px solid rgba(255,255,255,.1); border-radius: 6px;
+      padding: 4px 9px; font-size: 11.5px; color: rgba(235,235,240,.9); white-space: nowrap; z-index: 60;
+      pointer-events: none; box-shadow: 0 6px 18px rgba(0,0,0,.4);
+    }
+    .side-foot { display: flex; flex-direction: column; align-items: center; margin-top: auto; flex-shrink: 0; }
+
+    /* main area */
     .dp-main { flex: 1; min-width: 0; position: relative; background: rgba(0,0,0,.25); }
     .pane { position: absolute; inset: 0; display: none; flex-direction: column; }
     .pane.active { display: flex; }
+
+    /* ---------- Browser pane ---------- */
     .web-toolbar {
-      height: 46px; flex-shrink: 0; display: flex; align-items: center; gap: 8px;
-      padding: 0 14px; background: rgba(255,255,255,.03); border-bottom: 1px solid var(--border);
+      height: 40px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 10px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
     }
     .nav-btn {
-      width: 28px; height: 28px; border-radius: 7px; border: none; cursor: pointer;
+      width: 26px; height: 26px; border-radius: 6px; border: none; cursor: pointer;
       background: transparent; color: var(--text-tertiary); display: flex; align-items: center; justify-content: center; transition: all .18s;
     }
     .nav-btn:hover { background: rgba(255,255,255,.08); color: var(--text-secondary); }
     .nav-btn svg { width: 16px; height: 16px; }
     .addr {
-      flex: 1; display: flex; align-items: center; gap: 8px;
-      height: 30px; padding: 0 12px; border-radius: 8px;
-      background: rgba(0,0,0,.35); border: 1px solid var(--border);
-      color: var(--text-secondary); font-size: 13px;
+      flex: 1; display: flex; align-items: center; gap: 6px;
+      height: 26px; padding: 0 9px; border-radius: 7px;
+      background: rgba(255,255,255,.05);
+      border: .5px solid rgba(255,255,255,.07);
+      color: var(--text-secondary); font-size: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04);
+      transition: border-color .2s, background .2s;
     }
-    .addr svg { width: 13px; height: 13px; color: #4ade80; }
-    .addr input { flex: 1; background: none; border: none; outline: none; color: var(--text-secondary); font-size: 13px; font-family: inherit; }
-    .web-frame { flex: 1; overflow-y: auto; background: #0e0e12; }
+    .addr:focus-within { border-color: rgba(239,68,68,.3); background: rgba(255,255,255,.07); }
+    .addr svg { width: 11px; height: 11px; color: #4ade80; flex-shrink: 0; }
+    .addr input {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--text-secondary); font-size: 12px; font-family: inherit;
+    }
+    .web-frame { flex: 1; overflow-y: auto; background: transparent; position: relative; }
     .web-empty { padding: 40px; text-align: center; color: var(--text-tertiary); font-size: 14px; }
+
+    /* rendered fake pages */
+
     .page-docs { padding: 40px 56px; }
     .page-docs .kicker { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
     .page-docs h2 { font-size: 26px; font-weight: 700; margin: 10px 0 16px; }
@@ -745,10 +835,74 @@
     .page-docs .card:hover { border-color: var(--accent); }
     .page-docs .card b { display: block; font-size: 14px; margin-bottom: 4px; }
     .page-docs .card span { font-size: 12.5px; color: var(--text-tertiary); }
+
+    /* ---------- Chat pane（App ChatContainerView 布局） ---------- */
+    .chatui { flex: 1; display: flex; flex-direction: column; min-height: 0; background: rgba(0,0,0,.14); }
+    .chat-head {
+      height: 38px; flex-shrink: 0; display: flex; align-items: center; gap: 8px;
+      padding: 0 12px; border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .ch-ico { color: #34d399; display: flex; } .ch-ico svg { width: 15px; height: 15px; }
+    .ch-title { font-size: 13px; font-weight: 600; color: rgba(238,238,242,.9); }
+    .ch-model {
+      display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+      font-size: 11px; color: rgba(235,235,240,.6); padding: 3px 8px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.1); transition: background .15s;
+    }
+    .ch-model:hover { background: rgba(255,255,255,.05); }
+    .ch-model svg { width: 10px; height: 10px; }
+    .ch-sp { flex: 1; }
+    .ch-btn {
+      width: 26px; height: 26px; border-radius: 6px; border: none; cursor: pointer;
+      background: transparent; color: rgba(235,235,240,.5); display: flex; align-items: center; justify-content: center;
+      transition: background .15s, color .15s;
+    }
+    .ch-btn:hover { background: rgba(255,255,255,.06); color: rgba(235,235,240,.85); }
+    .ch-btn svg { width: 13px; height: 13px; }
+
+    .chat-body { flex: 1; overflow-y: auto; padding: 16px 14px 8px; display: flex; flex-direction: column; gap: 12px; }
+    .cmsg { max-width: 86%; font-size: 13px; line-height: 1.55; }
+    .cmsg.user { align-self: flex-end; background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.25); color: rgba(240,240,244,.92); padding: 9px 13px; border-radius: 14px 14px 4px 14px; }
+    .cmsg.ai { align-self: flex-start; display: flex; gap: 9px; }
+    .cmsg.ai .av {
+      width: 24px; height: 24px; border-radius: 7px; flex-shrink: 0; margin-top: 1px;
+      background: linear-gradient(135deg, #34d399, #059669); color: #fff; font-size: 11px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cmsg.ai .bubble { background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.07); padding: 9px 13px; border-radius: 4px 14px 14px 14px; color: rgba(230,230,236,.88); }
+    .cmsg code { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; background: rgba(110,118,129,.2); padding: 1px 5px; border-radius: 4px; color: #e6e6e6; }
+    .cmsg.ai.typing .bubble::after { content: '▋'; animation: ccblink 1s steps(1) infinite; color: #34d399; margin-left: 2px; }
+
+    .chat-composer { flex-shrink: 0; padding: 8px 12px 10px; }
+    .chat-inputwrap { display: flex; align-items: center; gap: 8px; }
+    .chat-inputwrap input {
+      flex: 1; height: 38px; border-radius: 12px; outline: none;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      color: rgba(238,238,242,.92); font-size: 13px; padding: 0 12px; font-family: inherit;
+      transition: border-color .2s, background .2s;
+    }
+    .chat-inputwrap input:focus { border-color: rgba(52,211,153,.35); background: rgba(255,255,255,.07); }
+    .chat-send {
+      width: 34px; height: 34px; border-radius: 10px; border: none; cursor: pointer; flex-shrink: 0;
+      background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .chat-send:hover { transform: scale(1.06); box-shadow: 0 4px 14px rgba(239,68,68,.4); }
+    .chat-send svg { width: 15px; height: 15px; }
+    .chat-modes { display: flex; gap: 6px; margin-top: 7px; }
+    .cm {
+      font-size: 11px; padding: 3px 10px; border-radius: 999px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.12); background: transparent; color: rgba(235,235,240,.55);
+      transition: all .15s; font-family: inherit;
+    }
+    .cm:hover { color: rgba(235,235,240,.85); }
+    .cm.active { border-color: rgba(52,211,153,.4); background: rgba(52,211,153,.12); color: #34d399; }
+
+    /* ---------- Terminal pane ---------- */
     .term {
       flex: 1; display: flex; flex-direction: column;
       background: var(--term-bg);
-      font-family: 'Geist Mono', 'SF Mono', Monaco, monospace;
+      font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
       font-size: 13px; line-height: 1.55; color: var(--term-fg);
     }
     .term-head {
@@ -775,26 +929,37 @@
     .t-yel { color: #facc15; }
     .t-grn { color: #4ade80; }
     .t-blu { color: #60a5fa; }
-    .claude { flex: 1; display: flex; flex-direction: column; background: var(--panel-bg); }
-    .claude-head { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-bottom: 1px solid rgba(255,255,255,.06); font-size: 12px; color: var(--text-tertiary); }
-    .claude-head .t { color: #c084fc; font-weight: 600; }
-    .claude-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-    .msg { max-width: 88%; }
-    .msg.user { align-self: flex-end; background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.25); color: var(--text-primary); padding: 9px 13px; border-radius: 14px 14px 4px 14px; font-size: 13.5px; }
-    .msg.bot { align-self: flex-start; display: flex; gap: 10px; }
-    .msg.bot .av { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg,#c084fc,#ef4444); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: white; }
-    .msg.bot .bubble { background: rgba(255,255,255,.04); border: 1px solid var(--border); padding: 10px 13px; border-radius: 4px 14px 14px 14px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
-    .msg.bot .bubble code { font-family: 'Geist Mono', monospace; font-size: 12px; background: rgba(110,118,129,.2); padding: 1px 5px; border-radius: 4px; color: #e6e6e6; }
-    .msg.bot.typing .bubble::after { content: '▋'; animation: blink 1s steps(1) infinite; color: var(--accent); margin-left: 2px; }
-    @keyframes blink { 50% { opacity: 0; } }
-    .claude-input { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border); background: rgba(0,0,0,.25); }
-    .claude-input input { flex: 1; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px; padding: 10px 13px; color: var(--text-primary); font-size: 13.5px; outline: none; }
-    .claude-input input:focus { border-color: var(--accent); }
-    .claude-input button { background: var(--accent); color: white; border: none; border-radius: 10px; padding: 0 16px; height: 40px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .claude-input button svg { width: 15px; height: 15px; }
-    .claude-suggest { display: flex; gap: 8px; padding: 0 14px 12px; flex-wrap: wrap; background: rgba(0,0,0,.25); border-top: 1px solid var(--border); }
-    .claude-suggest button { background: rgba(255,255,255,.04); border: 1px solid var(--border); color: var(--text-secondary); border-radius: 999px; padding: 6px 12px; font-size: 12px; cursor: pointer; transition: all .2s; }
-    .claude-suggest button:hover { border-color: var(--accent); color: var(--text-primary); }
+    .t-mag { color: #c084fc; }
+    .t-cyn { color: #22d3ee; }
+    .term-sel { background: rgba(96,165,250,.25); }
+    .term-link { color: #60a5ff; text-decoration: underline; cursor: pointer; }
+
+    /* ---------- Claude Code pane（终端界面） ---------- */
+    .cc {
+      flex: 1; display: flex; flex-direction: column; min-height: 0;
+      background: var(--term-bg);
+      font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+      font-size: 12.5px; line-height: 1.6; color: var(--term-fg);
+    }
+    .cc-out { flex: 1; overflow-y: auto; padding: 14px 16px 8px; white-space: pre-wrap; word-break: break-word; }
+    .cc-logo { color: #d97757; font-weight: 700; }
+    .cc b { color: #fff; font-weight: 700; }
+    .cc-rule { border-top: 1px solid rgba(255,255,255,.14); }
+    .cc-input-line { display: flex; align-items: center; gap: 9px; padding: 8px 16px; }
+    .cc-prompt { color: #d97757; font-weight: 700; user-select: none; }
+    .cc-input-line input {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--term-fg); font: inherit; caret-color: #d97757; padding: 0;
+    }
+    .cc-status { padding: 6px 16px 8px; font-size: 11.5px; color: var(--text-tertiary); user-select: none; }
+    .cc-q { color: var(--term-fg); }
+    .cc-q .cc-prompt-i { color: #d97757; }
+    .cc-a { color: rgba(222,222,228,.82); margin: 2px 0 12px; }
+    .cc-a .cc-arrow { color: var(--text-tertiary); margin-right: 8px; }
+    .cc-a code { font-family: inherit; background: rgba(110,118,129,.18); padding: 1px 5px; border-radius: 4px; color: #e6e6e6; font-size: 11.5px; }
+    .cc-think::after { content: '▋'; animation: ccblink 1s steps(1) infinite; color: #d97757; }
+    @keyframes ccblink { 50% { opacity: 0; } }
+
 
     /* =====================================================
        Responsive
@@ -901,101 +1066,177 @@
     <p class="hero-hint reveal reveal-d2">Press <kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd> anywhere on this page — the demo answers, just like the app.</p>
   </section>
 
-  <!-- ============ Live demo ============ -->
-  <div style="text-align:center; margin: 0 auto 18px; max-width:660px;" class="reveal">
-    <a href="demo.html" style="display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border-radius:999px; background:rgba(239,68,68,.14); border:1px solid rgba(239,68,68,.35); color:#f87171; font-size:14px; font-weight:600; text-decoration:none; transition:all .2s;" onmouseover="this.style.background='rgba(239,68,68,.24)'" onmouseout="this.style.background='rgba(239,68,68,.14)'">
-      🖱 体验完整交互演示 — 热区唤出 · 触发设置 · 四种显示模式 →
-    </a>
-  </div>
-  <div class="demo-stage reveal" id="demo">
-    <div class="product-demo">
-      <div class="bezel">
-      <div class="dp-window mode-centered" id="dpWindow">
+  <!-- ============ Live demo：页面即桌面，右缘热区唤出真面板 ============ -->
+  <section class="section" id="demo">
+    <div style="text-align:center; max-width:680px; margin:0 auto;">
+      <span class="eyebrow">● Live on this page</span>
+      <h2 style="font-size:clamp(28px,4vw,40px); margin:14px 0 12px;">这个页面就是你的桌面</h2>
+      <p style="color:var(--text-tertiary); font-size:15px; line-height:1.7; margin:0;">
+        把鼠标甩到<b style="color:var(--text-primary)">浏览器窗口最右侧边缘</b>，ZPad 滑入；移开自动收起。<br>
+        随时按 <kbd style="font-family:inherit;font-size:12px;padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);">⌘</kbd> <kbd style="font-family:inherit;font-size:12px;padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);">⌥</kbd> <kbd style="font-family:inherit;font-size:12px;padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);">P</kbd> 切换 · 侧栏可玩三个 Tab：ChatGPT · Chat · Claude Code
+      </p>
+    </div>
+  </section>
 
-        <div class="dp-titlebar">
-          <div class="traffic">
-            <span class="tl r"></span><span class="tl y"></span><span class="tl g"></span>
-          </div>
-          <div class="dp-title">ZPad — Focus Panel</div>
-          <div class="mode-switch" title="Display mode">
-            <button data-mode="navbar" title="Navbar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-            <button data-mode="left" title="Left panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4v16M10 4h10v16H10"/></svg></button>
-            <button data-mode="centered" class="active" title="Centered"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2" stroke-width="2"/></svg></button>
-            <button data-mode="right" title="Right panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 4v16M14 4H4v16h10"/></svg></button>
-          </div>
+  <!-- ZPad 真面板（fixed 视口贴缘）+ 热区层 + 引导 -->
+    <!-- 热区可视化覆盖层（调节时实时镜像感应范围） -->
+    <div class="hz-overlay" id="hzOverlay"><span class="hz-tag" id="hzTag"></span></div>
+
+    <!-- 首次引导：指向浏览器右缘 -->
+    <div class="coach" id="coach">
+      <span class="arrow">→</span>
+      <span>鼠标移到<b>窗口右缘</b></span>
+    </div>
+
+    <!-- 引导卡：页面即桌面 -->
+    <div class="stage-card">
+      <div class="sc-head">
+        <div class="sc-icon">🖱</div>
+        <div>
+          <h3>这个页面就是你的桌面</h3>
+          <div class="sc-sub">ZPad 已在屏幕右缘待命 — 用真实的方式唤出它</div>
         </div>
-
-        <div class="dp-body">
-          <aside class="dp-sidebar">
-            <div class="ws-head">
-              <span class="ws-dot"></span><span>ZPad</span>
-              <span class="ws-chev"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
-            </div>
-            <div class="tabs" id="tabs"></div>
-            <div class="new-tab" id="newTab">
-              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-              <span>New Tab</span>
-            </div>
-            <div class="side-foot">
-              <div class="row" title="Settings">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.3 3.2a1 1 0 011.4 0l.6.6a1 1 0 001 .25l.8-.27a1 1 0 011.27.64l.26.82a1 1 0 00.78.68l.85.14a1 1 0 01.83 1.14l-.13.85a1 1 0 00.36.95l.68.55a1 1 0 010 1.55l-.68.55a1 1 0 00-.36.95l.13.85a1 1 0 01-.83 1.14l-.85.14a1 1 0 00-.78.68l-.26.82a1 1 0 01-1.27.64l-.8-.27a1 1 0 00-1 .25l-.6.6a1 1 0 01-1.4 0l-.6-.6a1 1 0 00-1-.25l-.8.27a1 1 0 01-1.27-.64l-.26-.82a1 1 0 00-.78-.68l-.85-.14a1 1 0 01-.83-1.14l.13-.85a1 1 0 00-.36-.95l-.68-.55a1 1 0 010-1.55l.68-.55a1 1 0 00.36-.95l-.13-.85a1 1 0 01.83-1.14l.85-.14a1 1 0 00.78-.68l.26-.82a1 1 0 011.27-.64l.8.27a1 1 0 001-.25z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
-                <span>Settings</span>
-              </div>
-            </div>
-          </aside>
-
-          <div class="dp-main" id="main">
-            <!-- Browser pane -->
-            <div class="pane" data-pane="web">
-              <div class="web-toolbar">
-                <button class="nav-btn" title="Back"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
-                <button class="nav-btn" title="Forward"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
-                <button class="nav-btn" id="reload" title="Reload"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M20 9a8 8 0 00-14.9-3M4 15a8 8 0 0014.9 3"/></svg></button>
-                <label class="addr">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                  <input id="addr" value="developer.apple.com" spellcheck="false" />
-                </label>
-                <button class="nav-btn" title="Open in new" id="go"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5v5M19 5l-7 7M12 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-6"/></svg></button>
-              </div>
-              <div class="web-frame" id="webFrame"></div>
-            </div>
-
-            <!-- Terminal pane -->
-            <div class="pane" data-pane="terminal">
-              <div class="term">
-                <div class="term-head"><span>●</span><span>zsh — 120×34</span><span class="t" style="margin-left:auto">dev@zpad — ~/ZPad</span></div>
-                <div class="term-out" id="termOut"></div>
-                <div class="term-input-line" id="termLine">
-                  <span class="term-prompt"><span class="t-user">dev</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path" id="termPath">~</span> <span class="t-dim">%</span></span>
-                  <input id="termInput" autofocus spellcheck="false" autocomplete="off" />
-                </div>
-              </div>
-            </div>
-
-            <!-- Claude Code pane -->
-            <div class="pane" data-pane="claude">
-              <div class="claude">
-                <div class="claude-head"><span>●</span><span>claude code</span><span class="t" style="margin-left:auto">user-installed CLI · project: ZPad</span></div>
-                <div class="claude-body" id="claudeBody"></div>
-                <div class="claude-suggest" id="claudeSuggest">
-                  <button>Explain this repo</button>
-                  <button>Find the terminal code</button>
-                  <button>Write a shell one-liner</button>
-                </div>
-                <div class="claude-input">
-                  <input id="claudeInput" placeholder="Run your installed Claude Code CLI…" />
-                  <button id="claudeSend"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
+      <ol>
+        <li><i>1</i><span>把鼠标移到<b>浏览器窗口最右侧边缘</b></span></li>
+        <li><i>2</i><span>停留片刻，面板从右侧滑入 — 移开鼠标自动收起</span></li>
+        <li><i>3</i><span>随时按 <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> 唤出 / 收起面板</span></li>
+      </ol>
+      <div class="sc-sliders">
+        <div class="sp-row">
+          <label>热区宽度 <b id="hzWVal2">30 px</b></label>
+          <input type="range" id="hzWidth2" min="5" max="100" step="5" value="30" />
+        </div>
+        <div class="sp-row">
+          <label>热区高度 <b id="hzHVal2">100 %</b></label>
+          <input type="range" id="hzHeight2" min="10" max="100" step="5" value="100" />
+        </div>
+        <div class="sp-row">
+          <label>触发延迟 <b id="hzDVal2">0.15 s</b></label>
+          <input type="range" id="hzDelay2" min="0.05" max="0.8" step="0.05" value="0.15" />
+        </div>
       </div>
     </div>
-    <p class="demo-cap"><span class="live">Live interactive demo</span> — click tabs, type real commands in the terminal, switch display modes. Or press ⌘⌥P.</p>
-  </div>
+
+    <div class="dp-window mode-centered" id="window">
+      <!-- 设置弹层：热区宽度 / 高度 / 触发延迟（面板内，随面板滑入滑出） -->
+      <div class="settings-pop" id="settingsPop">
+        <h4>触发设置</h4>
+        <div class="sp-row">
+          <label>热区宽度 <b id="hzWVal">30 px</b></label>
+          <input type="range" id="hzWidth" min="5" max="100" step="5" value="30" />
+        </div>
+        <div class="sp-row">
+          <label>热区高度 <b id="hzHVal">100 %</b></label>
+          <input type="range" id="hzHeight" min="10" max="100" step="5" value="100" />
+        </div>
+        <div class="sp-row" style="margin-bottom:2px">
+          <label>触发延迟 <b id="hzDVal">0.15 s</b></label>
+          <input type="range" id="hzDelay" min="0.05" max="0.8" step="0.05" value="0.15" />
+        </div>
+      </div>
+
+      <!-- 无标题栏（真实 App：全尺寸内容视图）；模式切换为浮动小组件 -->
+
+      <!-- Body -->
+      <div class="dp-body">
+        <!-- Sidebar：实测 40px 窄条 -->
+        <aside class="dp-sidebar">
+          <button class="rail-btn" id="collapseBtn" title="收起面板">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="rail-btn on" id="hoverToggle" title="鼠标悬停触发（热区）开/关">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M12 7v3"/></svg>
+          </button>
+          <button class="rail-btn" title="收藏">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21z"/></svg>
+          </button>
+          <button class="rail-btn" id="newTab" title="新建标签">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v16m8-8H4"/></svg>
+          </button>
+          <div class="rail-div"></div>
+          <div class="tabs" id="tabs"></div>
+          <div class="side-foot">
+            <div class="rail-div"></div>
+            <button class="rail-btn" title="工作区：ZPad">
+              <span style="width:10px;height:10px;border-radius:3px;background:var(--accent);display:block;"></span>
+            </button>
+            <button class="rail-btn" id="settingsRow" title="设置（触发热区调节）">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.3 3.2a1 1 0 011.4 0l.6.6a1 1 0 001 .25l.8-.27a1 1 0 011.27.64l.26.82a1 1 0 00.78.68l.85.14a1 1 0 01.83 1.14l-.13.85a1 1 0 00.36.95l.68.55a1 1 0 010 1.55l-.68.55a1 1 0 00-.36.95l.13.85a1 1 0 01-.83 1.14l-.85.14a1 1 0 00-.78.68l-.26.82a1 1 0 01-1.27.64l-.8-.27a1 1 0 00-1 .25l-.6.6a1 1 0 01-1.4 0l-.6-.6a1 1 0 00-1-.25l-.8.27a1 1 0 01-1.27-.64l-.26-.82a1 1 0 00-.78-.68l-.85-.14a1 1 0 01-.83-1.14l.13-.85a1 1 0 00-.36-.95l-.68-.55a1 1 0 010-1.55l.68-.55a1 1 0 00.36-.95l-.13-.85a1 1 0 01.83-1.14l.85-.14a1 1 0 00.78-.68l.26-.82a1 1 0 011.27-.64l.8.27a1 1 0 001-.25z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+            </button>
+          </div>
+        </aside>
+
+        <!-- Main panes -->
+        <div class="dp-main" id="main">
+          <!-- Browser pane -->
+          <div class="pane" data-pane="web">
+            <div class="web-toolbar">
+              <button class="nav-btn" title="Back"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+              <button class="nav-btn" title="Forward"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+              <button class="nav-btn" id="reload" title="Reload"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M20 9a8 8 0 00-14.9-3M4 15a8 8 0 0014.9 3"/></svg></button>
+              <label class="addr">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                <input id="addr" value="chatgpt.com" spellcheck="false" />
+              </label>
+              <button class="nav-btn" title="Open in new" id="go"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5v5M19 5l-7 7M12 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-6"/></svg></button>
+            </div>
+            <div class="web-frame" id="webFrame"></div>
+          </div>
+
+          <!-- Chat pane（按 App ChatContainerView 布局） -->
+          <div class="pane" data-pane="chat">
+            <div class="chatui">
+              <div class="chat-head">
+                <span class="ch-ico"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75a7.5 7.5 0 017.5-7.5h4.5a7.5 7.5 0 017.5 7.5v0a7.5 7.5 0 01-7.5 7.5H9l-4.5 3v-4.09A7.5 7.5 0 014.5 12.75z"/></svg></span>
+                <span class="ch-title">Chat</span>
+                <span class="ch-model">gpt-5.2 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></span>
+                <span class="ch-sp"></span>
+                <button class="ch-btn" title="查找"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></button>
+                <button class="ch-btn" title="导出"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m3-3H9m10 7H5a2 2 0 01-2-2V7a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v11a2 2 0 01-2 2z"/></svg></button>
+              </div>
+              <div class="chat-body" id="chatBody"></div>
+              <div class="chat-composer">
+                <div class="chat-inputwrap">
+                  <input id="chatInput" placeholder="Ask anything…" autocomplete="off" spellcheck="false" />
+                  <button class="chat-send" id="chatSend" title="发送"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
+                </div>
+                <div class="chat-modes">
+                  <button class="cm active" data-m="fast">⚡ Fast</button>
+                  <button class="cm" data-m="think">🧠 Think</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terminal pane -->
+          <div class="pane" data-pane="terminal">
+            <div class="term">
+              <div class="term-out" id="termOut"></div>
+              <div class="term-input-line" id="termLine">
+                <span class="term-prompt"><span class="t-user">dev</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path" id="termPath">~</span> <span class="t-dim">%</span></span>
+                <input id="termInput" autofocus spellcheck="false" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Claude Code pane：终端界面 -->
+          <div class="pane" data-pane="claude">
+            <div class="cc">
+              <div class="cc-out" id="ccOut"></div>
+              <div class="cc-rule"></div>
+              <div class="cc-input-line">
+                <span class="cc-prompt">❯</span>
+                <input id="claudeInput" autocomplete="off" spellcheck="false" />
+              </div>
+              <div class="cc-rule"></div>
+              <div class="cc-status">⏸ manual mode on · ? for shortcuts · ← for agents</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   <!-- ============ Bento — the whole product, one grid ============ -->
   <section class="bento-section" id="features">
@@ -1281,14 +1522,19 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   });
 });
 
-/* ===== Inlined interactive panel ===== */
+/* ===== Live ZPad panel（全局面板引擎） ===== */
 (function(){
 
+/* =========================================================
+   Tab model — each tab has: id, type (web|terminal|claude), name, favicon, url(for web)
+   ========================================================= */
 let nextId = 1;
 const tabsEl = document.getElementById('tabs');
 const mainEl = document.getElementById('main');
 
 const FAV = {
+  zpad: { bg: 'linear-gradient(135deg,#ef4444,#b91c1c)', t: 'Z' },
+  chatgpt: { img: 'https://th.bing.com/th/id/ODF.TaWVp0eZxcA44tUgJJDYMQ?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2' },
   apple: { bg: '#60a5fa', t: '' },
   terminal: { bg: '#1a1a1a', t: '>_' },
   claude: { bg: '#c084fc', t: 'C' },
@@ -1298,6 +1544,14 @@ const FAV = {
 
 let tabs = [];
 let activeId = null;
+
+function iconSVG(type) {
+  switch (type) {
+    case 'web': return '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>';
+    case 'terminal': return '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';
+    case 'claude': return '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>';
+  }
+}
 
 function addTab(opts) {
   const t = Object.assign({ id: nextId++ }, opts);
@@ -1311,14 +1565,22 @@ function renderTabs() {
   tabsEl.innerHTML = '';
   tabs.forEach(t => {
     const el = document.createElement('div');
-    el.className = 'tab' + (t.id === activeId ? ' active' : '');
+    el.className = 'tab' + (t.id === activeId ? ' active' : '') + (t.type === 'web' ? ' loaded' : '');
     el.dataset.id = t.id;
+    el.dataset.hint = t.name;
     const fav = FAV[t.favKey || t.type];
-    el.innerHTML = `
-      <span class="fav" style="background:${fav.bg};color:#fff">${fav.t}</span>
-      <span class="name">${t.name}</span>
-      <span class="close" title="Close"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
+    const inner = t.type === 'terminal'
+      ? `<span class="fav term-ico"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>`
+      : t.type === 'chat'
+        ? `<span class="fav term-ico" style="color:#34d399"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75a7.5 7.5 0 017.5-7.5h4.5a7.5 7.5 0 017.5 7.5v0a7.5 7.5 0 01-7.5 7.5H9l-4.5 3v-4.09A7.5 7.5 0 014.5 12.75z"/></svg></span>`
+        : t.type === 'claude'
+        ? `<span class="fav" style="background:linear-gradient(135deg,#d97757,#b45309)">✳</span>`
+        : fav.img
+          ? `<img class="fav" src="${fav.img}" alt="" />`
+          : `<span class="fav" style="background:${fav.bg}">${fav.t}</span>`;
+    el.innerHTML = `${inner}<span class="dot"></span><span class="close" title="关闭标签"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
     el.addEventListener('click', () => activate(t.id));
+    el.addEventListener('contextmenu', (e) => { e.preventDefault(); closeTab(t.id); });
     el.querySelector('.close').addEventListener('click', (e) => { e.stopPropagation(); closeTab(t.id); });
     tabsEl.appendChild(el);
   });
@@ -1329,7 +1591,7 @@ function closeTab(id) {
   if (idx < 0) return;
   tabs.splice(idx, 1);
   if (!tabs.length) {
-    addTab({ type: 'web', favKey: 'apple', name: 'Apple Dev', url: 'developer.apple.com' });
+    addTab({ type: 'web', favKey: 'chatgpt', name: 'ChatGPT', url: 'chatgpt.com' });
     return;
   }
   if (activeId === id) activate(tabs[Math.min(idx, tabs.length - 1)].id);
@@ -1341,8 +1603,12 @@ function activate(id) {
   const tab = tabs.find(t => t.id === id);
   if (!tab) return;
   renderTabs();
+  // show correct pane
   document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
-  if (tab.type === 'terminal') {
+  if (tab.type === 'chat') {
+    document.querySelector('.pane[data-pane="chat"]').classList.add('active');
+    document.getElementById('chatInput').focus();
+  } else if (tab.type === 'terminal') {
     document.querySelector('.pane[data-pane="terminal"]').classList.add('active');
     document.getElementById('termInput').focus();
   } else if (tab.type === 'claude') {
@@ -1354,10 +1620,12 @@ function activate(id) {
   }
 }
 
+/* new tab cycles web -> terminal -> claude */
 let addCursor = 0;
 document.getElementById('newTab').addEventListener('click', () => {
   const kinds = [
     { type: 'web', favKey: 'web', name: 'New Tab', url: 'duckduckgo.com' },
+    { type: 'chat', favKey: 'chat', name: 'Chat' },
     { type: 'terminal', favKey: 'terminal', name: 'Terminal' },
     { type: 'claude', favKey: 'claude', name: 'Claude Code' }
   ];
@@ -1365,23 +1633,11 @@ document.getElementById('newTab').addEventListener('click', () => {
   addCursor++;
 });
 
-/* Display modes */
-const win = document.getElementById('dpWindow');
-document.querySelectorAll('.mode-switch button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.mode-switch button').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    const m = b.dataset.mode;
-    win.className = 'dp-window mode-' + m;
-  });
-});
-
-/* Browser (rendered pages) */
+/* =========================================================
+   Browser (rendered fake pages)
+   ========================================================= */
 const webFrame = document.getElementById('webFrame');
 const addrInput = document.getElementById('addr');
-
-const ICO_FOLDER = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 1.5a.25.25 0 00-.25.25v11.5c0 .138.112.25.25.25h.94V6h3.465a.75.75 0 001.06 0l1.06-1.06h5.015v8.56h.94a.25.25 0 00.25-.25V4.19a.25.25 0 00-.25-.25H8.06L6.935 5.53a.75.75 0 01-.53.22H2.75z"/><path d="M4 3.75A.75.75 0 014.75 3h3.875a.25.25 0 01.177.073l1 1a.25.25 0 01-.177.427H4.75a.75.75 0 01-.75-.75z"/></svg>';
-const ICO_FILE = '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M3.75 1.5a.25.25 0 00-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 00.25-.25V6h-2.75A1.75 1.75 0 019 4.25V1.5zm6.75.062V4.25c0 .138.112.25.25.25h2.688z"/></svg>';
 
 function renderWeb(url) {
   url = (url || '').trim().replace(/^https?:\/\//, '');
@@ -1390,20 +1646,78 @@ function renderWeb(url) {
   } else if (url.includes('developer.apple.com') || url.includes('apple.com')) {
     webFrame.innerHTML = applePage();
   } else if (url.includes('swift.org')) {
-    webFrame.innerHTML = docsPage('Swift.org', 'A powerful open-source language from Apple.');
+    webFrame.innerHTML = docsPage('Swift.org', 'A powerful open-source language from Apple.', 'swift');
+  } else if (url.includes('chatgpt.com') || url.includes('openai.com')) {
+    webFrame.innerHTML = chatgptPage();
   } else if (url.includes('zpad')) {
-    webFrame.innerHTML = docsPage('ZPad Docs', 'Everything about the focus panel.');
+    webFrame.innerHTML = zpadHome();
   } else {
     webFrame.innerHTML = genericPage(url);
   }
 }
 
 
+function zpadHome() {
+  const favs = [
+    { n: 'Swift.org', bg: '#f97316', t: 'S' },
+    { n: 'Hacker News', bg: '#ff6600', t: 'Y' },
+    { n: 'Stack Overflow', bg: '#f48024', t: 'S' },
+    { n: 'DuckDuckGo', bg: '#de5833', t: 'D' },
+    { n: 'Apple Dev', bg: '#60a5fa', t: '' },
+    { n: 'V2EX', bg: '#1f2937', t: 'V' }
+  ];
+  return `<div style="display:flex;flex-direction:column;align-items:center;padding:52px 30px 30px;min-height:100%">
+    <div style="font-size:34px;font-weight:800;letter-spacing:-.6px;color:rgba(238,238,242,.95)">Z<span style="color:#ef4444">Pad</span></div>
+    <div style="font-size:12.5px;color:rgba(235,235,240,.45);margin-top:6px">一个热键，唤出终端与浏览器</div>
+    <div style="width:100%;max-width:400px;margin-top:26px;position:relative">
+      <input placeholder="搜索或输入网址…" style="width:100%;box-sizing:border-box;height:38px;border-radius:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:.5px solid rgba(255,255,255,.09);box-shadow:0 2px 6px rgba(0,0,0,.05);padding:0 40px 0 16px;color:rgba(238,238,242,.9);outline:none;font-size:13px;transition:all .2s" onfocus="this.style.borderColor='rgba(239,68,68,.35)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.09)'" onblur="this.style.borderColor='rgba(255,255,255,.09)';this.style.boxShadow='0 2px 6px rgba(0,0,0,.05)'" />
+      <svg style="position:absolute;right:13px;top:12px;width:14px;height:14px;color:rgba(235,235,240,.4)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    </div>
+    <div style="width:100%;max-width:460px;margin-top:30px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:12px">收藏</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px">
+        ${favs.map(f => `<div title="${f.n}" style="cursor:pointer">
+          <div style="width:44px;height:44px;border-radius:11px;background:${f.bg};display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:800;margin:0 auto;transition:transform .15s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='none'">${f.t}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div style="width:100%;max-width:460px;margin-top:26px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:10px">最近</div>
+      ${favs.slice(0,3).map(f => `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background='none'">
+        <span style="width:22px;height:22px;border-radius:6px;background:${f.bg};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800">${f.t}</span>
+        <span style="font-size:12.5px;color:rgba(235,235,240,.75)">${f.n}</span>
+        <span style="margin-left:auto;font-size:11px;color:rgba(235,235,240,.3)">今天</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function chatgptPage() {
+  const chips = ['Summarize text', 'Brainstorm ideas', 'Analyze data', 'Make a plan', 'Code', 'Image ideas'];
+  return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:30px 26px;gap:0">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:34px">
+      <img src="https://th.bing.com/th/id/ODF.TaWVp0eZxcA44tUgJJDYMQ?w=32&h=32&qlt=90&pcl=fffffa&o=6&pid=1.2" alt="ChatGPT" style="width:30px;height:30px;border-radius:50%;background:#fff;object-fit:cover" />
+      <span style="font-size:17px;font-weight:600;color:rgba(238,238,242,.9)">ChatGPT</span>
+    </div>
+    <div style="font-size:21px;font-weight:600;color:rgba(238,238,242,.92);text-align:center;letter-spacing:-.2px">什么可以帮忙的？</div>
+    <div style="width:100%;max-width:440px;margin-top:28px;position:relative">
+      <input placeholder="Ask anything" style="width:100%;box-sizing:border-box;height:50px;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:0 96px 0 20px;color:rgba(238,238,242,.9);outline:none;font-size:14px;transition:all .2s" onfocus="this.style.borderColor='rgba(255,255,255,.22)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'" />
+      <span style="position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer">
+        <svg style="width:15px;height:15px;color:#0d0d0d" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M12 19V5m-7 7l7-7 7 7"/></svg>
+      </span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px;max-width:440px">
+      ${chips.map(c => `<span style="padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:12.5px;color:rgba(235,235,240,.7);cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">${c}</span>`).join('')}
+    </div>
+    <div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:rgba(235,235,240,.3)">ChatGPT 也可能犯错。请核查重要信息。</div>
+  </div>`;
+}
+
 function ddgPage() {
   return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;padding:30px">
     <div style="font-size:30px;font-weight:800;color:#de5833;letter-spacing:-.5px">DuckDuckGo</div>
     <div style="width:100%;max-width:440px;display:flex;gap:8px">
-      <input placeholder="Search the web without being tracked…" style="flex:1;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;padding:13px 20px;color:var(--text-primary);outline:none;font-size:14px;font-family:inherit" />
+      <input placeholder="Search the web without being tracked…" style="flex:1;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;padding:13px 20px;color:var(--text-primary);outline:none;font-size:14px" />
       <button style="background:#de5833;border:none;color:#fff;border-radius:999px;padding:0 18px;font-weight:600;cursor:pointer">Go</button>
     </div>
     <div style="font-size:12px;color:var(--text-tertiary)">Privacy, simplified.</div>
@@ -1424,7 +1738,7 @@ function applePage() {
   </div>`;
 }
 
-function docsPage(title, sub) {
+function docsPage(title, sub, key) {
   return `<div class="page-docs">
     <div class="kicker">Documentation</div>
     <h2>${title}</h2>
@@ -1443,7 +1757,7 @@ function genericPage(url) {
     <div class="kicker">${url}</div>
     <h2>${url.split('/')[0]}</h2>
     <p>This is a live preview of the ZPad in-app browser. In the real app, this loads the actual page with full WKWebView — JavaScript, logins, everything.</p>
-    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">developer.apple.com</code> · <code style="font-family:'Geist Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
+    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">chatgpt.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
   </div>`;
 }
 
@@ -1468,7 +1782,9 @@ function prettyName(url) {
   return host.charAt(0).toUpperCase() + host.slice(1);
 }
 
-/* ===== Terminal ===== */
+/* =========================================================
+   Terminal emulator
+   ========================================================= */
 const termOut = document.getElementById('termOut');
 const termInput = document.getElementById('termInput');
 const termPath = document.getElementById('termPath');
@@ -1476,6 +1792,7 @@ let cwd = '~';
 let history = [];
 let histIdx = -1;
 
+function el(html) { return html; }
 function termPrint(html) {
   const d = document.createElement('div');
   d.className = 'ln';
@@ -1567,7 +1884,7 @@ const commands = {
         'Author: dev &lt;dev@zpad.app&gt;',
         'Date:   Fri Jun 20 09:30:00 2026',
         '',
-        '    feat: add 4 display modes + terminal tabs',
+        '    feat: add 4 display modes + Claude Code tab',
         '',
         '<span class="t-yel">commit 9e8f7d6</span>',
         '    refactor: strategy pattern for tab behaviors'
@@ -1615,7 +1932,7 @@ const commands = {
     ].join('\n');
   },
   clear() { termOut.innerHTML = ''; return null; },
-  sudo() { return '<span class="t-acc">dev is not in the sudoers file. This incident will be reported.</span>'; },
+  sudo() { return '<span class="t-acc">dev is not in the sudoers file. This incident will be reported.</span> 😏'; },
   exit() { return '<span class="t-dim">use the traffic light or switch tabs to leave the terminal.</span>'; }
 };
 
@@ -1623,6 +1940,7 @@ function escapeHtml(s) { return String(s).replace(/[&<>]/g, c => ({ '&': '&amp;'
 
 function runCommand(raw) {
   const line = raw.trim();
+  // echo the prompt + command into the output
   termPrint(`${promptHtml()} ${escapeHtml(raw)}`);
   if (!line) return;
   history.push(line);
@@ -1630,7 +1948,7 @@ function runCommand(raw) {
   const [cmd, ...args] = line.split(/\s+/);
   if (commands[cmd]) {
     const out = commands[cmd](args);
-    if (out === null) return;
+    if (out === null) return; // clear handled
     if (out) termPrint(out);
   } else if (cmd === 'cls') { termOut.innerHTML = ''; }
   else {
@@ -1661,21 +1979,24 @@ termInput.addEventListener('keydown', (e) => {
   }
 });
 
+// clicking anywhere in the terminal focuses input
 document.querySelector('.pane[data-pane="terminal"]').addEventListener('click', () => termInput.focus());
 
-/* ===== Claude Code simulated chat ===== */
-const claudeBody = document.getElementById('claudeBody');
+/* =========================================================
+   Claude Code simulated chat
+   ========================================================= */
+const ccOut = document.getElementById('ccOut');
 const claudeInput = document.getElementById('claudeInput');
 
 const claudeResponses = [
-  { keys: ['explain', 'repo', 'what', 'about'], a: 'This is the <code>ZPad</code> repo — a macOS status-bar panel app. The architecture is clean and protocol-oriented: <code>DisplayModeStrategy</code> handles window positioning across 4 modes, <code>TabBehaviorStrategy</code> unifies web & terminal tabs via an <code>AnyTab</code> type erasure. The brain is <code>PanelManager.swift</code>; the UI is <code>HomepageView.swift</code>.' },
-  { keys: ['terminal', 'swiftterm', 'shell'], a: 'The terminal is powered by a <b>forked SwiftTerm</b> at <code>SwiftTerm-fork/</code>, wrapped in <code>TerminalContainerView</code> via <code>NSViewRepresentable</code>. Clever bit: all terminal views stay alive in a ZStack with opacity-based switching, so scrollback buffers are preserved when you switch tabs.' },
-  { keys: ['hotkey', 'shortcut', 'summon', 'mode'], a: 'Summon with <code>Cmd + Opt + P</code> — the panel slides out in ~0.3s. Four display modes: side-panel left/right, centered modal, and navbar. Each mode is its own <code>DisplayModeStrategy</code> implementation controlling frame, style mask, and animation.' },
-  { keys: ['file', 'find', 'where'], a: 'Looking at the tree: hotkey handling lives in <code>ZPadApp.swift</code>, window geometry in <code>PanelManager.swift</code>, and the tabbed sidebar in <code>HomepageView.swift</code>. Constants (sizes, animation, hot-zone) are centralized in <code>Constants.swift</code>.' },
-  { keys: ['shell', 'one-liner', 'oneliner', 'script'], a: 'Here\'s a handy one — find Swift files bigger than 300 lines:<br><code>find . -name "*.swift" -exec wc -l {} + | sort -rn | head</code>' },
-  { keys: ['claude', 'ai'], a: 'Yes — if you install Claude Code separately, it runs in a terminal tab. You can edit files, run commands, and get help without leaving the panel.' }
+  { keys: ['explain', 'repo', 'what', 'about'], a: 'This is the <code>ZPad</code> repo — a macOS status-bar panel app. The architecture is protocol-oriented: <code>DisplayModeStrategy</code> handles window positioning, <code>TabBehaviorStrategy</code> unifies web & terminal tabs via <code>AnyTab</code> type erasure. The brain is <code>PanelManager.swift</code>; the UI is <code>HomepageView.swift</code>.' },
+  { keys: ['terminal', 'swiftterm', 'shell'], a: 'The terminal is powered by a <b>forked SwiftTerm</b> at <code>SwiftTerm-fork/</code>, wrapped via <code>NSViewRepresentable</code>. All terminal views stay alive in a ZStack with opacity switching, so scrollback buffers survive tab changes.' },
+  { keys: ['hotkey', 'shortcut', 'summon'], a: 'Summon with <code>Cmd+Opt+P</code> — panel slides out in ~0.3s. Right-edge hot zone with configurable width/height/delay, exactly like the sliders in this demo.' },
+  { keys: ['file', 'find', 'where'], a: 'Hotkey handling: <code>ZPadApp.swift</code> · window geometry: <code>PanelManager.swift</code> · tabbed sidebar: <code>HomepageView.swift</code> · constants: <code>Constants.swift</code>.' },
+  { keys: ['shell', 'one-liner', 'oneliner', 'script'], a: 'Find Swift files over 300 lines:<br><code>find . -name "*.swift" -exec wc -l {} + | sort -rn | head</code>' },
+  { keys: ['claude', 'ai', 'glm'], a: 'Yes — Claude Code runs directly inside this tab. Edit files, run commands, stay in flow. That is literally what you are looking at right now. ✓' }
 ];
-const claudeDefault = 'I can explain the repo, find specific code, write shell snippets, or walk through the architecture. What do you want to dig into?';
+const claudeDefault = 'I can explain the repo, find code, write shell snippets, or walk through the architecture. What do you want to dig into?';
 
 function claudeAnswer(q) {
   const ql = q.toLowerCase();
@@ -1683,54 +2004,288 @@ function claudeAnswer(q) {
   return claudeDefault;
 }
 
+/* boot 画面（动态时间，无 MCP/hook 报错块） */
+(function ccBoot() {
+  const t = new Date(), pad = n => String(n).padStart(2, '0');
+  const ts = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
+  const el = document.createElement('div');
+  el.innerHTML = `<span class="t-dim">[${ts}]</span> <span class="t-blu">[~/Code/ZPad]</span> <span class="t-yel">[master ✖]</span> <span class="t-grn">❱❱❲</span> c
+<span class="cc-logo"> ▐▛███▛█</span>   <b>Claude Code</b> v2.1.263
+<span class="cc-logo">▝▜██████▀</span>  <span class="t-dim">Opus 4.5[1M] · API Usage Billing</span>
+<span class="cc-logo">  ▝▝ ▝▝</span>    <span class="t-blu">~/Code/ZPad</span>
+
+`;
+  ccOut.appendChild(el);
+})();
+
 function claudeSend(q) {
   q = (q || '').trim();
   if (!q) return;
-  const u = document.createElement('div'); u.className = 'msg user'; u.textContent = q; claudeBody.appendChild(u);
-  const b = document.createElement('div'); b.className = 'msg bot typing';
-  b.innerHTML = `<div class="av">C</div><div class="bubble"></div>`; claudeBody.appendChild(b);
-  claudeBody.scrollTop = claudeBody.scrollHeight;
+  const u = document.createElement('div'); u.className = 'cc-q';
+  u.innerHTML = `<span class="cc-prompt-i">❯</span> ${q.replace(/</g,'&lt;')}`;
+  ccOut.appendChild(u);
+  const a = document.createElement('div'); a.className = 'cc-a cc-think';
+  a.innerHTML = `<span class="cc-arrow">⎿</span>`;
+  ccOut.appendChild(a);
+  ccOut.scrollTop = ccOut.scrollHeight;
   const answer = claudeAnswer(q);
-  let i = 0; const words = answer.split(' ');
-  const tick = () => {
-    b.querySelector('.bubble').innerHTML = words.slice(0, i).join(' ');
-    claudeBody.scrollTop = claudeBody.scrollHeight;
-    if (i < words.length) { i++; setTimeout(tick, 35); }
-    else { b.classList.remove('typing'); b.querySelector('.bubble').innerHTML = answer; }
-  };
-  setTimeout(tick, 280);
+  setTimeout(() => {
+    let i = 0; const words = answer.split(' ');
+    a.classList.remove('cc-think');
+    const tick = () => {
+      a.innerHTML = `<span class="cc-arrow">⎿</span>` + words.slice(0, i).join(' ');
+      ccOut.scrollTop = ccOut.scrollHeight;
+      if (i < words.length) { i++; setTimeout(tick, 30); }
+    };
+    tick();
+  }, 320);
+  ccOut.scrollTop = ccOut.scrollHeight;
 }
 
-document.getElementById('claudeSend').addEventListener('click', () => { claudeSend(claudeInput.value); claudeInput.value = ''; });
 claudeInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { claudeSend(claudeInput.value); claudeInput.value = ''; } });
-document.querySelectorAll('#claudeSuggest button').forEach(b => b.addEventListener('click', () => claudeSend(b.textContent)));
 
-/* ===== Init ===== */
-addTab({ type: 'web', favKey: 'apple', name: 'Apple Dev', url: 'developer.apple.com' });
-addTab({ type: 'terminal', favKey: 'terminal', name: 'Terminal' });
+/* =========================================================
+   Chat pane（App ChatContainerView 风格）
+   ========================================================= */
+const chatBody = document.getElementById('chatBody');
+const chatInput = document.getElementById('chatInput');
+
+const chatResponses = [
+  { keys: ['热区', 'hot', '触发', '边缘'], a: '热区由 <code>PanelManager+Mouse.swift</code> 驱动：鼠标贴到屏幕边缘的感应矩形（宽度 × 高度% × 垂直居中）停留触发延迟后唤出面板。宽高延迟都可在设置里调，拖滑条时还有实时虚线预览——这个 demo 页右上角就能试。' },
+  { keys: ['模式', '左', 'mode', 'display'], a: 'ZPad 支持四种显示模式：右侧板（默认）、左侧板、居中弹窗、顶部 navbar。每种模式是独立的 <code>DisplayModeStrategy</code> 实现，控制窗口 frame、样式掩码和滑入动画。' },
+  { keys: ['终端', 'terminal', 'shell', 'zsh'], a: '终端基于 fork 的 SwiftTerm，用 <code>NSViewRepresentable</code> 包装。所有终端视图常驻 ZStack、透明度切换，切标签不丢回滚缓冲。' },
+  { keys: ['价格', '买', 'price', 'buy'], a: '买断制，一次购买永久使用，14 天无理由退款。下载页有 30 天全功能试用，不用绑卡。' },
+  { keys: ['快捷键', 'hotkey', '⌘'], a: '全局 <kbd>⌘⌥P</kbd> 随时唤出/收起。终端里 <kbd>⌘T</kbd> 新建、<kbd>⌘W</kbd> 关闭。' }
+];
+const chatDefault = '我是 ZPad 内置 Chat——接你自己的服务商（OpenAI 兼容 API）就能用，Fast/Think 双模式随时切。想了解什么？';
+
+function chatAnswer(q) {
+  const ql = q.toLowerCase();
+  for (const r of chatResponses) if (r.keys.some(k => ql.includes(k))) return r.a;
+  return chatDefault;
+}
+
+function appendMsg(role, html) {
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + role;
+  d.innerHTML = role === 'user' ? html : `<span class="av">Z</span><div class="bubble">${html}</div>`;
+  chatBody.appendChild(d);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return d;
+}
+
+/* 预置对话 */
+appendMsg('user', 'ZPad 的热区触发是怎么实现的？');
+appendMsg('ai', '鼠标贴到屏幕边缘的感应矩形（宽度 × 高度% × 垂直居中），停留触发延迟后面板滑入。<code>PanelManager+Mouse.swift</code> 里 60 行搞定，宽/高/延迟全部可调。');
+appendMsg('user', '能换到左边吗？');
+appendMsg('ai', '可以，四种显示模式：右侧板（默认）、左侧板、居中弹窗、navbar。每种是独立的 <code>DisplayModeStrategy</code>。');
+
+function chatSend(q) {
+  q = (q || '').trim();
+  if (!q) return;
+  appendMsg('user', q.replace(/</g, '&lt;'));
+  const b = document.createElement('div');
+  b.className = 'cmsg ai typing';
+  b.innerHTML = `<span class="av">Z</span><div class="bubble"></div>`;
+  chatBody.appendChild(b);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  const answer = chatAnswer(q);
+  setTimeout(() => {
+    let i = 0; const words = answer.split(' ');
+    b.classList.remove('typing');
+    const tick = () => {
+      b.querySelector('.bubble').innerHTML = words.slice(0, i).join(' ');
+      chatBody.scrollTop = chatBody.scrollHeight;
+      if (i < words.length) { i++; setTimeout(tick, 32); }
+    };
+    tick();
+  }, 300);
+}
+document.getElementById('chatSend').addEventListener('click', () => { chatSend(chatInput.value); chatInput.value = ''; });
+chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { chatSend(chatInput.value); chatInput.value = ''; } });
+document.querySelectorAll('.cm').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.cm').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+}));
+
+/* =========================================================
+   Hot-Zone Engine v2 — 页面即桌面
+   浏览器视口右/左缘 = App 热区；鼠标甩到缘停留 → 面板贴缘滑入；
+   离开面板与热区 0.3s → 自动收起；⌘⌥P 随时切换
+   ========================================================= */
+const winEl = document.getElementById('window');
+const hzOverlay = document.getElementById('hzOverlay');
+const hzTag = document.getElementById('hzTag');
+const coach = document.getElementById('coach');
+const settingsPop = document.getElementById('settingsPop');
+
+const HZ = { width: 30, heightPct: 100, delay: 150 };   // px / % / ms
+let appMode = 'right';
+let panelOpen = false;
+let enterTimer = null, leaveTimer = null, hzFadeTimer = null;
+let mouseInPanel = false;
+
+function isSideMode() { return appMode === 'left' || appMode === 'right'; }
+
+function applyAway() {
+  winEl.className = 'dp-window mode-' + appMode + (panelOpen ? '' : ' away-' + appMode);
+}
+
+function openPanel() {
+  if (panelOpen) return;
+  clearTimeout(leaveTimer);
+  panelOpen = true;
+  applyAway();
+  coach.classList.add('hide');
+}
+function closePanel() {
+  if (!panelOpen) return;
+  panelOpen = false;
+  applyAway();
+  settingsPop.classList.remove('open');
+}
+function togglePanel() { panelOpen ? closePanel() : openPanel(); }
+
+/* 视口级热区命中：宽度 × 高度%（垂直居中） */
+function inHotZone(e) {
+  if (!isSideMode() || panelOpen || !hoverEnabled) return false;
+  const W = window.innerWidth, H = window.innerHeight;
+  const h = H * HZ.heightPct / 100, top = (H - h) / 2;
+  if (e.clientY < top || e.clientY > top + h) return false;
+  return appMode === 'right' ? (e.clientX > W - HZ.width) : (e.clientX < HZ.width);
+}
+
+document.addEventListener('mousemove', (e) => {
+  if (inHotZone(e)) {
+    clearTimeout(enterTimer);
+    clearTimeout(leaveTimer);
+    enterTimer = setTimeout(openPanel, HZ.delay);
+  } else {
+    clearTimeout(enterTimer);
+  }
+  // auto-close：面板开着、鼠标不在面板上、不在触发缘 → 0.3s 收起
+  if (panelOpen && isSideMode() && !mouseInPanel) {
+    const W = window.innerWidth;
+    const nearEdge = appMode === 'right' ? e.clientX > W - HZ.width - 36 : e.clientX < HZ.width + 36;
+    if (!nearEdge) {
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(closePanel, 300);
+    } else clearTimeout(leaveTimer);
+  }
+}, { passive: true });
+
+/* 鼠标离开整个文档 → 收起（快速甩出浏览器也能关） */
+document.documentElement.addEventListener('mouseleave', () => {
+  if (panelOpen && isSideMode()) { clearTimeout(leaveTimer); leaveTimer = setTimeout(closePanel, 300); }
+});
+
+winEl.addEventListener('mouseenter', () => { mouseInPanel = true; clearTimeout(leaveTimer); });
+winEl.addEventListener('mouseleave', () => { mouseInPanel = false; });
+
+// 侧栏顶部操作（真实 App 语义：收起面板 / 悬停触发开关）
+document.getElementById('collapseBtn').addEventListener('click', closePanel);
+let hoverEnabled = true;
+document.getElementById('hoverToggle').addEventListener('click', function () {
+  hoverEnabled = !hoverEnabled;
+  this.classList.toggle('on', hoverEnabled);
+  showToastMini(hoverEnabled ? '鼠标悬停触发已开启' : '鼠标悬停触发已关闭 — 用 ⌘⌥P 唤出');
+});
+function showToastMini(msg) {
+  let t = document.getElementById('miniToast');
+  if (!t) {
+    t = document.createElement('div'); t.id = 'miniToast';
+    t.style.cssText = 'position:fixed;left:50%;top:24px;transform:translate(-50%,-8px);z-index:2000;background:rgba(38,38,44,.95);border:1px solid rgba(255,255,255,.14);border-radius:9px;padding:8px 15px;font-size:12.5px;color:rgba(235,235,240,.92);box-shadow:0 10px 34px rgba(0,0,0,.5);opacity:0;transition:all .25s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'translate(-50%,0)'; });
+  clearTimeout(t._h); t._h = setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translate(-50%,-8px)'; }, 2200);
+}
+
+// 全局快捷键 ⌘⌥P（e.code 避开 ⌥ 特殊字符）
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.altKey && e.code === 'KeyP') { e.preventDefault(); togglePanel(); }
+});
+
+/* ---------- 热区可视化预览（拖滑条实时镜像视口缘感应范围，1.2s 淡出——同 App） ---------- */
+function showHzPreview() {
+  const W = window.innerWidth, H = window.innerHeight;
+  const h = H * HZ.heightPct / 100, top = (H - h) / 2;
+  hzOverlay.style.height = h + 'px';
+  hzOverlay.style.top = top + 'px';
+  hzOverlay.style.width = Math.min(HZ.width, W) + 'px';
+  hzOverlay.style[appMode === 'left' ? 'left' : 'right'] = '0px';
+  hzOverlay.style[appMode === 'left' ? 'right' : 'left'] = 'auto';
+  hzTag.textContent = `宽 ${HZ.width} · 高 ${HZ.heightPct}%`;
+  hzOverlay.classList.add('show');
+  clearTimeout(hzFadeTimer);
+  hzFadeTimer = setTimeout(() => hzOverlay.classList.remove('show'), 1200);
+}
+
+/* ---------- 设置入口（面板内 Settings 行） ---------- */
+document.getElementById('settingsRow').addEventListener('click', (e) => {
+  e.stopPropagation();
+  settingsPop.classList.toggle('open');
+});
+document.addEventListener('click', (e) => {
+  if (!settingsPop.contains(e.target) && e.target.closest('#settingsRow') === null)
+    settingsPop.classList.remove('open');
+});
+
+/* ---------- 双组滑条绑定（面板内 + 页面引导卡）共享 HZ ---------- */
+function bindSlider(id, valId, fmt, apply) {
+  const el = document.getElementById(id), v = document.getElementById(valId);
+  if (!el) return;
+  el.addEventListener('input', () => {
+    const x = parseFloat(el.value);
+    apply(x); v.textContent = fmt(x);
+    // 双组同步
+    const pair = id.endsWith('2') ? id.slice(0, -1) : id + '2';
+    const pe = document.getElementById(pair), pv = document.getElementById(valId.replace(/(2)$/, '') + (id.endsWith('2') ? '' : '2'));
+    if (pe) pe.value = el.value;
+    if (pv) pv.textContent = fmt(x);
+    showHzPreview();
+  });
+}
+bindSlider('hzWidth',  'hzWVal',  x => x + ' px', x => HZ.width = x);
+bindSlider('hzWidth2', 'hzWVal2', x => x + ' px', x => HZ.width = x);
+bindSlider('hzHeight', 'hzHVal',  x => x + ' %',  x => HZ.heightPct = x);
+bindSlider('hzHeight2','hzHVal2', x => x + ' %',  x => HZ.heightPct = x);
+bindSlider('hzDelay',  'hzDVal',  x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
+bindSlider('hzDelay2', 'hzDVal2', x => x.toFixed(2) + ' s', x => HZ.delay = x * 1000);
+
+/* ---------- 显示模式 × 热区联动 ---------- */
+function setAppMode(m) {
+  appMode = m;
+  winEl.className = 'dp-window mode-' + m + (panelOpen ? '' : ' away-' + m);
+  if (isSideMode()) {
+    panelOpen = false;
+    coach.classList.toggle('left', m === 'left');
+    coach.querySelector('span:last-child').innerHTML = m === 'left'
+      ? '鼠标移到<b>窗口左缘</b>' : '鼠标移到<b>窗口右缘</b>';
+    coach.classList.remove('hide');
+    setTimeout(() => coach.classList.add('hide'), 4000);
+  } else {
+    panelOpen = true;
+    coach.classList.add('hide');
+  }
+  applyAway();
+}
+/* ---------- 初始：右侧板 + 收起，等待用户甩鼠标（固定右板模式，如真实 App） ---------- */
+setAppMode('right');
+
+/* =========================================================
+   Init
+   ========================================================= */
+// 三个 Tab：1 网页 · 2 Chat · 3 Claude Code
+addTab({ type: 'web', favKey: 'chatgpt', name: 'ChatGPT', url: 'chatgpt.com' });
+addTab({ type: 'chat', favKey: 'chat', name: 'Chat' });
 addTab({ type: 'claude', favKey: 'claude', name: 'Claude Code' });
-activate(1);
+activate(1);  // id=1 → 第一个 Tab（网页）
 boot();
 
 })();
 
-/* ===== Hotkey summon: Cmd+Opt+P pulses the panel, like the real app ===== */
-(function () {
-  var demo = document.getElementById('demo');
-  var win = document.querySelector('#demo .dp-window');
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function pulse() {
-    if (!win || reduce) return;
-    win.classList.remove('pulse'); void win.offsetWidth; win.classList.add('pulse');
-  }
-  document.addEventListener('keydown', function (e) {
-    if ((e.metaKey || e.ctrlKey) && e.altKey && (e.key === 'p' || e.key === 'P')) {
-      e.preventDefault();
-      demo.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(pulse, 360);
-    }
-  });
-})();
 </script>
 
 </body>
