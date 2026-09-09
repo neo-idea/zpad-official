@@ -204,22 +204,6 @@
     #window .dp-body { height: 100%; }
     #window.mode-navbar .dp-body { height: auto; }
 
-    /* 浮动模式切换器（真实 App 无标题栏，此为 demo 功能） */
-    .mode-switch {
-      position: absolute; top: 8px; right: 10px; z-index: 50;
-      display: flex; gap: 2px; padding: 2px; border-radius: 7px;
-      background: rgba(20,20,24,.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .mode-switch button {
-      width: 24px; height: 22px; border-radius: 5px; border: none; cursor: pointer;
-      background: transparent; color: rgba(235,235,240,.45);
-      display: flex; align-items: center; justify-content: center; transition: all .15s;
-    }
-    .mode-switch button svg { width: 12px; height: 12px; }
-    .mode-switch button:hover { color: rgba(235,235,240,.8); background: rgba(255,255,255,.06); }
-    .mode-switch button.active { background: rgba(239,68,68,.16); color: var(--accent); }
-
     /* body: sidebar + main */
     .dp-body { display: flex; flex: 1; min-height: 0; }
 
@@ -460,7 +444,7 @@
     <div class="legend">
       <span><i></i>Click tabs to switch</span>
       <span><i></i>Type in the terminal</span>
-      <span><i></i>Try the 4 display modes ↗</span>
+      <span><i></i>⌘⌥P toggles the panel ↗</span>
     </div>
   </section>
 
@@ -487,7 +471,7 @@
       <ol>
         <li><i>1</i><span>把鼠标移到<b>浏览器窗口最右侧边缘</b></span></li>
         <li><i>2</i><span>停留片刻，面板从右侧滑入 — 移开鼠标自动收起</span></li>
-        <li><i>3</i><span>随时按 <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> 切换，面板内可切四种显示模式</span></li>
+        <li><i>3</i><span>随时按 <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> 唤出 / 收起面板</span></li>
       </ol>
       <div class="sc-sliders">
         <div class="sp-row">
@@ -527,14 +511,6 @@
 
       <!-- Body -->
       <div class="dp-body">
-        <!-- 模式切换（浮动小组件，真实 App 无标题栏） -->
-        <div class="mode-switch" title="Display mode">
-          <button data-mode="navbar" title="Navbar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-          <button data-mode="left" title="Left panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4v16M10 4h10v16H10"/></svg></button>
-          <button data-mode="centered" title="Centered"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="5" y="6" width="14" height="12" rx="2" stroke-width="2"/></svg></button>
-          <button data-mode="right" title="Right panel"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 4v16M14 4H4v16h10"/></svg></button>
-        </div>
-
         <!-- Sidebar：实测 40px 窄条 -->
         <aside class="dp-sidebar">
           <button class="rail-btn" id="collapseBtn" title="收起面板">
@@ -756,16 +732,6 @@ document.getElementById('newTab').addEventListener('click', () => {
   ];
   addTab(kinds[addCursor % kinds.length]);
   addCursor++;
-});
-
-/* =========================================================
-   Display modes
-   ========================================================= */
-document.querySelectorAll('.mode-switch button').forEach(b => {
-  b.addEventListener('click', () => {
-    document.querySelectorAll('.mode-switch button').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-  });
 });
 
 /* =========================================================
@@ -1325,13 +1291,8 @@ function setAppMode(m) {
   }
   applyAway();
 }
-document.querySelectorAll('.mode-switch button').forEach(b => {
-  b.addEventListener('click', () => setTimeout(() => setAppMode(b.dataset.mode), 0));
-});
-
-/* ---------- 初始：右侧板 + 收起，等待用户甩鼠标 ---------- */
+/* ---------- 初始：右侧板 + 收起，等待用户甩鼠标（固定右板模式，如真实 App） ---------- */
 setAppMode('right');
-document.querySelectorAll('.mode-switch button').forEach(x => x.classList.toggle('active', x.dataset.mode === 'right'));
 
 /* =========================================================
    Init
