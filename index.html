@@ -9,7 +9,7 @@
   <meta name="description" content="ZPad slides a real terminal and a real browser out of your screen edge with one hotkey (Cmd+Opt+P). Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
   <meta name="author" content="ZPad" />
   <meta name="keywords" content="ZPad, macOS terminal, macOS browser, focus panel, status bar app, SwiftTerm, WKWebView, productivity, hotkey panel, workspace" />
-  <link rel="canonical" href="https://zpad.app/" />
+  <link rel="canonical" href="https://zpad.wangyitu.tech/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
 
   <!-- Open Graph -->
@@ -17,7 +17,7 @@
   <meta property="og:site_name" content="ZPad" />
   <meta property="og:title" content="ZPad | Terminal + Browser, One Hotkey Away" />
   <meta property="og:description" content="A real terminal and a real browser, one hotkey away. Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
-  <meta property="og:url" content="https://zpad.app/" />
+  <meta property="og:url" content="https://zpad.wangyitu.tech/" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter -->
@@ -38,12 +38,19 @@
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "macOS 15.1+",
     "description": "A real terminal and a real browser that slide out of your screen edge with one hotkey. Pure native Swift + SwiftUI. Not Electron.",
-    "offers": {
+    "offers": [{
       "@type": "Offer",
-      "price": "79",
+      "name": "Annual License",
+      "price": "29",
+      "priceCurrency": "USD",
+      "description": "12-month license, renews by choice. Free 30-day trial."
+    }, {
+      "@type": "Offer",
+      "name": "Lifetime License",
+      "price": "99",
       "priceCurrency": "USD",
       "description": "One-time lifetime license. Free 30-day trial."
-    },
+    }],
     "creator": { "@type": "Person", "name": "ZPad" },
     "softwareVersion": "1.0.1"
   }
@@ -54,7 +61,7 @@
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "Is there a free trial?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. ZPad comes with a 30-day, fully functional free trial. No credit card required." } },
-      { "@type": "Question", "name": "How much does ZPad cost?", "acceptedAnswer": { "@type": "Answer", "text": "A one-time $79 lifetime license — no subscription, up to 5 Macs, 14-day money-back guarantee." } },
+      { "@type": "Question", "name": "How much does ZPad cost?", "acceptedAnswer": { "@type": "Answer", "text": "$29/year, or $99 once for a lifetime license (founding price $69 for the first 500). Each license covers up to 3 Macs, with a 14-day money-back guarantee." } },
       { "@type": "Question", "name": "Which Macs does ZPad support?", "acceptedAnswer": { "@type": "Answer", "text": "macOS 15.1 (Sequoia) or later on Apple Silicon (arm64)." } },
       { "@type": "Question", "name": "Is ZPad an Electron app?", "acceptedAnswer": { "@type": "Answer", "text": "No. Native Swift + SwiftUI, WKWebView browser, real SwiftTerm terminal. Notarized builds." } },
       { "@type": "Question", "name": "Can I get a refund?", "acceptedAnswer": { "@type": "Answer", "text": "Full refund within 14 days, no questions asked." } }
@@ -497,10 +504,26 @@
       box-shadow: 0 40px 120px rgba(0,0,0,0.5), 0 0 80px rgba(239,68,68,0.06);
       max-width: 560px; margin: 0 auto;
     }
+    .price-cards {
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px;
+      max-width: 900px; margin: 0 auto;
+      align-items: stretch;
+    }
+    @media (max-width: 860px) { .price-cards { grid-template-columns: 1fr; max-width: 560px; } }
     .price-card {
       background: #0b0b0e; border-radius: 18px;
       box-shadow: inset 0 1px 1px rgba(255,255,255,0.09);
       padding: 40px 42px 36px;
+    }
+    .price-card.hero {
+      border: 1px solid rgba(239,68,68,0.5);
+    }
+    .price-card .was { text-decoration: line-through; opacity: 0.55; font-size: 26px; font-weight: 600; }
+    .price-card-hero-shell {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(239,68,68,0.35);
+      border-radius: 24px; padding: 7px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.5), 0 0 80px rgba(239,68,68,0.06);
     }
     .price-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -879,6 +902,11 @@
   </section>
 
   <!-- ============ Live demo ============ -->
+  <div style="text-align:center; margin: 0 auto 18px; max-width:660px;" class="reveal">
+    <a href="demo.html" style="display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border-radius:999px; background:rgba(239,68,68,.14); border:1px solid rgba(239,68,68,.35); color:#f87171; font-size:14px; font-weight:600; text-decoration:none; transition:all .2s;" onmouseover="this.style.background='rgba(239,68,68,.24)'" onmouseout="this.style.background='rgba(239,68,68,.14)'">
+      🖱 体验完整交互演示 — 热区唤出 · 触发设置 · 四种显示模式 →
+    </a>
+  </div>
   <div class="demo-stage reveal" id="demo">
     <div class="product-demo">
       <div class="bezel">
@@ -1074,12 +1102,12 @@
         <div class="shell"><div class="core">
           <span class="b-tag">The deal</span>
           <div class="stat-rows">
-            <div class="stat-row"><span class="sv">$79 <em>once</em></span><span class="sl">lifetime, no subscription</span></div>
-            <div class="stat-row"><span class="sv">5 Macs</span><span class="sl">per license</span></div>
+            <div class="stat-row"><span class="sv">$99 <em>once</em></span><span class="sl">lifetime — or $29/year</span></div>
+            <div class="stat-row"><span class="sv">3 Macs</span><span class="sl">per license</span></div>
             <div class="stat-row"><span class="sv">30 days</span><span class="sl">free trial, no card</span></div>
             <div class="stat-row"><span class="sv">14 days</span><span class="sl">money-back guarantee</span></div>
           </div>
-          <p style="margin-top:10px;">≈ $0.02/day over a 10-year tool life.</p>
+          <p style="margin-top:10px;">Lifetime ≈ 3.4 years of the annual — most people stop paying there.</p>
         </div></div>
       </div>
     </div>
@@ -1089,37 +1117,59 @@
   <section class="pricing-section" id="pricing">
     <div class="reveal">
       <span class="eyebrow"><span class="dot"></span>Pricing</span>
-      <h2>Buy once. It's yours.</h2>
-      <p class="pricing-sub">No subscription. No seat games. No “premium tier” later — everything above is one license.</p>
+      <h2>Pay once. Or ease in.</h2>
+      <p class="pricing-sub">Same app, same features, same updates — pick how you pay. No data hostage, no “premium tier” later.</p>
     </div>
     <div class="price-anchor reveal">
       <span class="was">A launcher subscription: ~$8/mo → $96 every year</span>
       <span>→</span>
-      <span class="now">ZPad: $79, once.</span>
+      <span class="now">ZPad Lifetime: $99, once.</span>
     </div>
-    <div class="price-card-shell reveal reveal-d1">
-      <div class="price-card">
-        <span class="price-badge">Early-adopter price</span>
-        <div class="price-row">
-          <span class="num">$79</span>
-          <span class="per">one-time<br>lifetime</span>
+    <!-- TODO(stripe): 上线前在 Stripe 重建价格（$29/yr 订阅 + $99 lifetime + $69 founding 一次性）并重新生成两个 payment link -->
+    <div class="price-cards reveal reveal-d1">
+      <div class="price-card-shell">
+        <div class="price-card">
+          <span class="price-badge" style="background:rgba(255,255,255,0.12);">Annual</span>
+          <div class="price-row">
+            <span class="num">$29</span>
+            <span class="per">per year<br>12-month term</span>
+          </div>
+          <p class="price-note">Renews by choice — cancel anytime, keep using the current term.</p>
+          <ul class="price-feats">
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>Everything</b> — full app, all updates while active</span></li>
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b></span></li>
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Day-one credit toward <b>Lifetime upgrade</b></span></li>
+          </ul>
+          <a class="btn-primary price-cta" href="https://buy.stripe.com/14A00j8yv3cQ0Sm5cS9fW01" rel="noopener" target="blank" style="background:rgba(255,255,255,0.12);">
+            Start Annual — $29
+            <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+          </a>
         </div>
-        <p class="price-note">Price rises as the product grows — buying now locks it in.</p>
-        <ul class="price-feats">
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>Everything in the trial</b> — nothing held back</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Browser + terminal + workspaces, <b>forever</b></span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 5 Macs</b>, offline-friendly (14 days)</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Self-serve device management &amp; license recovery</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>All updates for the current product line</span></li>
-        </ul>
-        <a class="btn-primary price-cta" href="https://buy.stripe.com/14A00j8yv3cQ0Sm5cS9fW01" rel="noopener" target="_blank">
-          Buy Lifetime — $79
-          <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
-        </a>
-        <div class="price-trust">
-          <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001z" clip-rule="evenodd"/></svg>Secure Stripe checkout</span>
-          <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>14-day money-back</span>
-          <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM2 9v5a2 2 0 002 2h12a2 2 0 002-2V9H2zm2 3a1 1 0 011-1h2a1 1 0 110 2H5a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>Key emailed instantly</span>
+      </div>
+      <div class="price-card-hero-shell">
+        <div class="price-card hero">
+          <span class="price-badge">Founding price · first 500</span>
+          <div class="price-row">
+            <span class="num">$69</span>
+            <span class="per"><span class="was">$99</span> one-time<br>lifetime</span>
+          </div>
+          <p class="price-note">Price rises to $99 after the first 500 licenses — buying now locks it in forever.</p>
+          <ul class="price-feats">
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>Everything in the trial</b> — nothing held back</span></li>
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Browser + terminal + workspaces, <b>forever</b></span></li>
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b>, offline-friendly (14 days)</span></li>
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Self-serve device management &amp; license recovery</span></li>
+            <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>All updates, for the life of the product</b></span></li>
+          </ul>
+          <a class="btn-primary price-cta" href="https://buy.stripe.com/14A00j8yv3cQ0Sm5cS9fW01" rel="noopener" target="_blank">
+            Buy Lifetime — $69
+            <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+          </a>
+          <div class="price-trust">
+            <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001z" clip-rule="evenodd"/></svg>Secure Stripe checkout</span>
+            <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>14-day money-back</span>
+            <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM2 9v5a2 2 0 002 2h12a2 2 0 002-2V9H2zm2 3a1 1 0 011-1h2a1 1 0 110 2H5a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>Key emailed instantly</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1135,7 +1185,7 @@
         Download Free
         <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
       </a>
-      <a class="btn-ghost" href="https://buy.stripe.com/14A00j8yv3cQ0Sm5cS9fW01" target="_blank" rel="noopener">Buy Lifetime — $79</a>
+      <a class="btn-ghost" href="https://buy.stripe.com/14A00j8yv3cQ0Sm5cS9fW01" target="_blank" rel="noopener">Buy Lifetime — $69 <span style="opacity:.6;text-decoration:line-through;font-size:12px;">$99</span></a>
     </div>
   </section>
 
@@ -1170,7 +1220,7 @@
       <a href="privacy.html">Privacy</a>
       <a href="eula.html">EULA</a>
       <a href="refund.html">Refunds</a>
-      <a href="mailto:hello@zpad.app">Contact</a>
+      <a href="mailto:hello@zpad.wangyitu.tech">Contact</a>
     </div>
   </div>
   <div class="foot-bottom">
@@ -1340,7 +1390,7 @@ function renderWeb(url) {
   } else if (url.includes('developer.apple.com') || url.includes('apple.com')) {
     webFrame.innerHTML = applePage();
   } else if (url.includes('swift.org')) {
-    webFrame.innerHTML = docsPage('Swift.org', 'A powerful language from Apple.');
+    webFrame.innerHTML = docsPage('Swift.org', 'A powerful open-source language from Apple.');
   } else if (url.includes('zpad')) {
     webFrame.innerHTML = docsPage('ZPad Docs', 'Everything about the focus panel.');
   } else {
