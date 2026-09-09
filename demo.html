@@ -1114,10 +1114,10 @@ function claudeAnswer(q) {
   const t = new Date(), pad = n => String(n).padStart(2, '0');
   const ts = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
   const el = document.createElement('div');
-  el.innerHTML = `<span class="t-dim">[${ts}]</span> <span class="t-blu">[~/Code/GITHUB/ZPad]</span> <span class="t-yel">[master ✖]</span> <span class="t-grn">❱❱❲</span> c
+  el.innerHTML = `<span class="t-dim">[${ts}]</span> <span class="t-blu">[~/Code/ZPad]</span> <span class="t-yel">[master ✖]</span> <span class="t-grn">❱❱❲</span> c
 <span class="cc-logo"> ▐▛███▛█</span>   <b>Claude Code</b> v2.1.263
-<span class="cc-logo">▝▜██████▀</span>  <span class="t-dim">glm-5.3[1M] · API Usage Billing</span>
-<span class="cc-logo">  ▝▝ ▝▝</span>    <span class="t-blu">~/Code/GITHUB/ZPad</span>
+<span class="cc-logo">▝▜██████▀</span>  <span class="t-dim">Opus 4.5[1M] · API Usage Billing</span>
+<span class="cc-logo">  ▝▝ ▝▝</span>    <span class="t-blu">~/Code/ZPad</span>
 
 `;
   ccOut.appendChild(el);
