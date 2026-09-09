@@ -572,7 +572,7 @@
               <button class="nav-btn" id="reload" title="Reload"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M20 9a8 8 0 00-14.9-3M4 15a8 8 0 0014.9 3"/></svg></button>
               <label class="addr">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                <input id="addr" value="developer.apple.com" spellcheck="false" />
+                <input id="addr" value="zpad.app" spellcheck="false" />
               </label>
               <button class="nav-btn" title="Open in new" id="go"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5h5v5M19 5l-7 7M12 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-6"/></svg></button>
             </div>
@@ -582,7 +582,6 @@
           <!-- Terminal pane -->
           <div class="pane" data-pane="terminal">
             <div class="term">
-              <div class="term-head"><span>●</span><span>zsh — 120×34</span><span class="t" style="margin-left:auto">dev@zpad — ~/ZPad</span></div>
               <div class="term-out" id="termOut"></div>
               <div class="term-input-line" id="termLine">
                 <span class="term-prompt"><span class="t-user">dev</span><span class="t-dim">@</span><span class="t-host">zpad</span> <span class="t-path" id="termPath">~</span> <span class="t-dim">%</span></span>
@@ -667,6 +666,7 @@ const tabsEl = document.getElementById('tabs');
 const mainEl = document.getElementById('main');
 
 const FAV = {
+  zpad: { bg: 'linear-gradient(135deg,#ef4444,#b91c1c)', t: 'Z' },
   apple: { bg: '#60a5fa', t: '' },
   terminal: { bg: '#1a1a1a', t: '>_' },
   claude: { bg: '#c084fc', t: 'C' },
@@ -719,7 +719,7 @@ function closeTab(id) {
   if (idx < 0) return;
   tabs.splice(idx, 1);
   if (!tabs.length) {
-    addTab({ type: 'web', favKey: 'apple', name: 'Apple Dev', url: 'developer.apple.com' });
+    addTab({ type: 'web', favKey: 'zpad', name: 'ZPad 官网', url: 'zpad.app' });
     return;
   }
   if (activeId === id) activate(tabs[Math.min(idx, tabs.length - 1)].id);
@@ -782,12 +782,47 @@ function renderWeb(url) {
   } else if (url.includes('swift.org')) {
     webFrame.innerHTML = docsPage('Swift.org', 'A powerful open-source language from Apple.', 'swift');
   } else if (url.includes('zpad')) {
-    webFrame.innerHTML = docsPage('ZPad Docs', 'Everything about the focus panel.', 'zpad');
+    webFrame.innerHTML = zpadHome();
   } else {
     webFrame.innerHTML = genericPage(url);
   }
 }
 
+
+function zpadHome() {
+  const favs = [
+    { n: 'Swift.org', bg: '#f97316', t: 'S' },
+    { n: 'Hacker News', bg: '#ff6600', t: 'Y' },
+    { n: 'GitHub', bg: '#24292e', t: '' },
+    { n: 'DuckDuckGo', bg: '#de5833', t: 'D' },
+    { n: 'Apple Dev', bg: '#60a5fa', t: '' },
+    { n: 'V2EX', bg: '#1f2937', t: 'V' }
+  ];
+  return `<div style="display:flex;flex-direction:column;align-items:center;padding:52px 30px 30px;min-height:100%">
+    <div style="font-size:34px;font-weight:800;letter-spacing:-.6px;color:rgba(238,238,242,.95)">Z<span style="color:#ef4444">Pad</span></div>
+    <div style="font-size:12.5px;color:rgba(235,235,240,.45);margin-top:6px">一个热键，唤出终端与浏览器</div>
+    <div style="width:100%;max-width:400px;margin-top:26px;position:relative">
+      <input placeholder="搜索或输入网址…" style="width:100%;box-sizing:border-box;height:38px;border-radius:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:.5px solid rgba(255,255,255,.09);box-shadow:0 2px 6px rgba(0,0,0,.05);padding:0 40px 0 16px;color:rgba(238,238,242,.9);outline:none;font-size:13px;transition:all .2s" onfocus="this.style.borderColor='rgba(239,68,68,.35)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.09)'" onblur="this.style.borderColor='rgba(255,255,255,.09)';this.style.boxShadow='0 2px 6px rgba(0,0,0,.05)'" />
+      <svg style="position:absolute;right:13px;top:12px;width:14px;height:14px;color:rgba(235,235,240,.4)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    </div>
+    <div style="width:100%;max-width:460px;margin-top:30px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:12px">收藏</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px">
+        ${favs.map(f => `<div title="${f.n}" style="cursor:pointer">
+          <div style="width:44px;height:44px;border-radius:11px;background:${f.bg};display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:800;margin:0 auto;transition:transform .15s" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='none'">${f.t}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div style="width:100%;max-width:460px;margin-top:26px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(235,235,240,.35);margin-bottom:10px">最近</div>
+      ${favs.slice(0,3).map(f => `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background='none'">
+        <span style="width:22px;height:22px;border-radius:6px;background:${f.bg};display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800">${f.t}</span>
+        <span style="font-size:12.5px;color:rgba(235,235,240,.75)">${f.n}</span>
+        <span style="margin-left:auto;font-size:11px;color:rgba(235,235,240,.3)">今天</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
 
 function ddgPage() {
   return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;padding:30px">
@@ -833,7 +868,7 @@ function genericPage(url) {
     <div class="kicker">${url}</div>
     <h2>${url.split('/')[0]}</h2>
     <p>This is a live preview of the ZPad in-app browser. In the real app, this loads the actual page with full WKWebView — JavaScript, logins, everything.</p>
-    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">developer.apple.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
+    <p style="color:var(--text-tertiary);font-size:13px">Try: <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">zpad.app</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">duckduckgo.com</code> · <code style="font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px">swift.org</code></p>
   </div>`;
 }
 
@@ -1277,7 +1312,7 @@ document.querySelectorAll('.mode-switch button').forEach(x => x.classList.toggle
 /* =========================================================
    Init
    ========================================================= */
-addTab({ type: 'web', favKey: 'apple', name: 'Apple Dev', url: 'developer.apple.com' });
+addTab({ type: 'web', favKey: 'zpad', name: 'ZPad 官网', url: 'zpad.app' });
 addTab({ type: 'terminal', favKey: 'terminal', name: 'Terminal' });
 addTab({ type: 'claude', favKey: 'claude', name: 'Claude Code' });
 // start on the web tab
