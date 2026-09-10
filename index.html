@@ -9,7 +9,7 @@
   <meta name="description" content="ZPad slides a real terminal and a real browser out of your screen edge with one hotkey (Cmd+Opt+P). Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
   <meta name="author" content="ZPad" />
   <meta name="keywords" content="ZPad, macOS terminal, macOS browser, focus panel, status bar app, SwiftTerm, WKWebView, productivity, hotkey panel, workspace" />
-  <link rel="canonical" href="https://zpad.wangyitu.tech/" />
+  <link rel="canonical" href="https://zpad.app/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
 
   <!-- Open Graph -->
@@ -40,16 +40,10 @@
     "description": "A real terminal and a real browser that slide out of your screen edge with one hotkey. Pure native Swift + SwiftUI. Not Electron.",
     "offers": [{
       "@type": "Offer",
-      "name": "Annual License",
-      "price": "29",
-      "priceCurrency": "USD",
-      "description": "12-month license, renews by choice. Free 30-day trial."
-    }, {
-      "@type": "Offer",
       "name": "Lifetime License",
-      "price": "99",
+      "price": "69",
       "priceCurrency": "USD",
-      "description": "One-time lifetime license. Free 30-day trial."
+      "description": "One-time lifetime license, founding price for the first 500 (then $99). Free 30-day trial."
     }],
     "creator": { "@type": "Person", "name": "ZPad" },
     "softwareVersion": "1.0.1"
@@ -61,7 +55,7 @@
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "Is there a free trial?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. ZPad comes with a 30-day, fully functional free trial. No credit card required." } },
-      { "@type": "Question", "name": "How much does ZPad cost?", "acceptedAnswer": { "@type": "Answer", "text": "$29/year, or $99 once for a lifetime license (founding price $69 for the first 500). Each license covers up to 3 Macs, with a 14-day money-back guarantee." } },
+      { "@type": "Question", "name": "How much does ZPad cost?", "acceptedAnswer": { "@type": "Answer", "text": "$69 once for a lifetime license (founding price for the first 500, then $99). Each license covers up to 3 Macs, with a 14-day money-back guarantee." } },
       { "@type": "Question", "name": "Which Macs does ZPad support?", "acceptedAnswer": { "@type": "Answer", "text": "macOS 15.1 (Sequoia) or later on Apple Silicon (arm64)." } },
       { "@type": "Question", "name": "Is ZPad an Electron app?", "acceptedAnswer": { "@type": "Answer", "text": "No. Native Swift + SwiftUI, WKWebView browser, real SwiftTerm terminal. Notarized builds." } },
       { "@type": "Question", "name": "Can I get a refund?", "acceptedAnswer": { "@type": "Answer", "text": "Full refund within 14 days, no questions asked." } }
@@ -1271,7 +1265,7 @@
         <div class="shell"><div class="core">
           <span class="b-tag">The deal</span>
           <div class="stat-rows">
-            <div class="stat-row"><span class="sv">$99 <em>once</em></span><span class="sl">lifetime — or $29/year</span></div>
+            <div class="stat-row"><span class="sv">$69 <em>once</em></span><span class="sl">lifetime founding — $99 after first 500</span></div>
             <div class="stat-row"><span class="sv">3 Macs</span><span class="sl">per license</span></div>
             <div class="stat-row"><span class="sv">30 days</span><span class="sl">free trial, no card</span></div>
             <div class="stat-row"><span class="sv">14 days</span><span class="sl">money-back guarantee</span></div>
@@ -1292,7 +1286,7 @@
     <div class="price-anchor reveal">
       <span class="was">A launcher subscription: ~$8/mo → $96 every year</span>
       <span>→</span>
-      <span class="now">ZPad Lifetime: $99, once.</span>
+      <span class="now">ZPad Lifetime: $69 founding — $99 once after.</span>
     </div>
     <!-- TODO(stripe): before launch, recreate prices in Stripe ($29/yr sub + $99 lifetime + $69 founding one-time) and regenerate the two payment links -->
     <div class="price-cards reveal reveal-d1">
@@ -1309,10 +1303,11 @@
             <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b></span></li>
             <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Day-one credit toward <b>Lifetime upgrade</b></span></li>
           </ul>
-          <a class="btn-primary price-cta" href="https://buy.stripe.com/14A00j8yv3cQ0Sm5cS9fW01" rel="noopener" target="blank" style="background:rgba(255,255,255,0.12);">
-            Start Annual — $29
+          <span class="price-cta" style="pointer-events:none;opacity:.45;cursor:default;">
+            Annual — returning soon
             <span class="ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
-          </a>
+          </span>
+          <p class="price-note" style="margin-top:8px;">Annual checkout is being rebuilt — lifetime is the only plan on sale right now.</p>
         </div>
       </div>
       <div class="price-card-hero-shell">
