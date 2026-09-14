@@ -5,25 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#F7F4ED" />
 
-  <title>ZPad | Browser, Terminal &amp; Editor — One Hotkey Away</title>
-  <meta name="description" content="ZPad slides a real browser, a real terminal and a CodeMirror editor out of your screen edge with one hotkey (Cmd+Opt+P). Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
+  <title>ZPad | Browser, Terminal, Editor &amp; AI Chat — One Hotkey Away</title>
+  <meta name="description" content="ZPad slides a real browser, a real terminal, a CodeMirror editor and an AI chat out of your screen edge with one hotkey (Cmd+Opt+P). Bring your own model — OpenAI, DeepSeek, Ollama. Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
   <meta name="author" content="ZPad" />
-  <meta name="keywords" content="ZPad, macOS terminal, macOS browser, code editor, markdown editor, focus panel, status bar app, SwiftTerm, WKWebView, CodeMirror, productivity, hotkey panel, workspace" />
+  <meta name="keywords" content="ZPad, macOS terminal, macOS browser, code editor, markdown editor, AI chat, bring your own model, Ollama, OpenAI, DeepSeek, focus panel, status bar app, SwiftTerm, WKWebView, CodeMirror, productivity, hotkey panel, workspace" />
   <link rel="canonical" href="https://zpad.app/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231C1712'/><rect x='7' y='7' width='86' height='86' rx='16' fill='none' stroke='%23F7F4ED' stroke-width='4'/><text x='50' y='71' font-size='58' font-family='-apple-system,sans-serif' font-weight='800' fill='%23F7F4ED' text-anchor='middle'>Z</text></svg>" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ZPad" />
-  <meta property="og:title" content="ZPad | Browser, Terminal &amp; Editor — One Hotkey Away" />
-  <meta property="og:description" content="A real browser, a real terminal and a code editor, one hotkey away. Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
+  <meta property="og:title" content="ZPad | Browser, Terminal, Editor &amp; AI Chat — One Hotkey Away" />
+  <meta property="og:description" content="A real browser, a real terminal, a code editor and an AI chat — one hotkey away. Bring your own model: OpenAI, DeepSeek, Ollama. Pure native Swift + SwiftUI for macOS 15+. Not Electron." />
   <meta property="og:url" content="https://zpad.app/" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ZPad | Browser, Terminal &amp; Editor — One Hotkey Away" />
-  <meta name="twitter:description" content="A real browser, a real terminal and a code editor, one hotkey away. Pure native Swift + SwiftUI for macOS 15+." />
+  <meta name="twitter:title" content="ZPad | Browser, Terminal, Editor &amp; AI Chat — One Hotkey Away" />
+  <meta name="twitter:description" content="A real browser, a real terminal, a code editor and an AI chat — one hotkey away. Bring your own model: OpenAI, DeepSeek, Ollama. Pure native Swift + SwiftUI for macOS 15+." />
 
   <link rel="stylesheet" href="assets/site.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,7 +38,7 @@
     "name": "ZPad",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "macOS 15.1+",
-    "description": "A real browser, a real terminal and a lightweight code editor that slide out of your screen edge with one hotkey. Pure native Swift + SwiftUI. Not Electron.",
+    "description": "A real browser, a real terminal, a code editor and an AI chat (bring your own model — OpenAI, DeepSeek, Ollama) that slide out of your screen edge with one hotkey. Pure native Swift + SwiftUI. Not Electron.",
     "offers": [{
       "@type": "Offer",
       "name": "Lifetime License",
@@ -505,6 +505,7 @@
     /* extra bits for verbatim panel markup */
     .cm svg { width: 10px; height: 10px; vertical-align: -1px; margin-right: 3px; }
 
+
     /* =====================================================
        Responsive (page + panel)
        ===================================================== */
@@ -890,7 +891,7 @@
     </div>
     <a class="nav-cta" href="download.html">
       <span>Download</span>
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
     </a>
     <button class="nav-burger" aria-label="Open menu" onclick="toggleMenu(true)">
       <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -920,14 +921,14 @@
     </h1>
     <div class="zh-caption reveal reveal-d1" id="zhCaption" aria-hidden="true"></div>
     <p class="hero-sub reveal reveal-d2">
-      <strong>One hotkey. Browser, Terminal &amp; Editor.</strong>
-      ZPad slides a real browser, a real terminal and a full code editor out of your screen edge —
+      <strong>One hotkey. Browser, Terminal, Editor &amp; AI Chat.</strong>
+      ZPad slides a real browser, a real terminal, a full code editor and a bring-your-own-model AI chat out of your screen edge —
       <kbd>⌘</kbd> <kbd>⌥</kbd> <kbd>P</kbd> from anywhere. Work, dismiss, resume. Never switch apps again.
     </p>
     <div class="hero-cta reveal reveal-d2">
       <a class="btn btn-primary" href="download.html">
         Download Free
-        <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+        <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
       </a>
       <a class="btn btn-ghost" href="#pricing">Lifetime $69<span class="strike">$99</span></a>
     </div>
@@ -978,16 +979,16 @@
         <!-- sidebar: measured 40px rail -->
         <aside class="dp-sidebar">
           <button class="rail-btn" id="collapseBtn" title="Collapse panel">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </button>
           <button class="rail-btn on" id="hoverToggle" title="Toggle hover-trigger (hot zone)">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" stroke-width="1.8"/><path stroke-linecap="round" stroke-width="1.8" d="M12 7v3"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="5" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M12 7v3"/></svg>
           </button>
           <button class="rail-btn" title="Favorites">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21z"/></svg>
           </button>
           <button class="rail-btn" id="newTab" title="New tab">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v16m8-8H4"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
           </button>
           <div class="rail-div"></div>
           <div class="tabs" id="tabs"></div>
@@ -1034,11 +1035,11 @@
               <div class="chat-composer">
                 <div class="chat-inputwrap">
                   <input id="chatInput" placeholder="Ask anything…" autocomplete="off" spellcheck="false" />
-                  <button class="chat-send" id="chatSend" title="Send"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
+                  <button class="chat-send" id="chatSend" title="Send"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m-7 7l7-7 7 7"/></svg></button>
                 </div>
                 <div class="chat-modes">
-                  <button class="cm active" data-m="fast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>Fast</button>
-                  <button class="cm" data-m="think"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v18M3.8 7.5l16.4 9M20.2 7.5l-16.4 9"/></svg>Think</button>
+                  <button class="cm active" data-m="fast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>Fast</button>
+                  <button class="cm" data-m="think"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M3.8 7.5l16.4 9M20.2 7.5l-16.4 9"/></svg>Think</button>
                 </div>
               </div>
             </div>
@@ -1134,10 +1135,10 @@
           <div class="summon-keys"><kbd>⌘</kbd><kbd>⌥</kbd><kbd>P</kbd></div>
           <div class="summon-stat"><span class="v">0.3s</span><span class="l">from any app — fullscreen included</span></div>
           <div class="modes-row">
-            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="18" height="12" rx="2"/></svg>Side</div>
-            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="1" width="12" height="12" rx="2"/></svg>Centered</div>
-            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3h18M3 5h14v8H3z"/></svg>Navbar</div>
-            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 2v10M3 4h16v8H3"/></svg>Edge</div>
+            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="1" width="18" height="12" rx="2"/></svg>Side</div>
+            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="1" width="12" height="12" rx="2"/></svg>Centered</div>
+            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h18M3 5h14v8H3z"/></svg>Navbar</div>
+            <div class="mode-pill"><svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 2v10M3 4h16v8H3"/></svg>Edge</div>
           </div>
         </div>
       </div>
@@ -1223,9 +1224,9 @@
         </div>
         <p class="price-note">Renews by choice — cancel anytime, keep using the current term.</p>
         <ul class="price-feats">
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>Everything</b> — full app, all updates while active</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b></span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Day-one credit toward <b>Lifetime upgrade</b></span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span><b>Everything</b> — full app, all updates while active</span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b></span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Day-one credit toward <b>Lifetime upgrade</b></span></li>
         </ul>
         <span class="price-cta" style="pointer-events:none;opacity:.45;cursor:default;border:1px dashed var(--line-strong);border-radius:12px;color:var(--ink-3);">
           Annual — returning soon
@@ -1240,15 +1241,15 @@
         </div>
         <p class="price-note">Price rises to $99 after the first 500 licenses — buying now locks it in forever.</p>
         <ul class="price-feats">
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>Everything in the trial</b> — nothing held back</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Browser, terminal, editor + workspaces, <b>forever</b></span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b>, offline-friendly (14 days)</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>Self-serve device management &amp; license recovery</span></li>
-          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span><b>All updates, for the life of the product</b></span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span><b>Everything in the trial</b> — nothing held back</span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Browser, terminal, editor + workspaces, <b>forever</b></span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Covers <b>up to 3 Macs</b>, offline-friendly (14 days)</span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Self-serve device management &amp; license recovery</span></li>
+          <li><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span><b>All updates, for the life of the product</b></span></li>
         </ul>
         <a class="btn btn-primary price-cta" href="download.html">
           Download Free — Buy In-App $69
-          <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
+          <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
         </a>
         <div class="price-trust">
           <span><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001z" clip-rule="evenodd"/></svg>Card &amp; Apple Pay in-app</span>
@@ -1267,7 +1268,7 @@
     <div class="hero-cta reveal reveal-d2">
       <a class="btn btn-primary" href="download.html">
         Download Free
-        <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
+        <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg></span>
       </a>
       <a class="btn btn-ghost" href="download.html">Lifetime $69 in-app<span class="strike">$99</span></a>
     </div>
@@ -1283,7 +1284,7 @@
         <span class="brand-mark" aria-hidden="true">Z</span>
         <span class="brand-name">ZPad</span>
       </div>
-      <p>Browser, terminal and editor, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
+      <p>Browser, terminal, editor &amp; AI chat, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
     </div>
     <div class="foot-col">
       <h4>Product</h4>
@@ -1384,6 +1385,14 @@ const FAV = {
   web: { bg: '#60a5fa', t: '⌘' }
 };
 
+/* Centralized tab-icon registry: favKey → inline SVG (one swap point when
+   app-accurate icons arrive). All icons: 24 viewBox · stroke 2 · round joins. */
+const FAV_SVG = {
+  web: { svg: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4-3-9s1.34-9 3-9"/></svg>' },
+  terminal: { svg: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>' },
+  chat: { svg: '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75a7.5 7.5 0 017.5-7.5h4.5a7.5 7.5 0 017.5 7.5v0a7.5 7.5 0 01-7.5 7.5H9l-4.5 3v-4.09A7.5 7.5 0 014.5 12.75z"/></svg>', color: '#34d399' }
+};
+
 let tabs = [];
 let activeId = null;
 
@@ -1410,17 +1419,17 @@ function renderTabs() {
     el.className = 'tab' + (t.id === activeId ? ' active' : '') + (t.type === 'web' ? ' loaded' : '');
     el.dataset.id = t.id;
     el.dataset.hint = t.name;
-    const fav = FAV[t.favKey || t.type];
-    const inner = t.type === 'terminal'
-      ? `<span class="fav term-ico"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>`
-      : t.type === 'chat'
-        ? `<span class="fav term-ico" style="color:#34d399"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.5 12.75a7.5 7.5 0 017.5-7.5h4.5a7.5 7.5 0 017.5 7.5v0a7.5 7.5 0 01-7.5 7.5H9l-4.5 3v-4.09A7.5 7.5 0 014.5 12.75z"/></svg></span>`
-        : t.type === 'claude'
+    const key = t.favKey || t.type;
+    const fav = FAV[key];
+    const svg = FAV_SVG[key];
+    const inner = svg
+      ? `<span class="fav term-ico"${svg.color ? ` style="color:${svg.color}"` : ''}>${svg.svg}</span>`
+      : t.type === 'claude'
         ? `<span class="fav" style="background:linear-gradient(135deg,#d97757,#b45309)">✳</span>`
-        : fav.img
+        : fav && fav.img
           ? `<img class="fav" src="${fav.img}" alt="" />`
-          : `<span class="fav" style="background:${fav.bg}">${fav.t}</span>`;
-    el.innerHTML = `${inner}<span class="dot"></span><span class="close" title="Close tab"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
+          : `<span class="fav" style="background:${fav ? fav.bg : '#3a3a42'}">${fav ? fav.t : ''}</span>`;
+    el.innerHTML = `${inner}<span class="dot"></span><span class="close" title="Close tab"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
     el.addEventListener('click', () => activate(t.id));
     el.addEventListener('contextmenu', (e) => { e.preventDefault(); closeTab(t.id); });
     el.querySelector('.close').addEventListener('click', (e) => { e.stopPropagation(); closeTab(t.id); });
@@ -1462,7 +1471,6 @@ function activate(id) {
   }
 }
 
-/* new tab cycles web -> terminal -> claude */
 let addCursor = 0;
 document.getElementById('newTab').addEventListener('click', () => {
   const kinds = [
@@ -1545,7 +1553,7 @@ function chatgptPage() {
     <div style="width:100%;max-width:440px;margin-top:28px;position:relative">
       <input placeholder="Ask anything" style="width:100%;box-sizing:border-box;height:50px;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);padding:0 96px 0 20px;color:rgba(238,238,242,.9);outline:none;font-size:14px;transition:all .2s" onfocus="this.style.borderColor='rgba(255,255,255,.22)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'" />
       <span style="position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;background:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer">
-        <svg style="width:15px;height:15px;color:#0d0d0d" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M12 19V5m-7 7l7-7 7 7"/></svg>
+        <svg style="width:15px;height:15px;color:#0d0d0d" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19V5m-7 7l7-7 7 7"/></svg>
       </span>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px;max-width:440px">
@@ -1653,7 +1661,7 @@ const FS = {
     'HomepageView.swift': 'Sidebar + web view + terminal + favorites',
     'Constants.swift': 'DesignConstants + UserDefaultsKey',
     'Terminal': 'TerminalContainerView (SwiftTerm wrapper)',
-    'README.md': '# ZPad — Browser, Terminal & Editor, one hotkey away'
+    'README.md': '# ZPad — Browser, Terminal, Editor & AI Chat, one hotkey away'
   }
 };
 
@@ -1750,7 +1758,7 @@ const commands = {
       '<span class="t-acc">      | |_| | |_| | |_|  _ < (_| \\__ \\ |_</span>',
       '<span class="t-acc">      |____/ \\__,_|\\__|_| \\_\\__,_|___/\\__|</span>',
       '',
-      '  <span class="t-yel">Browser, Terminal & Editor, one hotkey away.</span>',
+      '  <span class="t-yel">Browser, Terminal, Editor & AI Chat — one hotkey away.</span>',
       '  macOS 15.1+ · Pure Swift + SwiftUI · Not Electron',
       '  <span class="t-dim">summon →</span> <span class="t-grn">Cmd + Opt + P</span>'
     ].join('\n');
