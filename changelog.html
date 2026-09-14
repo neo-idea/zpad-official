@@ -3,181 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#F7F4ED" />
   <title>ZPad Changelog — What's new in every release</title>
   <meta name="description" content="Every ZPad release, dated and documented: new features, fixes, and improvements. Watch the product improve in public — v1.0.0 shipped the sliding panel, browser, terminal, workspaces, and licensing." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://zpad.app/changelog.html" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ef4444'/><text x='50' y='72' font-size='62' font-family='-apple-system,sans-serif' font-weight='800' fill='white' text-anchor='middle'>Z</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231C1712'/><rect x='7' y='7' width='86' height='86' rx='16' fill='none' stroke='%23F7F4ED' stroke-width='4'/><text x='50' y='71' font-size='58' font-family='-apple-system,sans-serif' font-weight='800' fill='%23F7F4ED' text-anchor='middle'>Z</text></svg>" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ZPad" />
   <meta property="og:title" content="ZPad Changelog" />
   <meta property="og:description" content="Every release, dated and documented. Watch ZPad improve in public." />
   <meta property="og:url" content="https://zpad.app/changelog.html" />
+  <link rel="stylesheet" href="assets/site.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --accent: #ef4444;
-      --accent-dim: rgba(239, 68, 68, 0.1);
-      --text-primary: #f5f5f7;
-      --text-secondary: rgba(255, 255, 255, 0.7);
-      --text-tertiary: rgba(255, 255, 255, 0.5);
-      --border: rgba(255, 255, 255, 0.1);
-      --border-light: rgba(255, 255, 255, 0.16);
-      --card: rgba(255, 255, 255, 0.02);
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-      background: #000;
-      color: var(--text-primary);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    code {
-      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-      font-size: 0.88em;
-      background: rgba(255,255,255,0.07);
-      padding: 2px 7px;
-      border-radius: 5px;
-    }
-
-    .header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 13px 32px;
-      background: rgba(0,0,0,0.82);
-      backdrop-filter: saturate(180%) blur(20px);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .brand { display: flex; align-items: center; gap: 10px; color: inherit; }
-    .brand:hover { text-decoration: none; }
-    .logo {
-      width: 28px; height: 28px; border-radius: 8px;
-      background: var(--accent); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 14px;
-    }
-    .brand-name { font-weight: 700; font-size: 15px; }
-    .header-crumb { font-size: 13px; color: var(--text-tertiary); }
-    .header-links { display: flex; align-items: center; gap: 18px; }
-    .header-links a { color: var(--text-secondary); font-size: 13.5px; font-weight: 500; }
-    .header-links a:hover { color: var(--text-primary); text-decoration: none; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent); color: #fff !important;
-      padding: 9px 18px; border-radius: 10px;
-      font-size: 13.5px; font-weight: 600;
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(239,68,68,0.35); text-decoration: none; }
-
-    main { max-width: 780px; margin: 0 auto; padding: 120px 24px 90px; }
-
-    .page-head { margin-bottom: 48px; }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 14px;
-    }
-    h1 { font-size: clamp(32px, 5vw, 46px); font-weight: 800; line-height: 1.12; margin-bottom: 14px; }
-    .page-head p { color: var(--text-secondary); font-size: 16.5px; max-width: 600px; }
-
-    .subscribe-card {
-      display: flex; align-items: center; justify-content: space-between; gap: 18px;
-      flex-wrap: wrap;
-      border: 1px solid var(--border); border-radius: 16px;
-      background: var(--card); padding: 22px 26px; margin-bottom: 48px;
-    }
-    .subscribe-card p { margin: 0; font-size: 14.5px; color: var(--text-secondary); }
-    .subscribe-card p strong { color: var(--text-primary); }
-
-    /* Timeline */
-    .release { position: relative; padding: 0 0 44px 36px; border-left: 1px solid var(--border); }
-    .release:last-child { border-left-color: transparent; padding-bottom: 0; }
-    .release::before {
-      content: ''; position: absolute; left: -5px; top: 6px;
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--accent); box-shadow: 0 0 0 4px var(--accent-dim);
-    }
-    .release.current::before { animation: pulse 2.2s infinite; }
-    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 4px var(--accent-dim);} 50% { box-shadow: 0 0 0 8px rgba(239,68,68,0.05);} }
-    .rel-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
-    .rel-head h2 { font-size: 20px; font-weight: 800; }
-    .rel-tag {
-      font-size: 10.5px; font-weight: 800; letter-spacing: .05em;
-      padding: 3px 10px; border-radius: 999px;
-    }
-    .rel-tag.latest { background: var(--accent); color: #fff; }
-    .rel-tag.next { background: var(--accent-dim); color: var(--accent); }
-    .rel-tag.stable { background: rgba(52,211,153,0.12); color: #34d399; }
-    .rel-date { font-size: 13px; color: var(--text-tertiary); }
-    .rel-body p { color: var(--text-secondary); font-size: 14.5px; margin: 12px 0 6px; }
-    .rel-body ul { margin: 6px 0 10px 18px; color: var(--text-secondary); font-size: 14.5px; }
-    .rel-body li { margin-bottom: 7px; }
-    .rel-body strong { color: var(--text-primary); }
-    .rel-body h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-tertiary); margin: 18px 0 8px; }
-    .rel-link { font-size: 13.5px; font-weight: 600; display: inline-block; margin-top: 8px; }
-
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 32px; text-align: center;
-      color: var(--text-tertiary); font-size: 13px;
-    }
-    .footer a { color: var(--text-secondary); }
-
-    @media (max-width: 640px) {
-      .header { padding: 12px 20px; }
-      .header-crumb { display: none; }
-      main { padding: 100px 18px 70px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .release.current::before { animation: none; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-<header class="header">
-  <a class="brand" href="index.html">
-    <div class="logo">Z</div>
-    <span class="brand-name">ZPad</span>
-    <span class="header-crumb">/ Changelog</span>
-  </a>
-  <nav class="header-links">
-    <a href="docs.html">Docs</a>
-    <a href="faq.html">FAQ</a>
-    <a href="support.html">Support</a>
-    <a class="btn-primary" href="download.html" target="_blank" rel="noopener">Download</a>
-  </nav>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="head-in">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">Z</span>
+      <span class="brand-name">ZPad</span>
+      <span class="head-crumb">/ Changelog</span>
+    </a>
+    <nav class="head-links" aria-label="Site">
+      <a href="docs.html">Docs</a>
+      <a href="faq.html">FAQ</a>
+      <a href="support.html">Support</a>
+      <a class="btn btn-primary btn-sm" href="download.html">Download</a>
+    </nav>
+  </div>
 </header>
 
-<main>
+<main class="page-main" id="main">
   <div class="page-head">
-    <span class="eyebrow">Changelog</span>
-    <h1>Shipped, dated,<br>and documented.</h1>
-    <p>Every release of ZPad lands here. For the engineering-level notes (file by file), see the archive bundled with each release.</p>
+    <span class="kicker">Changelog</span>
+    <h1>Shipped, dated,<br>and <em>documented</em>.</h1>
+    <p class="lede">Every release of ZPad lands here. For the engineering-level notes (file by file), see the archive bundled with each release.</p>
   </div>
 
   <div class="subscribe-card">
     <p><strong>Update in-app:</strong> Settings → System → <em>Check for updates</em>. Automatic checks can be enabled in Settings → Privacy.</p>
-    <a class="btn-primary" href="download.html" target="_blank" rel="noopener" style="text-decoration:none;">Get the latest →</a>
+    <a class="btn btn-primary btn-sm" href="download.html">Get the latest
+      <span class="chip-ic"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></span>
+    </a>
   </div>
 
   <!-- ============ Next ============ -->
-  <article class="release current" id="next">
+  <article class="release" id="next">
     <div class="rel-head">
       <h2>In development</h2>
-      <span class="rel-tag next">COMING NEXT</span>
+      <span class="rel-tag next">Coming next</span>
     </div>
     <div class="rel-date">Now in active development</div>
     <div class="rel-body">
@@ -194,20 +74,20 @@
   <article class="release" id="v1-0-0">
     <div class="rel-head">
       <h2>v1.0.0</h2>
-      <span class="rel-tag stable">STABLE</span>
+      <span class="rel-tag stable">Stable</span>
       <span class="rel-date">2026-08-09 · the first tagged, distributable build</span>
     </div>
     <div class="rel-body">
       <h3>Added</h3>
       <ul>
-        <li><strong>Sliding status-bar panel</strong> with hot-zone activation and <kbd style="font-family:inherit;">⌘⌥P</kbd> global toggle.</li>
+        <li><strong>Sliding status-bar panel</strong> with hot-zone activation and <kbd>⌘⌥P</kbd> global toggle.</li>
         <li><strong>Multi-tab web browser</strong> (WKWebView) with favicons, history, and bookmark management.</li>
         <li><strong>Built-in terminal</strong> powered by SwiftTerm with per-tab scrollback preservation.</li>
         <li><strong>Four display modes</strong> — side panel (left/right), centered modal, navbar-anchored.</li>
         <li><strong>Workspaces &amp; favorites</strong> for organizing tabs and bookmarks.</li>
         <li><strong>Localization</strong> — English + 简体中文 via String Catalogs.</li>
         <li><strong>Licensing</strong> — offline Ed25519 verification, in-app purchase UI, 30-day trial, self-serve device management, Stripe checkout, license emails.</li>
-        <li>Sparkle plumbing for auto-updates; observability and activation UX hardening.</li>
+        <li>Signed update plumbing; observability and activation UX hardening.</li>
       </ul>
       <h3>Fixed</h3>
       <ul>
@@ -230,8 +110,40 @@
   </article>
 </main>
 
-<footer class="footer">
-  <p>&copy; 2024-2026 ZPad · <a href="docs.html">Docs</a> · <a href="faq.html">FAQ</a> · <a href="support.html">Support</a> · <a href="privacy.html">Privacy</a> · <a href="eula.html">EULA</a></p>
+<footer class="site-foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">Z</span>
+        <span class="brand-name">ZPad</span>
+      </div>
+      <p>Browser, terminal and editor, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Product</h4>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="download.html">Download</a>
+      <a href="changelog.html">Changelog</a>
+    </div>
+    <div class="foot-col">
+      <h4>Resources</h4>
+      <a href="docs.html">User guide</a>
+      <a href="faq.html">FAQ</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy</a>
+      <a href="eula.html">EULA</a>
+      <a href="refund.html">Refunds</a>
+      <a href="mailto:hello@zpad.app">Contact</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2024–2026 ZPad. Built for focused work.</span>
+    <span>macOS 15.1+ · Apple Silicon · All prices USD</span>
+  </div>
 </footer>
 
 </body>
