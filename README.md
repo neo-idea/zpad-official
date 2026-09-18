@@ -12,6 +12,7 @@ Source for **[zpad.app](https://zpad.app)** — the official site of ZPad, a nat
 | `download.html` | Download page (DMG: `https://zpad.app/ZPad.dmg`) |
 | `get.html` | No-index download redirect (meta-refresh + JS fallback) → `ZPad.dmg` |
 | `docs.html` | User guide (14 chapters) |
+| `banners.html` | Banner scripts — copy-paste HTML recipes for the custom homepage banner |
 | `faq.html` | FAQ (5 categories, FAQPage JSON-LD) |
 | `changelog.html` | Release timeline |
 | `support.html` | Self-serve support paths + bug report template |

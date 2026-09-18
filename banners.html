@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F4ED" />
+  <title>ZPad Banner Scripts — Ready-to-paste HTML for your homepage banner</title>
+  <meta name="description" content="Copy-paste HTML recipes for ZPad's custom homepage banner. Hitokoto quotes, starter layouts, and your own ideas — HTML, CSS, and JavaScript, up to 512 KB." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://zpad.app/banners.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231C1712'/><rect x='7' y='7' width='86' height='86' rx='16' fill='none' stroke='%23F7F4ED' stroke-width='4'/><text x='50' y='71' font-size='58' font-family='-apple-system,sans-serif' font-weight='800' fill='%23F7F4ED' text-anchor='middle'>Z</text></svg>" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="ZPad" />
+  <meta property="og:title" content="ZPad Banner Scripts" />
+  <meta property="og:description" content="Ready-to-paste HTML recipes for ZPad's custom homepage banner." />
+  <meta property="og:url" content="https://zpad.app/banners.html" />
+  <link rel="stylesheet" href="assets/site.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* banners-specific */
+    .snippet { margin-bottom: 64px; scroll-margin-top: 100px; }
+    .snippet-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line-strong); padding-top: 18px; margin-bottom: 14px; }
+    .snippet-head h2 { font-family: var(--font-display); font-optical-sizing: auto; font-size: 24px; font-weight: 600; letter-spacing: -0.01em; }
+    .snippet-head .idx { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--ink-4); letter-spacing: 0.08em; }
+    .snippet-desc { color: var(--ink-2); font-size: 15px; max-width: 660px; margin-bottom: 16px; }
+    .snippet-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .snippet-meta span { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-2); border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px; background: var(--plate); }
+    .snippet-meta span.net { color: var(--accent-ink); border-color: rgba(217,72,31,.35); background: var(--accent-soft); }
+    .bug-template pre { max-height: 480px; overflow: auto; white-space: pre; }
+    @media (max-width: 700px) { .snippet-head { flex-direction: column; gap: 4px; } }
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#top">Skip to content</a>
+
+<header class="site-head">
+  <div class="head-in">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">Z</span>
+      <span class="brand-name">ZPad</span>
+      <span class="head-crumb">/ Banner Scripts</span>
+    </a>
+    <nav class="head-links" aria-label="Site">
+      <a href="docs.html">Docs</a>
+      <a href="faq.html">FAQ</a>
+      <a href="support.html">Support</a>
+      <a class="btn btn-primary btn-sm" href="download.html">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-main" id="top">
+
+  <div class="page-head">
+    <span class="kicker">Field kit · Homepage banner</span>
+    <h1>Scripts for your<br><em>homepage banner</em>.</h1>
+    <p class="lede">ZPad's homepage banner can run your own HTML, CSS, and JavaScript. Copy a recipe below, paste it into <strong>Settings → Homepage Banner → Custom HTML</strong>, and the panel homepage becomes yours.</p>
+  </div>
+
+  <!-- ============ How to use ============ -->
+  <section style="margin-bottom:64px;">
+    <div class="sec-head">
+      <span class="kicker">How to install</span>
+      <span class="idx">00 / SETUP</span>
+    </div>
+    <ol class="steps">
+      <li><p><strong>Open Settings → Homepage Banner.</strong> Use the gear in the panel header or <kbd>⌘</kbd><kbd>,</kbd> from the panel.</p></li>
+      <li><p><strong>Choose “Custom HTML”</strong> as the banner style, then paste a script into the editor (it replaces the sample — that's fine).</p></li>
+      <li><p><strong>Save.</strong> The homepage now renders your markup at its real banner size. Scripts up to <strong>512 KB</strong> are accepted; edit or clear anytime.</p></li>
+    </ol>
+    <div class="card tip">
+      <span class="card-tag">Good to know</span>
+      <p>JavaScript runs; links open outside the banner instead of navigating it; storage is non-persistent (a fresh slate each load). Scripts that fetch remote APIs — like the Hitokoto recipe — need an internet connection and show their own fallback text offline.</p>
+    </div>
+  </section>
+
+  <!-- ============ Snippet 01: Hitokoto ============ -->
+  <section class="snippet" id="hitokoto">
+    <div class="snippet-head">
+      <h2>Hitokoto — a quote a moment</h2>
+      <span class="idx">01 / SCRIPT</span>
+    </div>
+    <p class="snippet-desc">A dark glass card that pulls a fresh line of poetry, anime, film, or philosophy from the <a href="https://hitokoto.cn" target="_blank" rel="noopener">Hitokoto</a> API on every load, with its category and source on the right. Chinese-language content; graceful offline fallback.</p>
+    <div class="snippet-meta">
+      <span class="net">Network · v1.hitokoto.cn</span>
+      <span>4 KB</span>
+      <span>Self-contained · no assets</span>
+    </div>
+    <div class="bug-template">
+      <button class="copy-btn" data-copy="code-hitokoto" aria-label="Copy Hitokoto banner script">Copy</button>
+      <pre><code id="code-hitokoto">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;style&gt;
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      color: #f4f7fa;
+      font: 500 14px/1.35 -apple-system, BlinkMacSystemFont, &quot;SF Pro Text&quot;, sans-serif;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(52,199,189,.34), transparent 35%),
+        radial-gradient(circle at 86% 12%, rgba(255,159,10,.22), transparent 32%),
+        linear-gradient(125deg, #071119, #0b1a25 58%, #04080c);
+    }
+    .zpad-html-demo {
+      width: min(94%, 920px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 15px 19px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
+      box-shadow: 0 18px 42px rgba(0,0,0,.25);
+      backdrop-filter: blur(16px);
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 6px;
+      color: rgba(255,255,255,.64);
+      font-size: 10px;
+      font-weight: 650;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+    .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34c7bd;
+      box-shadow: 0 0 10px rgba(52,199,189,.85);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      margin: 0 0 5px;
+      font-size: clamp(17px, 3.5vw, 28px);
+      letter-spacing: -.025em;
+    }
+    p {
+      margin: 0;
+      max-width: 42ch;
+      color: rgba(255,255,255,.68);
+      font-size: clamp(10px, 1.5vw, 13px);
+    }
+    .facts {
+      display: grid;
+      gap: 6px;
+      min-width: 88px;
+    }
+    .fact {
+      padding: 6px 8px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.065);
+    }
+    .fact span {
+      display: block;
+      color: rgba(255,255,255,.52);
+      font-size: 9px;
+      letter-spacing: .05em;
+    }
+    .fact strong {
+      display: block;
+      margin-top: 1px;
+      font-size: 12px;
+    }
+    @media (max-width: 430px) {
+      .zpad-html-demo { grid-template-columns: 1fr; }
+      .facts { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pulse { animation: none; }
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class=&quot;zpad-html-demo&quot; aria-label=&quot;ZPad custom HTML demo&quot;&gt;
+    &lt;section&gt;
+      &lt;div class=&quot;eyebrow&quot;&gt;&lt;span class=&quot;pulse&quot;&gt;&lt;/span&gt;一言 · Hitokoto&lt;/div&gt;
+      &lt;h1 id=&quot;hitokoto-text&quot;&gt;加载一言中...&lt;/h1&gt;
+      &lt;p id=&quot;hitokoto-from&quot;&gt;——&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;aside class=&quot;facts&quot;&gt;
+      &lt;div class=&quot;fact&quot;&gt;&lt;span&gt;类型&lt;/span&gt;&lt;strong id=&quot;hitokoto-type&quot;&gt;文学&lt;/strong&gt;&lt;/div&gt;
+      &lt;div class=&quot;fact&quot;&gt;&lt;span&gt;来源&lt;/span&gt;&lt;strong id=&quot;hitokoto-src&quot;&gt;一言 API&lt;/strong&gt;&lt;/div&gt;
+    &lt;/aside&gt;
+  &lt;/main&gt;
+
+&lt;script&gt;
+// 一言API，支持跨域，直接浏览器请求
+async function fetchHitokoto() {
+  try {
+    const res = await fetch(&#x27;https://v1.hitokoto.cn/&#x27;);
+    const data = await res.json();
+    document.getElementById(&#x27;hitokoto-text&#x27;).innerText = data.hitokoto;
+    document.getElementById(&#x27;hitokoto-from&#x27;).innerText = `—— ${data.from}`;
+    document.getElementById(&#x27;hitokoto-type&#x27;).innerText = getHitokotoTypeName(data.type);
+    document.getElementById(&#x27;hitokoto-src&#x27;).innerText = data.from_who || data.from;
+  } catch (err) {
+    document.getElementById(&#x27;hitokoto-text&#x27;).innerText = &#x27;获取一言失败&#x27;;
+    document.getElementById(&#x27;hitokoto-from&#x27;).innerText = &#x27;网络或接口异常&#x27;;
+  }
+}
+
+// 一言type编码转中文名称
+function getHitokotoTypeName(t) {
+  const map = {
+    a: &#x27;动画&#x27;, b: &#x27;漫画&#x27;, c: &#x27;游戏&#x27;, d: &#x27;文学&#x27;,
+    e: &#x27;原创&#x27;, f: &#x27;网络&#x27;, g: &#x27;其他&#x27;, h: &#x27;影视&#x27;,
+    i: &#x27;诗词&#x27;, j: &#x27;网易云&#x27;, k: &#x27;哲学&#x27;, l: &#x27;谚语&#x27;
+  };
+  return map[t] || &#x27;未知&#x27;;
+}
+
+fetchHitokoto();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- ============ Snippet 02: Starter ============ -->
+  <section class="snippet" id="starter">
+    <div class="snippet-head">
+      <h2>Starter glass panel</h2>
+      <span class="idx">02 / SCRIPT</span>
+    </div>
+    <p class="snippet-desc">The same layout ZPad ships as its built-in sample — an offline-safe starting point. Remix the gradient, swap the headline, keep or drop the fact tiles. Works with zero network access.</p>
+    <div class="snippet-meta">
+      <span>Offline · no network</span>
+      <span>3 KB</span>
+      <span>Same as in-app sample</span>
+    </div>
+    <div class="bug-template">
+      <button class="copy-btn" data-copy="code-starter" aria-label="Copy starter banner script">Copy</button>
+      <pre><code id="code-starter">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;style&gt;
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      color: #f4f7fa;
+      font: 500 14px/1.35 -apple-system, BlinkMacSystemFont, &quot;SF Pro Text&quot;, sans-serif;
+      background:
+        radial-gradient(circle at 16% 18%, rgba(52,199,189,.34), transparent 35%),
+        radial-gradient(circle at 86% 12%, rgba(255,159,10,.22), transparent 32%),
+        linear-gradient(125deg, #071119, #0b1a25 58%, #04080c);
+    }
+    .zpad-html-demo {
+      width: min(94%, 920px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 15px 19px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
+      box-shadow: 0 18px 42px rgba(0,0,0,.25);
+      backdrop-filter: blur(16px);
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 6px;
+      color: rgba(255,255,255,.64);
+      font-size: 10px;
+      font-weight: 650;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+    .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #34c7bd;
+      box-shadow: 0 0 10px rgba(52,199,189,.85);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    h1 {
+      margin: 0 0 5px;
+      font-size: clamp(17px, 3.5vw, 28px);
+      letter-spacing: -.025em;
+    }
+    p {
+      margin: 0;
+      max-width: 42ch;
+      color: rgba(255,255,255,.68);
+      font-size: clamp(10px, 1.5vw, 13px);
+    }
+    .facts {
+      display: grid;
+      gap: 6px;
+      min-width: 88px;
+    }
+    .fact {
+      padding: 6px 8px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.065);
+    }
+    .fact span {
+      display: block;
+      color: rgba(255,255,255,.52);
+      font-size: 9px;
+      letter-spacing: .05em;
+    }
+    .fact strong {
+      display: block;
+      margin-top: 1px;
+      font-size: 12px;
+    }
+    @media (max-width: 430px) {
+      .zpad-html-demo { grid-template-columns: 1fr; }
+      .facts { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pulse { animation: none; }
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class=&quot;zpad-html-demo&quot; aria-label=&quot;ZPad custom HTML demo&quot;&gt;
+    &lt;section&gt;
+      &lt;div class=&quot;eyebrow&quot;&gt;&lt;span class=&quot;pulse&quot;&gt;&lt;/span&gt;Custom HTML&lt;/div&gt;
+      &lt;h1&gt;Your homepage, any layout&lt;/h1&gt;
+      &lt;p&gt;Paste HTML, CSS, and JavaScript. This demo previews typography, glass, metrics, and motion.&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;aside class=&quot;facts&quot;&gt;
+      &lt;div class=&quot;fact&quot;&gt;&lt;span&gt;Preview&lt;/span&gt;&lt;strong&gt;Exact fit&lt;/strong&gt;&lt;/div&gt;
+      &lt;div class=&quot;fact&quot;&gt;&lt;span&gt;Size limit&lt;/span&gt;&lt;strong&gt;512 KB&lt;/strong&gt;&lt;/div&gt;
+    &lt;/aside&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+  </section>
+
+  <!-- ============ Contribute ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="kicker">Contribute</span>
+      <span class="idx">03 / SHARE</span>
+    </div>
+    <div class="still-stuck">
+      <h3>Built one you like?</h3>
+      <p>Send your HTML to <a href="mailto:hello@zpad.app?subject=ZPad%20Banner%20Script">hello@zpad.app</a> — the best ones get featured on this page with credit.</p>
+      <a class="btn-primary" href="mailto:hello@zpad.app?subject=ZPad%20Banner%20Script">Submit a script</a>
+    </div>
+  </section>
+
+  <div class="doc-footer" style="margin-top:64px;">
+    <div class="links">
+      <a href="docs.html">← User guide</a>
+      <a href="faq.html">FAQ</a>
+      <a href="changelog.html">What's New</a>
+      <a href="support.html">Support</a>
+      <a href="index.html">Back to homepage</a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-foot">
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">Z</span>
+        <span class="brand-name">ZPad</span>
+      </div>
+      <p>Browser, terminal and editor, one hotkey away. Pure native Swift + SwiftUI, made for macOS.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Product</h4>
+      <a href="index.html#features">Features</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="download.html">Download</a>
+      <a href="changelog.html">Changelog</a>
+    </div>
+    <div class="foot-col">
+      <h4>Resources</h4>
+      <a href="docs.html">User guide</a>
+      <a href="banners.html">Banner scripts</a>
+      <a href="faq.html">FAQ</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <a href="privacy.html">Privacy</a>
+      <a href="eula.html">EULA</a>
+      <a href="refund.html">Refunds</a>
+      <a href="mailto:hello@zpad.app">Contact</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2024–2026 ZPad. Built for focused work.</span>
+    <span>macOS 15.1+ · Apple Silicon · All prices USD</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  function done(btn) {
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  }
+  function fallbackCopy(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(btn); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const el = document.getElementById(btn.dataset.copy);
+      if (!el) return;
+      const text = el.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => done(btn)).catch(() => fallbackCopy(text, btn));
+      } else {
+        fallbackCopy(text, btn);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
